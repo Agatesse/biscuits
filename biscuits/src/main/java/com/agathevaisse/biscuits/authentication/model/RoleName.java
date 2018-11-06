@@ -1,8 +1,7 @@
 package com.agathevaisse.biscuits.authentication.model;
 
 public enum RoleName {
-    ROLE_USER,
-    ROLE_PM,
+    ROLE_PARENTS,
     ROLE_ADMIN
 }
 
