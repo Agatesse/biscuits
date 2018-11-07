@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestRestAPIs {
 
 
-        @GetMapping("/api/test/parents")
-        @PreAuthorize("hasRole('PARENTS') or hasRole('ADMIN')")
+        @GetMapping("/api/test/user")
+        @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
         public String userAccess() {
-            return ">>> Parents Contents!";
+            return ">>> User Contents!";
         }
 
         @GetMapping("/api/test/admin")

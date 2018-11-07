@@ -35,8 +35,9 @@ public class UserPrinciple implements UserDetails {
     }
 
     public static UserPrinciple build(User user) {
+        System.out.println(user.getRole().getRoleNameString());
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add( new SimpleGrantedAuthority(user.getRole().toString()));
+        authorities.add( new SimpleGrantedAuthority(user.getRole().getRoleNameString()));
 
         return new UserPrinciple(
                 user.getId(),
@@ -67,7 +68,7 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return this.authorities;
     }
 
     @Override

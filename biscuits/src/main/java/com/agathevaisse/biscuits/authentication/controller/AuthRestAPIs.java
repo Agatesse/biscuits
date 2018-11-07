@@ -67,7 +67,7 @@ public class AuthRestAPIs {
         User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        String stringRole = signUpRequest.getRole().toString();
+        String stringRole = signUpRequest.getRole();
         RoleName role;
 
             switch (stringRole) {
@@ -75,7 +75,7 @@ public class AuthRestAPIs {
                     role = RoleName.ROLE_ADMIN;
                     break;
                 default:
-                    role = RoleName.ROLE_PARENTS;
+                    role = RoleName.ROLE_USER;
             }
 
         user.setRole(role);
