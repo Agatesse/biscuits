@@ -1,0 +1,66 @@
+<nav class="navbar is-primary is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://bulma.io" routerLink="home">
+      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+       data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <ul class="navbar-start">
+      <li class="navbar-item" routerLink="home">
+        <a class="nav-link">
+          Home
+        </a>
+      </li>
+      <li *ngIf="authority === 'user'" class="navbar-item" routerLink="user">
+        <a class="nav-link">
+          User
+        </a>
+      <li *ngIf="authority === 'admin'" class="navbar-item" routerLink="admin">
+        <a class="nav-link">
+          Admin
+        </a>
+
+      </li>
+    </ul>
+
+    <div class="navbar-end" routerLinkActive="active">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a *ngIf="!authority" class="button is-light" (click)="signUp($event)">
+            <strong>Sign Up</strong>
+          </a>
+          <a *ngIf="!authority" class="button is-light" (click)="signIn($event)">
+            <strong>Sign In</strong>
+          </a>
+          <a *ngIf="authority === 'user'" class="button is-light" (click)="signOut($event)">
+            <strong>Sign Out</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="modal signIn" [ngClass]="{'is-active': signInIsActive}">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <app-sign-in (messageEvent)="receiveMessageFromSignIn($event)"></app-sign-in>
+  </div>
+  <button class="modal-close is-large" aria-label="close" (click)="signIn($event)"></button>
+</div>
+
+<div class="modal signUp" [ngClass]="{'is-active': signUpIsActive}">
+<div class="modal-background"></div>
+<div class="modal-content">
+  <app-sign-up (messageEvent)="receiveMessageFromSignUp($event)"></app-sign-up>
+</div>
+<button class="modal-close is-large" aria-label="close" (click)="signUp($event)"></button>
+</div>

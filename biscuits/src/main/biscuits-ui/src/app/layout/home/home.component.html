@@ -1,0 +1,21 @@
+<section class="hero is-info is-fullheight is-bold">
+  <div class="hero-body">
+    <div class="container">
+
+      <div *ngIf="info.token; else loggedOut">
+        <h5 class="text-primary">Your Information</h5>
+        <p>
+          <strong>Username:</strong> {{info.username}}<br/>
+          <strong>Roles:</strong> {{info.authorities}}<br/>
+          <strong>Token:</strong> {{info.token}}.
+        </p>
+        <button class="btn btn-secondary" (click)="logout()">Logout</button>
+      </div>
+
+      <ng-template #loggedOut>
+        Please login.
+            </ng-template>
+
+    </div>
+  </div>
+</section>
