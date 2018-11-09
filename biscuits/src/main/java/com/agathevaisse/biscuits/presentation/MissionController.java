@@ -8,44 +8,45 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class MissionController {
 
     @Autowired
     MissionService missionService;
 
-    @PostMapping(value = "/missions", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createTask(@RequestBody Mission mission) {
+    @PostMapping(value = "api/missions/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createMission(@RequestBody Mission mission) {
         missionService.createMission(mission);
     }
 
-    @GetMapping(value = "/missions")
-    public List<Mission> loadAllTasks() {
+    @GetMapping(value = "api/missions/all")
+    public List<Mission> loadAllMissions() {
         return missionService.loadAllMissions();
     }
 
-    @GetMapping(value = "/missions/{id}")
-    public Mission findTaskById(@PathVariable("id") int id) {
+    @GetMapping(value = "api/missions/{id}")
+    public Mission findMissionById(@PathVariable("id") int id) {
         return missionService.findMissionById(id);
     }
 
-    @GetMapping(value = "/missions/search/{word}")
-    public List<Mission> findTaskByWord(@PathVariable("word") String word) {
+    @GetMapping(value = "api/missions/{word}")
+    public List<Mission> findMissionByWord(@PathVariable("word") String word) {
         return missionService.searchMissionsWithOneWord(word);
     }
 
-    @DeleteMapping(value = "/missions/{id}")
-    public void delete(@PathVariable("id") int id) {
+    @DeleteMapping(value = "api/missions/delete/{id}")
+    public void deleteMissionById(@PathVariable("id") int id) {
         missionService.deleteMissionById(id);
     }
 
-    @DeleteMapping(value = "/missions")
-    public void delete() {
+    @DeleteMapping(value = "api/missions/delete")
+    public void deleteAllMissions() {
         missionService.deleteAllMissions();
     }
 
-    @PatchMapping(value = "/missions/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@PathVariable("id") int id, @RequestBody String update) {
+    @PatchMapping(value = "api/missions/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateMission(@PathVariable("id") int id, @RequestBody String update) {
         missionService.updateMission(id, update);
     }
 

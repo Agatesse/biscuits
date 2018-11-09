@@ -1,0 +1,9 @@
+<h1>Missions</h1>
+
+<div *ngFor="let mission of missions | async" style="width: 300px;">
+  <app-mission-details [mission]='mission'></app-mission-details>
+</div>
+
+<div>
+  <button type="button" class="button btn-danger" (click)='deleteAllMissions()'>Delete All</button>
+</div>

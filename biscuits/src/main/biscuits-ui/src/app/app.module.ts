@@ -14,6 +14,8 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
+import { MissionDetailsComponent } from './missions/mission-details/mission-details.component';
+import {MissionsListComponent} from "./missions/missions-list/missions-list.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { SignInComponent } from './authentication/sign-in/sign-in.component';
     HeaderComponent,
     FooterComponent,
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
+    MissionsListComponent,
+    MissionDetailsComponent
   ],
   imports: [
     BrowserModule,
