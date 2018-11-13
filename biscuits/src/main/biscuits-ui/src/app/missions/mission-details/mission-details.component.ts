@@ -27,8 +27,8 @@ export class MissionDetailsComponent implements OnInit {
         error => console.log(error));
   }
 
-  deleteMission() {
-    this.missionService.deleteMission(this.mission.id)
+  removeMission() {
+    this.missionService.removeMission(this.mission.id)
       .subscribe(
         data => {
           console.log(data);

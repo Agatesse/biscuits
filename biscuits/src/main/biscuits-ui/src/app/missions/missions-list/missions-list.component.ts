@@ -17,8 +17,8 @@ export class MissionsListComponent implements OnInit {
     this.reloadData();
   }
 
-  deleteAllMissions() {
-    this.missionService.deleteAllMissions()
+  removeAllMissions() {
+    this.missionService.removeAllMissions()
       .subscribe(
         data => {
           console.log(data);

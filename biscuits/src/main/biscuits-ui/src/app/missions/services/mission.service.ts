@@ -7,33 +7,37 @@ import {Mission} from "../model/Mission";
   providedIn: 'root'
 })
 export class MissionService {
-
   private baseUrl = 'http://localhost:8080/api/missions';
 
   constructor(private http: HttpClient) {
   }
   retrieveMissionById(id: number): Observable<Object> {
-    return this.http.get(this.baseUrl + id);
+    let getMissionById = this.baseUrl + id;
+    return this.http.get(getMissionById);
   }
 
   retrieveAllMissions(): Observable<any> {
-    return this.http.get(this.baseUrl + '/all');
+  let getAllMissions = this.baseUrl + '/all';
+    return this.http.get(getAllMissions);
   }
 
-  selectMission(mission: Mission): Observable<Object> {
-    return this.http.post('${this.baseUrl}' + '/create', mission);
+  addMission(mission: Mission): Observable<Object> {
+    let createMission = this.baseUrl + '/create';
+    return this.http.post(createMission, mission);
   }
 
   updateMission(id: number, value: string): Observable<Object> {
     return this.http.put(`${this.baseUrl}/${id}`, value);
   }
 
-  deleteMission(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  removeMission(id: number): Observable<any> {
+    let deleteMission = this.baseUrl + '/delete/' + id;
+    return this.http.delete(deleteMission, { responseType: 'text' });
   }
 
-  deleteAllMissions(): Observable<any> {
-    return this.http.delete(`${this.baseUrl}` + `/delete`, { responseType: 'text' });
+  removeAllMissions(): Observable<any> {
+    let deleteAllMissions = this.baseUrl + '/delete/';
+    return this.http.delete(deleteAllMissions, { responseType: 'text' });
   }
 
 }
