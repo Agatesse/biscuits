@@ -12,7 +12,7 @@ export class MissionService {
   constructor(private http: HttpClient) {
   }
   retrieveMissionById(id: number): Observable<Object> {
-    let getMissionById = this.baseUrl + id;
+    let getMissionById = this.baseUrl + '/' + id;
     return this.http.get(getMissionById);
   }
 

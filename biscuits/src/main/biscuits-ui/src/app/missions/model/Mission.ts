@@ -1,13 +1,17 @@
 export class Mission {
   private _id: number;
-  private _title: string;
+  private _action: string;
+  private _imageURL: string;
+  private _isDone: boolean;
+  private _biscuitsToEarn: number;
 
-
-  constructor(id: number, title: string) {
+  constructor(id: number, action: string, imageURL: string, isDone: boolean, biscuitsToEarn: number) {
     this._id = id;
-    this._title = title;
+    this._action = action;
+    this._imageURL = imageURL;
+    this._isDone = isDone;
+    this._biscuitsToEarn = biscuitsToEarn;
   }
-
 
   get id(): number {
     return this._id;
@@ -17,11 +21,11 @@ export class Mission {
     this._id = value;
   }
 
-  get title(): string {
-    return this._title;
+  get action(): string {
+    return this._action;
   }
 
-  set title(value: string) {
-    this._title = value;
+  set action(value: string) {
+    this._action = value;
   }
 }

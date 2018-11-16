@@ -18,7 +18,7 @@ export class MissionDetailsComponent implements OnInit {
   }
 
   updateMission() {
-    this.missionService.updateMission(this.mission.id, this.mission.title)
+    this.missionService.updateMission(this.mission.id, this.mission.action)
       .subscribe(
         data => {
           console.log(data);
