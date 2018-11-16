@@ -1,6 +1,6 @@
 <div *ngIf="mission">
   <div>
-     {{mission.title}}
+     {{mission.action}}
   </div>
   <div>
     {{mission.id}}
@@ -9,3 +9,15 @@
   <span class="button is-small btn-danger" (click)="removeMission()">Delete</span>
 
 </div>
+
+<div *ngIf="mission" class="block" (click)="updateMission()">
+  <span class="tag is-success">
+    {{mission.action}}
+    <button class="delete is-small" (click)="removeMission()"></button>
+  </span>
+</div>
+
+<div class="board-item">
+  <div class="board-item-content"><span>{{mission.action}}</span></div>
+</div>
+

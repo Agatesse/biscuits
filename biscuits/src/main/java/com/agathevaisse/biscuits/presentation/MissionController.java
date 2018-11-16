@@ -46,8 +46,13 @@ public class MissionController {
     }
 
     @PatchMapping(value = "api/missions/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateMission(@PathVariable("id") int id, @RequestBody String update) {
-        missionService.updateMission(id, update);
+    public void updateMission(@PathVariable("id") int id, @RequestBody String action, int biscuitsToEarn) {
+        missionService.updateMission(id, action, biscuitsToEarn);
+    }
+
+    @PatchMapping(value = "api/missions/is-done/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void isMissionDone(@PathVariable("id") int id, @RequestBody boolean isDone) {
+        missionService.isMissionDone(id, isDone);
     }
 
 }

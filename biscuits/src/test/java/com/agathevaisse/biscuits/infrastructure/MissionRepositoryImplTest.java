@@ -29,7 +29,7 @@ public class MissionRepositoryImplTest {
 
     @Before
     public void setUp() throws Exception {
-        String sql = "create table if not exists biscuit_mission (mission_id bigint auto_increment primary key, mission_title text not null);";
+        String sql = "create table if not exists biscuit_mission (mission_id bigint auto_increment primary key, mission_action text not null, mission_image text not null, mission_done boolean not null, mission_biscuits int not null);";
         jdbcTemplate.update(sql);
     }
 
@@ -41,40 +41,40 @@ public class MissionRepositoryImplTest {
 
     @Test
     public void should_load_all_missions() {
-        String insertSQL1 = "insert into biscuit_mission(mission_title) values ('Mission1')";
-        String insertSQL2 = "insert into biscuit_mission(mission_title) values ('Mission2')";
-        String insertSQL3 = "insert into biscuit_mission(mission_title) values ('Mission3')";
+        String insertSQL1 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Se laver les dents', 'images/secret-mission-stamp.jpg', false, 5)";
+        String insertSQL2 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Se laver les mains', 'images/secret-mission-stamp.jpg', false, 8)";
+        String insertSQL3 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Se laver les pieds', 'images/secret-mission-stamp.jpg', false, 15)";
         jdbcTemplate.update(insertSQL1);
         jdbcTemplate.update(insertSQL2);
         jdbcTemplate.update(insertSQL3);
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(missionRepositoryImpl.loadAllMissions().size()).isEqualTo(3);
-        softly.assertThat(missionRepositoryImpl.loadAllMissions()).extracting("id", "title")
-                .contains(tuple(1, "Mission1"),
-                        tuple(2, "Mission2"),
-                        tuple(3, "Mission3"));
+        softly.assertThat(missionRepositoryImpl.loadAllMissions()).extracting("id", "action", "imageURL", "isDone", "biscuitsToEarn")
+                .contains(tuple(1, "Se laver les dents", "images/secret-mission-stamp.jpg", false, 5),
+                        tuple(2, "Se laver les mains", "images/secret-mission-stamp.jpg", false, 8),
+                        tuple(3, "Se laver les pieds", "images/secret-mission-stamp.jpg", false, 15));
         softly.assertAll();
     }
 
     @Test
     public void should_create_a_mission() {
-        missionRepositoryImpl.createMission(new Mission("Préparer son goûter"));
-        missionRepositoryImpl.createMission(new Mission("Ranger ses jouets"));
-        missionRepositoryImpl.createMission(new Mission("Prendre ses vitamines"));
+        missionRepositoryImpl.createMission(new Mission("Préparer son goûter", 10));
+        missionRepositoryImpl.createMission(new Mission("Ranger ses jouets", 3));
+        missionRepositoryImpl.createMission(new Mission("Prendre ses vitamines", 1));
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(missionRepositoryImpl.loadAllMissions().size()).isEqualTo(3);
-        softly.assertThat(missionRepositoryImpl.loadAllMissions()).extracting("id", "title")
-                .contains(tuple(1, "Préparer son goûter"),
-                          tuple(2, "Ranger ses jouets"),
-                          tuple(3, "Prendre ses vitamines"));
+        softly.assertThat(missionRepositoryImpl.loadAllMissions()).extracting("id", "action", "imageURL", "isDone", "biscuitsToEarn")
+                .contains(tuple(1, "Préparer son goûter", "images/secret-mission-stamp.jpg", false, 10),
+                          tuple(2, "Ranger ses jouets", "images/secret-mission-stamp.jpg", false, 3),
+                          tuple(3, "Prendre ses vitamines", "images/secret-mission-stamp.jpg", false, 1));
         softly.assertAll();
     }
 
     @Test
     public void should_find_a_Mission_with_its_id() {
-        String insertSQL1 = "insert into biscuit_mission(mission_title) values ('Aller chercher du pain')";
-        String insertSQL2 = "insert into biscuit_mission(mission_title) values ('Vider le lave-vaisselle')";
-        String insertSQL3 = "insert into biscuit_mission(mission_title) values ('Finir son assiette')";
+        String insertSQL1 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Aller chercher du pain', 'images/secret-mission-stamp.jpg', false, 20)";
+        String insertSQL2 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Vider le lave-vaisselle', 'images/secret-mission-stamp.jpg', false, 12)";
+        String insertSQL3 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Finir son assiette', 'images/secret-mission-stamp.jpg', false, 10)";
         jdbcTemplate.update(insertSQL1);
         jdbcTemplate.update(insertSQL2);
         jdbcTemplate.update(insertSQL3);
@@ -83,22 +83,22 @@ public class MissionRepositoryImplTest {
 
     @Test
     public void should_search_missions_with_a_word() {
-        String insertSQL1 = "insert into biscuit_mission(mission_title) values ('Prendre une douche')";
-        String insertSQL2 = "insert into biscuit_mission(mission_title) values ('Se coiffer les cheveux')";
-        String insertSQL3 = "insert into biscuit_mission(mission_title) values ('Ranger les vêtements propres')";
+        String insertSQL1 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Prendre une douche', 'images/secret-mission-stamp.jpg', false, 3)";
+        String insertSQL2 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Se coiffer les cheveux', 'images/secret-mission-stamp.jpg', false, 8)";
+        String insertSQL3 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Ranger les vêtements propres', 'images/secret-mission-stamp.jpg', false, 16)";
         jdbcTemplate.update(insertSQL1);
         jdbcTemplate.update(insertSQL2);
         jdbcTemplate.update(insertSQL3);
         assertThat(missionRepositoryImpl.searchMissionsWithOneWord("les").size()).isEqualTo(2);
-        assertThat(missionRepositoryImpl.searchMissionsWithOneWord("les")).extracting("title")
+        assertThat(missionRepositoryImpl.searchMissionsWithOneWord("les")).extracting("action")
                 .containsExactlyInAnyOrder("Se coiffer les cheveux", "Ranger les vêtements propres");
     }
 
     @Test
     public void should_count_missions() {
-        String insertSQL1 = "insert into biscuit_mission(mission_title) values ('Aller chercher du pain')";
-        String insertSQL2 = "insert into biscuit_mission(mission_title) values ('Vider le lave-vaisselle')";
-        String insertSQL3 = "insert into biscuit_mission(mission_title) values ('Finir son assiette')";
+        String insertSQL1 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Aller chercher du pain', 'images/secret-mission-stamp.jpg', false, 7)";
+        String insertSQL2 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Vider le lave-vaisselle', 'images/secret-mission-stamp.jpg', false, 9)";
+        String insertSQL3 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Finir son assiette', 'images/secret-mission-stamp.jpg', false, 10)";
         jdbcTemplate.update(insertSQL1);
         jdbcTemplate.update(insertSQL2);
         jdbcTemplate.update(insertSQL3);
@@ -107,7 +107,7 @@ public class MissionRepositoryImplTest {
 
     @Test
     public void should_delete_a_mission_with_its_id() {
-        String insertSQL = "insert into biscuit_mission(mission_title) values ('Débarrasser la table')";
+        String insertSQL = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Débarrasser la table', 'images/secret-mission-stamp.jpg', false, 7,)";
         jdbcTemplate.update(insertSQL);
         assertThat(missionRepositoryImpl.loadAllMissions().size()).isEqualTo(1);
         missionRepositoryImpl.deleteMissionById(1);
@@ -116,9 +116,9 @@ public class MissionRepositoryImplTest {
 
     @Test
     public void should_delete_all_missions() {
-        String insertSQL1 = "insert into biscuit_mission(mission_title) values ('Manger des bonbons')";
-        String insertSQL2 = "insert into biscuit_mission(mission_title) values ('Finir sa soupe')";
-        String insertSQL3 = "insert into biscuit_mission(mission_title) values ('Nettoyer les vitres')";
+        String insertSQL1 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Manger des bonbons', 'images/secret-mission-stamp.jpg', false, 42)";
+        String insertSQL2 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Finir sa soupe', 'images/secret-mission-stamp.jpg', false, 6)";
+        String insertSQL3 = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Nettoyer les vitres', 'images/secret-mission-stamp.jpg', false, 16)";
         jdbcTemplate.update(insertSQL1);
         jdbcTemplate.update(insertSQL2);
         jdbcTemplate.update(insertSQL3);
@@ -129,13 +129,27 @@ public class MissionRepositoryImplTest {
 
     @Test
     public void should_update_a_mission() {
-        String insertSQL = "insert into biscuit_mission(mission_title) values ('Se laver les dents')";
+        String insertSQL = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Se laver les dents', 'images/secret-mission-stamp.jpg', false, 5)";
         jdbcTemplate.update(insertSQL);
-        assertThat(missionRepositoryImpl.findMissionById(1)).extracting("title")
-                .contains("Se laver les dents");
-        missionRepositoryImpl.updateMission(1, "Se laver les mains");
-        assertThat(missionRepositoryImpl.findMissionById(1)).extracting("title")
-                .contains("Se laver les mains");
+        assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
+                .contains("Se laver les dents", "images/secret-mission-stamp.jpg", false, 5);
+        missionRepositoryImpl.updateMission(1, "Se laver les mains", 8);
+        assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
+                .contains("Se laver les mains", "images/secret-mission-stamp.jpg", false, 8);
+    }
+
+    @Test
+    public void should_update_is_done_attribute() {
+        String insertSQL = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Se laver les dents', 'images/secret-mission-stamp.jpg', false, 5)";
+        jdbcTemplate.update(insertSQL);
+        assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
+                .contains("Se laver les dents", "images/secret-mission-stamp.jpg", false, 5);
+        missionRepositoryImpl.isMissionDone(1, true);
+        assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
+                .contains("Se laver les dents", "images/secret-mission-stamp.jpg", true, 5);
+        missionRepositoryImpl.isMissionDone(1, false);
+        assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
+                .contains("Se laver les dents", "images/secret-mission-stamp.jpg", false, 5);
     }
 
 }

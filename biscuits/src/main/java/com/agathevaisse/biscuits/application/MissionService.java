@@ -21,5 +21,6 @@ public class MissionService {
     public List<Mission> searchMissionsWithOneWord(String word) {return missionRepository.searchMissionsWithOneWord(word);}
     public void deleteMissionById(int id) {missionRepository.deleteMissionById(id);}
     public void deleteAllMissions() {missionRepository.deleteAllMissions();}
-    public void updateMission(int id, String update) {missionRepository.updateMission(id, update);}
+    public void updateMission(int id, String action, int biscuitsToEarn) {missionRepository.updateMission(id, action, biscuitsToEarn);}
+    public void isMissionDone (int id, boolean isDone) {missionRepository.isMissionDone(id, isDone);}
 }

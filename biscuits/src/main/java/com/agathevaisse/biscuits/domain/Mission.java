@@ -5,13 +5,19 @@ import java.util.Objects;
 public class Mission {
 
     private int id;
-    private String title;
+    private String action;
+    private String imageURL;
+    private boolean isDone;
+    private int biscuitsToEarn;
 
     public Mission() {
     }
 
-    public Mission(String title) {
-        this.title = title;
+    public Mission(String action, int biscuitsToEarn) {
+        this.action = action;
+        this.imageURL = "images/secret-mission-stamp.jpg";
+        this.isDone = false;
+        this.biscuitsToEarn = biscuitsToEarn;
     }
 
     public int getId() {
@@ -22,12 +28,36 @@ public class Mission {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getAction() {
+        return action;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setimageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
+    public int getBiscuitsToEarn() {
+        return biscuitsToEarn;
+    }
+
+    public void setBiscuitsToEarn(int biscuitsToEarn) {
+        this.biscuitsToEarn = biscuitsToEarn;
     }
 
     @Override
@@ -36,20 +66,25 @@ public class Mission {
         if (!(o instanceof Mission)) return false;
         Mission mission = (Mission) o;
         return getId() == mission.getId() &&
-                Objects.equals(getTitle(), mission.getTitle());
+                isDone() == mission.isDone() &&
+                getBiscuitsToEarn() == mission.getBiscuitsToEarn() &&
+                Objects.equals(getAction(), mission.getAction()) &&
+                Objects.equals(getImageURL(), mission.getImageURL());
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(getId(), getTitle());
+        return Objects.hash(getId(), getAction(), getImageURL(), isDone(), getBiscuitsToEarn());
     }
 
     @Override
     public String toString() {
         return "Mission{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
+                ", action='" + action + '\'' +
+                ", image='" + imageURL + '\'' +
+                ", isDone=" + isDone +
+                ", biscuitsToEarn=" + biscuitsToEarn +
                 '}';
     }
 }
