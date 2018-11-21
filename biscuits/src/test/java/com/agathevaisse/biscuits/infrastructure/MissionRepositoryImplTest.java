@@ -64,9 +64,9 @@ public class MissionRepositoryImplTest {
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(missionRepositoryImpl.loadAllMissions().size()).isEqualTo(3);
         softly.assertThat(missionRepositoryImpl.loadAllMissions()).extracting("id", "action", "imageURL", "isDone", "biscuitsToEarn")
-                .contains(tuple(1, "Préparer son goûter", "images/secret-mission-stamp.jpg", false, 10),
-                          tuple(2, "Ranger ses jouets", "images/secret-mission-stamp.jpg", false, 3),
-                          tuple(3, "Prendre ses vitamines", "images/secret-mission-stamp.jpg", false, 1));
+                .contains(tuple(1, "Préparer son goûter", "src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg", false, 10),
+                          tuple(2, "Ranger ses jouets", "src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg", false, 3),
+                          tuple(3, "Prendre ses vitamines", "src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg", false, 1));
         softly.assertAll();
     }
 
@@ -133,21 +133,21 @@ public class MissionRepositoryImplTest {
         jdbcTemplate.update(insertSQL);
         assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
                 .contains("Se laver les dents", "images/secret-mission-stamp.jpg", false, 5);
-        missionRepositoryImpl.updateMission(1, "Se laver les mains", 8);
+        missionRepositoryImpl.updateMission(1, "Se laver les mains", missionRepositoryImpl.findMissionById(1).isDone(), 8);
         assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
                 .contains("Se laver les mains", "images/secret-mission-stamp.jpg", false, 8);
     }
 
-    @Test
+      @Test
     public void should_update_is_done_attribute() {
         String insertSQL = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Se laver les dents', 'images/secret-mission-stamp.jpg', false, 5)";
         jdbcTemplate.update(insertSQL);
         assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
                 .contains("Se laver les dents", "images/secret-mission-stamp.jpg", false, 5);
-        missionRepositoryImpl.isMissionDone(1, true);
+        missionRepositoryImpl.isMissionDone(1);
         assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
                 .contains("Se laver les dents", "images/secret-mission-stamp.jpg", true, 5);
-        missionRepositoryImpl.isMissionDone(1, false);
+        missionRepositoryImpl.isMissionDone(1);
         assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
                 .contains("Se laver les dents", "images/secret-mission-stamp.jpg", false, 5);
     }

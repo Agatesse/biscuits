@@ -12,19 +12,20 @@ export class MissionDetailsComponent implements OnInit {
 
   @Input() mission: Mission;
 
-  constructor(private missionService: MissionService, private missionsListComponent : MissionsListComponent) { }
+  constructor(private missionService: MissionService, private missionsListComponent: MissionsListComponent) {
+  }
 
   ngOnInit() {
   }
 
   updateMission() {
-    this.missionService.updateMission(this.mission.id, this.mission.action)
+/*    this.missionService.updateMission(this.mission.id, this.mission.action, this.mission.isDone, this.mission.biscuitsToEarn)
       .subscribe(
         data => {
           console.log(data);
           this.mission = data as Mission;
         },
-        error => console.log(error));
+        error => console.log(error));*/
   }
 
   removeMission() {
@@ -37,4 +38,15 @@ export class MissionDetailsComponent implements OnInit {
         error => console.log(error));
   }
 
+  isMissionDone() {
+    this.missionService.isMissionDone(this.mission.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.mission = data as Mission;
+          console.log(this.mission.isDone);
+        },
+        error => console.log(error));
+  }
 }
+

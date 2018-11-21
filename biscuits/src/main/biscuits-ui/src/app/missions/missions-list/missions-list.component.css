@@ -1,8 +1,8 @@
-#sectioncontainer {
+/*#sectioncontainer {
   margin-top: 20px;
 }
 
-/* Keep from sticking to sides */
+!* Keep from sticking to sides *!
 .cards-container {
   max-width: 95%;
 }
@@ -28,4 +28,4 @@
 
 .delete {
   pointer-events: auto;
-}
+}*/

@@ -15,7 +15,7 @@ public class Mission {
 
     public Mission(String action, int biscuitsToEarn) {
         this.action = action;
-        this.imageURL = "images/secret-mission-stamp.jpg";
+        this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg";
         this.isDone = false;
         this.biscuitsToEarn = biscuitsToEarn;
     }
@@ -86,5 +86,14 @@ public class Mission {
                 ", isDone=" + isDone +
                 ", biscuitsToEarn=" + biscuitsToEarn +
                 '}';
+    }
+
+   public boolean switchDone() {
+        if (this.isDone()) {
+            this.setDone(false);
+        } else {
+            this.setDone(true);
+        }
+        return this.isDone();
     }
 }

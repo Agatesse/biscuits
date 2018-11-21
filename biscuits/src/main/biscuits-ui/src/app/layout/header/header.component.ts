@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   private signUpIsActive: boolean;
   private signInToSignUp: boolean = false;
   private signUpToSignIn: boolean = false;
+  toggled: boolean = false;
 
   constructor(private tokenStorage: TokenStorageService) {
   }
@@ -54,4 +55,9 @@ export class HeaderComponent implements OnInit {
     this.signUp();
     this.signIn();
   }
+
+  toggleBurger(){
+    this.toggled = this.toggled != true;
+  }
+
 }

@@ -7,30 +7,30 @@ mission_biscuits
 values
   (
   'Brush your teeth',
-  'images/secret-mission-stamp.jpg',
+  '/assets/images/secret-mission-stamp.jpg',
   false,
   5
   ),
   (
   'Make your bed',
-  'images/secret-mission-stamp.jpg',
+  '/assets/images/secret-mission-stamp.jpg',
   false,
   3
   ),
   (
   'Feed pets',
-  'images/secret-mission-stamp.jpg',
+  '/assets/images/secret-mission-stamp.jpg',
   false,
   10
   ),
   (
   'Clean your room',
-  'images/secret-mission-stamp.jpg',
+  '/assets/images/secret-mission-stamp.jpg',
   false,
   15
   ),
   ('Get dressed',
-  'images/secret-mission-stamp.jpg',
+  '/assets/images/secret-mission-stamp.jpg',
   false,
   3
   );

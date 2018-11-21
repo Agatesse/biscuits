@@ -9,7 +9,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  @Output() messageEvent = new EventEmitter<boolean>();
+  @Output() fromSignUpToSignIn = new EventEmitter<boolean>();
+  @Output() closeSignUp = new EventEmitter<boolean>();
   signUpForm: FormGroup;
   submitted = false;
   toSignIn: boolean = false;
@@ -17,6 +18,7 @@ export class SignUpComponent implements OnInit {
   isSignedUp = false;
   isSignUpFailed = false;
   errorMessage = '';
+  signUpIsActive: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {
   }
@@ -66,11 +68,17 @@ export class SignUpComponent implements OnInit {
         this.isSignUpFailed = true;
       }
     );
+    this.signUp();
   }
 
   goToSignIn() {
     this.toSignIn = !this.toSignIn;
-    this.messageEvent.emit(this.toSignIn)
+    this.fromSignUpToSignIn.emit(this.toSignIn)
+  }
+
+  signUp() {
+    this.signUpIsActive =!this.signUpIsActive;
+    this.closeSignUp.emit(this.signUpIsActive);
   }
 
 }

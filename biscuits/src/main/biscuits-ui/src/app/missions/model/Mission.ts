@@ -28,4 +28,28 @@ export class Mission {
   set action(value: string) {
     this._action = value;
   }
+
+  get imageURL(): string {
+    return this._imageURL;
+  }
+
+  set imageURL(value: string) {
+    this._imageURL = value;
+  }
+
+  get isDone(): boolean {
+    return this._isDone;
+  }
+
+  set isDone(value: boolean) {
+    this._isDone = value;
+  }
+
+  get biscuitsToEarn(): number {
+    return this._biscuitsToEarn;
+  }
+
+  set biscuitsToEarn(value: number) {
+    this._biscuitsToEarn = value;
+  }
 }

@@ -1,23 +1,20 @@
-<div *ngIf="mission">
-  <div>
-     {{mission.action}}
+  <div class="card large">
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-96x96">
+            <img [src]="mission.imageURL" alt="Secret Mission">
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4 no-padding has-text-black">{{mission.action}}</p>
+          <p class="subtitle is-6 has-text-primary"><span>{{mission.biscuitsToEarn}}</span> <span clas="icon is-small"><i class="fas fa-cookie"></i></span></p>
+        </div>
+      </div>
+      <footer class="card-footer">
+        <a href="#" class="card-footer-item"><i class="fas fa-times" (click)="removeMission()"></i></a>
+        <a href="#" class="card-footer-item"><i class="fas fa-edit" (click)="updateMission()"></i></a>
+        <a href="#" class="card-footer-item"><i class="fas fa-check" (click)="isMissionDone()"></i></a>
+      </footer>
+    </div>
   </div>
-  <div>
-    {{mission.id}}
-  </div>
-
-  <span class="button is-small btn-danger" (click)="removeMission()">Delete</span>
-
-</div>
-
-<div *ngIf="mission" class="block" (click)="updateMission()">
-  <span class="tag is-success">
-    {{mission.action}}
-    <button class="delete is-small" (click)="removeMission()"></button>
-  </span>
-</div>
-
-<div class="board-item">
-  <div class="board-item-content"><span>{{mission.action}}</span></div>
-</div>
-

@@ -10,7 +10,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  @Output() messageEvent = new EventEmitter<boolean>();
+  @Output() fromSignInToSignUp = new EventEmitter<boolean>();
+  @Output() closeSignIn = new EventEmitter<boolean>();
   signInForm: FormGroup;
   submitted = false;
   toSignUp: boolean = false;
@@ -19,6 +20,7 @@ export class SignInComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
   private loginInfo: AuthLoginInfo;
+  signInIsActive: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService) {
   }
@@ -62,6 +64,7 @@ export class SignInComponent implements OnInit {
         this.isLoginFailed = true;
       }
     );
+    this.signIn();
   }
 
   reloadPage() {
@@ -70,7 +73,12 @@ export class SignInComponent implements OnInit {
 
   goToSignUp() {
     this.toSignUp = !this.toSignUp;
-    this.messageEvent.emit(this.toSignUp)
+    this.fromSignInToSignUp.emit(this.toSignUp)
+  }
+
+  signIn() {
+    this.signInIsActive =!this.signInIsActive;
+    this.closeSignIn.emit(this.signInIsActive);
   }
 
 }

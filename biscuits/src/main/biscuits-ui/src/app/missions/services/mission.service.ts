@@ -26,9 +26,10 @@ export class MissionService {
     return this.http.post(createMission, mission);
   }
 
-  updateMission(id: number, value: string): Observable<Object> {
-    return this.http.put(`${this.baseUrl}/${id}`, value);
-  }
+/* updateMission(id: number, action: string, isDone: boolean, biscuitsToEarn: number): Observable<Object> {
+    let updateMission = this.baseUrl + '/update/' + id;
+    return this.http.patch(updateMission, id, action, isDone, biscuitsToEarn);
+  }*/
 
   removeMission(id: number): Observable<any> {
     let deleteMission = this.baseUrl + '/delete/' + id;
@@ -38,6 +39,11 @@ export class MissionService {
   removeAllMissions(): Observable<any> {
     let deleteAllMissions = this.baseUrl + '/delete/';
     return this.http.delete(deleteAllMissions, { responseType: 'text' });
+  }
+
+  isMissionDone(id: number): Observable<any> {
+    let isMissionDone = this.baseUrl + '/is-done/' + id;
+    return this.http.patch(isMissionDone, id);
   }
 
 }

@@ -1,0 +1,10 @@
+.biscuits {
+  margin-left: 0.5em;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+.navbar-end {
+  padding-right: 0.5em;
+}

@@ -18,14 +18,16 @@ public class MissionRepositoryImpl implements MissionRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public MissionRepositoryImpl(JdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
+    public MissionRepositoryImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-    private final String INSERT_SQL = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values (?, ?, ?, ?)";
+    private final static String INSERT_SQL = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values (?, ?, ?, ?)";
     private final String SELECT_ALL_SQL = "select mission_id, mission_action, mission_image, mission_done, mission_biscuits from biscuit_mission";
     private final String SELECT_BY_ID_SQL = "select mission_id, mission_action, mission_image, mission_done, mission_biscuits from biscuit_mission where mission_id = ?";
     private final String DELETE_BY_ID_SQL = "delete from biscuit_mission where mission_id = ?";
     private final String DELETE_ALL_SQL = "delete from biscuit_mission";
-    private final String UPDATE_MISSION_BY_PATCH_SQL = "update biscuit_mission set mission_action = ?, mission_biscuits = ?  where mission_id = ?";
+    private final String UPDATE_MISSION_BY_PATCH_SQL = "update biscuit_mission set mission_action = ?, mission_done = ?, mission_biscuits = ?  where mission_id = ?";
     private final String UPDATE_ISDONE_BY_PATCH_SQL = "update biscuit_mission set mission_done = ? where mission_id = ?";
 
     @Override
@@ -35,14 +37,14 @@ public class MissionRepositoryImpl implements MissionRepository {
 
     @Override
     public void createMission(Mission mission) {
-        mission.setimageURL("images/secret-mission-stamp.jpg");
+        mission.setimageURL("src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg");
         mission.setDone(false);
         jdbcTemplate.update(INSERT_SQL, mission.getAction(), mission.getImageURL(), mission.isDone(), mission.getBiscuitsToEarn());
     }
 
     @Override
     public Mission findMissionById(int id) {
-        return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new Object [] {id}, new MissionMapper());
+        return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new Object[]{id}, new MissionMapper());
     }
 
     @Override
@@ -63,12 +65,15 @@ public class MissionRepositoryImpl implements MissionRepository {
     }
 
     @Override
-    public void updateMission(int id, String action, int biscuitsToEarn) {
-        jdbcTemplate.update(UPDATE_MISSION_BY_PATCH_SQL, action, biscuitsToEarn, id);
+    public void updateMission(int id, String action, boolean isDone, int biscuitsToEarn) {
+        jdbcTemplate.update(UPDATE_MISSION_BY_PATCH_SQL, action, isDone, biscuitsToEarn, id);
     }
 
-    @Override
-    public void isMissionDone(int id, boolean isDone) {
-        jdbcTemplate.update(UPDATE_ISDONE_BY_PATCH_SQL, isDone, id);
+   @Override
+    public void isMissionDone(int id) {
+        Mission mission = findMissionById(id);
+        mission.switchDone();
+        updateMission(mission.getId(), mission.getAction(), mission.isDone(), mission.getBiscuitsToEarn());
     }
 }
+
