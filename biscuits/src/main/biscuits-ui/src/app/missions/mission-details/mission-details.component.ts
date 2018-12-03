@@ -33,7 +33,7 @@ export class MissionDetailsComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          this.missionsListComponent.reloadData();
+          /*this.missionsListComponent.reloadData();*/
         },
         error => console.log(error));
   }

@@ -21,8 +21,8 @@ public class MissionController {
     }
 
     @GetMapping(value = "api/missions/all")
-    public List<Mission> loadAllMissions() {
-        return missionService.loadAllMissions();
+    public List<Mission> getMissions() {
+        return missionService.getMissions();
     }
 
     @GetMapping(value = "api/missions/{id}")
@@ -32,7 +32,7 @@ public class MissionController {
 
     @GetMapping(value = "api/missions/{word}")
     public List<Mission> findMissionByWord(@PathVariable("word") String word) {
-        return missionService.searchMissionsWithOneWord(word);
+        return missionService.findMissionsByWord(word);
     }
 
     @DeleteMapping(value = "api/missions/delete/{id}")
@@ -46,8 +46,8 @@ public class MissionController {
     }
 
     @PatchMapping(value = "api/missions/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateMission(@PathVariable("id") int id, @RequestBody String action, boolean isDone, int biscuitsToEarn) {
-        missionService.updateMission(id, action, isDone, biscuitsToEarn);
+    public void updateMission(@PathVariable("id") int id, @RequestBody Mission mission) {
+        missionService.updateMission(id, mission);
     }
 
     @PatchMapping(value = "api/missions/is-done/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

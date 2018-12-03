@@ -10,6 +10,6 @@ public interface MissionRepository {
         List<Mission> searchMissionsWithOneWord(String word);
         void deleteMissionById(int id);
         void deleteAllMissions();
-        void updateMission(int id, String action, boolean isDone, int biscuitsToEarn);
+        void updateMission(int id, Mission mission);
         void isMissionDone(int id);
 }

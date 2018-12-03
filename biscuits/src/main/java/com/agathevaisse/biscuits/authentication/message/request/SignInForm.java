@@ -2,7 +2,7 @@ package com.agathevaisse.biscuits.authentication.message.request;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class LoginForm {
+public class SignInForm {
     @NotBlank
     @Size(min=3, max = 60)
     private String username;

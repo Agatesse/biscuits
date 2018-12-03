@@ -15,12 +15,12 @@ public class MissionService {
     @Autowired
     MissionRepository missionRepository;
 
-    public List<Mission> loadAllMissions() {return missionRepository.loadAllMissions();}
+    public List<Mission> getMissions() {return missionRepository.loadAllMissions();}
     public void createMission(Mission mission){missionRepository.createMission(mission);}
     public Mission findMissionById(int id) {return missionRepository.findMissionById(id);}
-    public List<Mission> searchMissionsWithOneWord(String word) {return missionRepository.searchMissionsWithOneWord(word);}
+    public List<Mission> findMissionsByWord(String word) {return missionRepository.searchMissionsWithOneWord(word);}
     public void deleteMissionById(int id) {missionRepository.deleteMissionById(id);}
     public void deleteAllMissions() {missionRepository.deleteAllMissions();}
-    public void updateMission(int id, String action, boolean isDone, int biscuitsToEarn) {missionRepository.updateMission(id, action, isDone, biscuitsToEarn);}
+    public void updateMission(int id, Mission mission) {missionRepository.updateMission(id, mission);}
     public void isMissionDone (int id) {missionRepository.isMissionDone(id);}
 }

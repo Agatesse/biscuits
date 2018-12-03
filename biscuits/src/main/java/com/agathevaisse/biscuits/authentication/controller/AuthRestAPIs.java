@@ -1,6 +1,6 @@
 package com.agathevaisse.biscuits.authentication.controller;
 
-import com.agathevaisse.biscuits.authentication.message.request.LoginForm;
+import com.agathevaisse.biscuits.authentication.message.request.SignInForm;
 import com.agathevaisse.biscuits.authentication.message.request.SignUpForm;
 import com.agathevaisse.biscuits.authentication.message.response.JwtResponse;
 import com.agathevaisse.biscuits.authentication.message.response.ResponseMessage;
@@ -38,7 +38,7 @@ public class AuthRestAPIs {
     JwtProvider jwtProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody SignInForm loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));

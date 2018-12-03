@@ -3,7 +3,7 @@
   <div class="field">
     <label class="label has-text-info">Family Name</label>
     <div class="control has-icons-left has-icons-right">
-      <input type="text" formControlName="familyName" class="input form-control" placeholder="e.g Doe Team" name="familyName"
+      <input disabled type="text" formControlName="familyName" class="input form-control" placeholder="e.g Doe Team" name="familyName"
              [ngClass]="{ 'is-invalid': submitted && f.familyName.errors }"/>
       <span class="icon is-left">
       <i class="fa fa-users"></i>
@@ -20,7 +20,7 @@
   <div class="field">
     <label class="label has-text-info">Email</label>
     <div class="control has-icons-left has-icons-right">
-      <input type="email" formControlName="email" class="input form-control" placeholder="e.g hello@doe.us" name="email"
+      <input disabled type="email" formControlName="email" class="input form-control" placeholder="e.g hello@doe.us" name="email"
              [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
       <span class="icon is-left">
       <i class="fa fa-envelope"></i>
@@ -35,7 +35,7 @@
     </div>
     </div>
 
-  <div class="field">
+<!--  <div class="field">
   <label class="label has-text-info">Password</label>
   <div class="control has-icons-left has-icons-right">
     <input type="password" formControlName="password" class="input from-control" name="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
@@ -66,7 +66,7 @@
       <p *ngIf="f.confirmPassword.errors.required" class="help is-danger">Password must be confirmed</p>
       <p *ngIf="f.confirmPassword.errors.minlength" class="help is-danger">Password must be at least 6 characters</p>
     </div>
-  </div>
+  </div>-->
   <div class="field has-text-centered">
   <button type="submit" class="button is-info is-medium">Sign Up</button>
   <p *ngIf="f.submitted && isSignUpFailed" class="help is-danger">

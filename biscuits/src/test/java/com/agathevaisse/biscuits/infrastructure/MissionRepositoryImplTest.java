@@ -127,7 +127,7 @@ public class MissionRepositoryImplTest {
         assertThat(missionRepositoryImpl.loadAllMissions().size()).isEqualTo(0);
     }
 
-    @Test
+   /* @Test
     public void should_update_a_mission() {
         String insertSQL = "insert into biscuit_mission(mission_action, mission_image, mission_done, mission_biscuits) values ('Se laver les dents', 'images/secret-mission-stamp.jpg', false, 5)";
         jdbcTemplate.update(insertSQL);
@@ -136,7 +136,7 @@ public class MissionRepositoryImplTest {
         missionRepositoryImpl.updateMission(1, "Se laver les mains", missionRepositoryImpl.findMissionById(1).isDone(), 8);
         assertThat(missionRepositoryImpl.findMissionById(1)).extracting("action", "imageURL", "isDone", "biscuitsToEarn")
                 .contains("Se laver les mains", "images/secret-mission-stamp.jpg", false, 8);
-    }
+    }*/
 
       @Test
     public void should_update_is_done_attribute() {
