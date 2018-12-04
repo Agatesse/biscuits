@@ -1,7 +1,8 @@
 package com.agathevaisse.biscuits.infrastructure;
 
 import com.agathevaisse.biscuits.configurationDataBaseTest.DataBaseTestConfiguration;
-import com.agathevaisse.biscuits.domain.Mission;
+import com.agathevaisse.biscuits.domain.mission.Mission;
+import com.agathevaisse.biscuits.infrastructure.mission.MissionRepositoryImpl;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;

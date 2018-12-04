@@ -1,7 +1,7 @@
 package com.agathevaisse.biscuits.configurationDataBaseTest;
 
-import com.agathevaisse.biscuits.domain.MissionRepository;
-import com.agathevaisse.biscuits.infrastructure.MissionRepositoryImpl;
+import com.agathevaisse.biscuits.domain.mission.MissionRepository;
+import com.agathevaisse.biscuits.infrastructure.mission.MissionRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;

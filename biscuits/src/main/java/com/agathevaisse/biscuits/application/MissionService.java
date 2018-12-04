@@ -1,7 +1,7 @@
 package com.agathevaisse.biscuits.application;
 
-import com.agathevaisse.biscuits.domain.Mission;
-import com.agathevaisse.biscuits.domain.MissionRepository;
+import com.agathevaisse.biscuits.domain.mission.Mission;
+import com.agathevaisse.biscuits.domain.mission.MissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

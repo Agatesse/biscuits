@@ -1,6 +1,6 @@
 package com.agathevaisse.biscuits.presentation;
 
-import com.agathevaisse.biscuits.domain.Mission;
+import com.agathevaisse.biscuits.domain.mission.Mission;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

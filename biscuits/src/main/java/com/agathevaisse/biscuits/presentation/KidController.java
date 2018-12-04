@@ -1,8 +1,7 @@
 package com.agathevaisse.biscuits.presentation;
 
 import com.agathevaisse.biscuits.application.KidService;
-import com.agathevaisse.biscuits.domain.Kid;
-import com.agathevaisse.biscuits.domain.Mission;
+import com.agathevaisse.biscuits.domain.kid.Kid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

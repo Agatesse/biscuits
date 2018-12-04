@@ -1,5 +1,6 @@
 package com.agathevaisse.biscuits.domain;
 
+import com.agathevaisse.biscuits.domain.mission.Mission;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
