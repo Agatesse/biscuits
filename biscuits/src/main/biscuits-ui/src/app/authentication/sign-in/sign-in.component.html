@@ -1,0 +1,119 @@
+<!--
+<div class="modal signIn">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Sign In</p>
+    </header>
+    <section class="modal-card-body">
+
+      <form [formGroup]="signInForm" (ngSubmit)=onSubmit()>
+        <div class="field">
+          <label class="label has-text-info">Family Name</label>
+          <div class="control has-icons-left has-icons-right">
+            <input type="text" formControlName="familyName" class="input form-control" placeholder="e.g Doe Team"
+                   name="familyName"
+                   [ngClass]="{ 'is-invalid': submitted && f.familyName.errors }"/>
+            <span class="icon is-left">
+      <i class="fa fa-users"></i>
+    </span>
+            <span class="icon is-right">
+      <i class="fas fa-check"></i>
+    </span>
+          </div>
+          <div *ngIf="submitted && f.familyName.errors" class="invalid-feedback">
+            <p *ngIf="f.familyName.errors.required" class="help is-danger">Family Name is required</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label has-text-info">Password</label>
+          <div class="control has-icons-left has-icons-right">
+            <input type="password" formControlName="password" class="input from-control" name="password"
+                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+            <span class="icon is-left">
+      <i class="fas fa-unlock"></i>
+    </span>
+            <span class="icon is-right">
+      <i class="fas fa-check"></i>
+    </span>
+
+          </div>
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <p *ngIf="f.password.errors.required" class="help is-danger">Password is required</p>
+            <p *ngIf="f.password.errors.minlength" class="help is-danger">Password must be at least 6 characters</p>
+          </div>
+        </div>
+
+&lt;!&ndash;        <div class="field has-text-centered">
+          <button type="submit" class="button is-info is-medium">Sign In</button>
+          <p *ngIf="f.submitted && isSignInFailed" class="help is-danger">
+            Signin failed!<br/>{{errorMessage}}
+          </p>
+        </div>&ndash;&gt;
+      </form>
+
+      <p class="has-text-right has-text-primary is-size-7">Doesn't have an account? <a class="has-text-success is-size-7" (click)="goToSignUp()">Sign up!</a></p>
+
+
+    </section>
+    <footer class="modal-card-foot">
+      <button  type="submit" class="button is-success">Sign In</button>
+      <button class="button" (click)="signIn($event)">Cancel</button>
+      <p *ngIf="f.submitted && isSignInFailed" class="help is-danger">
+        Signin failed!<br/>{{errorMessage}}
+      </p>
+    </footer>
+  </div>
+</div>
+
+&lt;!&ndash;
+<h2 class="action is-2 has-text-centered has-text-info">Sign In</h2>
+<form [formGroup]="signInForm" (ngSubmit)=onSubmit()>
+  <div class="field">
+    <label class="label has-text-info">Family Name</label>
+    <div class="control has-icons-left has-icons-right">
+      <input type="text" formControlName="familyName" class="input form-control" placeholder="e.g Doe Team"
+             name="familyName"
+             [ngClass]="{ 'is-invalid': submitted && f.familyName.errors }"/>
+      <span class="icon is-left">
+      <i class="fa fa-users"></i>
+    </span>
+      <span class="icon is-right">
+      <i class="fas fa-check"></i>
+    </span>
+    </div>
+    <div *ngIf="submitted && f.familyName.errors" class="invalid-feedback">
+      <p *ngIf="f.familyName.errors.required" class="help is-danger">Family Name is required</p>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label has-text-info">Password</label>
+    <div class="control has-icons-left has-icons-right">
+      <input type="password" formControlName="password" class="input from-control" name="password"
+             [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+      <span class="icon is-left">
+      <i class="fas fa-unlock"></i>
+    </span>
+      <span class="icon is-right">
+      <i class="fas fa-check"></i>
+    </span>
+
+    </div>
+    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+      <p *ngIf="f.password.errors.required" class="help is-danger">Password is required</p>
+      <p *ngIf="f.password.errors.minlength" class="help is-danger">Password must be at least 6 characters</p>
+    </div>
+  </div>
+
+  <div class="field has-text-centered">
+    <button type="submit" class="button is-info is-medium">Sign In</button>
+    <p *ngIf="f.submitted && isSignInFailed" class="help is-danger">
+      Signin failed!<br/>{{errorMessage}}
+    </p>
+  </div>
+</form>
+
+<p class="has-text-right has-text-white is-size-7">Doesn't have an account? <a class="has-text-info is-size-7" (click)="goToSignUp()">Sign up!</a></p>
+

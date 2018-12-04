@@ -1,0 +1,12 @@
+<section class="hero is-link is-large">
+  <div class="hero-body">
+    <div class="container">
+      <div class="row columns is-multiline">
+        <div class="column is-one-third" *ngFor="let mission of missions | async">
+          <app-mission-details [mission]='mission'></app-mission-details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
