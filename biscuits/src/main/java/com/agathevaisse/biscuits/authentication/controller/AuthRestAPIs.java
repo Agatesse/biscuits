@@ -37,7 +37,7 @@ public class AuthRestAPIs {
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping("/signin")
+    @PostMapping("/sign-in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody SignInForm loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -51,7 +51,7 @@ public class AuthRestAPIs {
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),

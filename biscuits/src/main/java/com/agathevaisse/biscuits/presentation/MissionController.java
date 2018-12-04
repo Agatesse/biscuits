@@ -30,7 +30,7 @@ public class MissionController {
         return missionService.findMissionById(id);
     }
 
-    @GetMapping(value = "api/missions/{word}")
+    @GetMapping(value = "api/missions/search/{word}")
     public List<Mission> findMissionByWord(@PathVariable("word") String word) {
         return missionService.findMissionsByWord(word);
     }

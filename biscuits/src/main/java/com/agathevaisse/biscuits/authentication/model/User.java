@@ -15,36 +15,34 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {
-                "username"
-        }),
-        @UniqueConstraint(columnNames = {
-                "email"
-        })
-})
+@Table(name = "biscuits_user")
+
 public class User {
+    @Column(name = "user_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_username")
     @NotBlank
     @Size(min = 3, max = 50)
     private String username;
 
+    @Column(name = "user_email")
     @NaturalId
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
 
+    @Column(name = "user_password")
     @NotBlank
     @Size(min = 6, max = 100)
     private String password;
 
+    @Column(name = "user_role",length = 60)
     @Enumerated(EnumType.STRING)
     @NaturalId
-    @Column(length = 60)
     private RoleName role;
 
     public User() {

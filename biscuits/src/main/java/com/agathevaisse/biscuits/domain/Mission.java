@@ -1,9 +1,14 @@
 package com.agathevaisse.biscuits.domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 public class Mission {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String action;
     private String imageURL;
@@ -95,5 +100,11 @@ public class Mission {
             this.setDone(true);
         }
         return this.isDone();
+    }
+
+    public Mission initializeMission(Mission mission) {
+        mission.setimageURL("src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg");
+        mission.setDone(false);
+        return mission;
     }
 }

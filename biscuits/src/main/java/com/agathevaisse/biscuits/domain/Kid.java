@@ -13,7 +13,7 @@ public class Kid {
 
     public Kid(String nickname) {
         this.nickname = nickname;
-        this.imageURL = imageURL;
+        this.imageURL = "imageURL";
         this.biscuitsEarned = 0;
     }
 
@@ -73,5 +73,11 @@ public class Kid {
                 ", imageURL='" + imageURL + '\'' +
                 ", biscuitsEarned=" + biscuitsEarned +
                 '}';
+    }
+
+    public Kid initializeKid(Kid kid) {
+        kid.setImageURL("imageURL");
+        kid.setBiscuitsEarned(0);
+        return kid;
     }
 }

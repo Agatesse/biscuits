@@ -22,12 +22,12 @@ public class KidRepositoryImpl implements KidRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private final static String INSERT_SQL = "insert into biscuit_kid(kid_nickname, kid_image, kid_biscuits) values (?, ?, ?)";
-    private final static String SELECT_ALL_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuit_kid";
-    private final static String SELECT_BY_ID_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuit_kid where kid_id = ?";
-    private final static String DELETE_BY_ID_SQL = "delete from biscuit_kid where kid_id = ?";
-    private final static String DELETE_ALL_SQL = "delete from biscuit_kid";
-    private final static String UPDATE_BY_PUT_SQL = "update biscuit_kid set kid_nickname = ?, kid_biscuits = ?  where kid_id = ?";
+    private final static String INSERT_SQL = "insert into biscuits_kid(kid_nickname, kid_image, kid_biscuits) values (?, ?, ?)";
+    private final static String SELECT_ALL_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuits_kid";
+    private final static String SELECT_BY_ID_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuits_kid where kid_id = ?";
+    private final static String DELETE_BY_ID_SQL = "delete from biscuits_kid where kid_id = ?";
+    private final static String DELETE_ALL_SQL = "delete from biscuits_kid";
+    private final static String UPDATE_BY_PUT_SQL = "update biscuits_kid set kid_nickname = ?, kid_biscuits = ?  where kid_id = ?";
 
     @Override
     public List<Kid> getKids() {
@@ -36,6 +36,7 @@ public class KidRepositoryImpl implements KidRepository {
 
     @Override
     public void createKid(Kid kid) {
+        kid.initializeKid(kid);
         jdbcTemplate.update(INSERT_SQL, kid.getNickname(), kid.getImageURL(), kid.getBiscuitsEarned());
     }
 
@@ -47,7 +48,7 @@ public class KidRepositoryImpl implements KidRepository {
     @Override
     public List<Kid> findKidsByNickname(String nickname) {
         return getKids().stream()
-                .filter(kid -> kid.getNickname().contains(nickname))
+                .filter(kid -> kid.getNickname().toLowerCase().contains(nickname.trim().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
