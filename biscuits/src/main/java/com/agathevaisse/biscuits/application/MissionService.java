@@ -16,11 +16,12 @@ public class MissionService {
     MissionRepository missionRepository;
 
     public List<Mission> getMissions() {return missionRepository.loadAllMissions();}
-    public void createMission(Mission mission){missionRepository.createMission(mission);}
-    public Mission findMissionById(int id) {return missionRepository.findMissionById(id);}
+    public boolean createMission(Mission mission){return missionRepository.createMission(mission);}
+    public Mission findMissionById(Long id) {return missionRepository.findMissionById(id);}
     public List<Mission> findMissionsByWord(String word) {return missionRepository.searchMissionsWithOneWord(word);}
-    public void deleteMissionById(int id) {missionRepository.deleteMissionById(id);}
-    public void deleteAllMissions() {missionRepository.deleteAllMissions();}
-    public void updateMission(int id, Mission mission) {missionRepository.updateMission(id, mission);}
-    public void isMissionDone (int id) {missionRepository.isMissionDone(id);}
+    public boolean deleteMissionById(Long id) {return missionRepository.deleteMissionById(id);}
+    public boolean deleteAllMissions() {return missionRepository.deleteAllMissions();}
+    public Mission updateMission(Long id, Mission mission) {return missionRepository.updateMission(id, mission);}
+    public boolean completeMission(Long id) {return missionRepository.completeMission(id);}
+    public boolean cancelCompleteMission(Long id) {return missionRepository.cancelCompleteMission(id);}
 }

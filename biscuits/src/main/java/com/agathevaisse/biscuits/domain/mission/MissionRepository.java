@@ -7,11 +7,12 @@ import java.util.List;
 public interface MissionRepository {
 
         List<Mission> loadAllMissions();
-        void createMission(Mission mission);
-        Mission findMissionById(int id);
+        boolean createMission(Mission mission);
+        Mission findMissionById(Long id);
         List<Mission> searchMissionsWithOneWord(String word);
-        void deleteMissionById(int id);
-        void deleteAllMissions();
-        void updateMission(int id, Mission mission);
-        void isMissionDone(int id);
+        boolean deleteMissionById(Long id);
+        boolean deleteAllMissions();
+        Mission updateMission(Long id, Mission mission);
+        boolean completeMission(Long id);
+        boolean cancelCompleteMission(Long id);
 }

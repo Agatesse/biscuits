@@ -16,8 +16,8 @@ public class MissionController {
     MissionService missionService;
 
     @PostMapping(value = "api/missions/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createMission(@RequestBody Mission mission) {
-        missionService.createMission(mission);
+    public boolean createMission(@RequestBody Mission mission) {
+        return missionService.createMission(mission);
     }
 
     @GetMapping(value = "api/missions/all")
@@ -26,7 +26,7 @@ public class MissionController {
     }
 
     @GetMapping(value = "api/missions/{id}")
-    public Mission findMissionById(@PathVariable("id") int id) {
+    public Mission findMissionById(@PathVariable("id") Long id) {
         return missionService.findMissionById(id);
     }
 
@@ -36,23 +36,28 @@ public class MissionController {
     }
 
     @DeleteMapping(value = "api/missions/delete/{id}")
-    public void deleteMissionById(@PathVariable("id") int id) {
-        missionService.deleteMissionById(id);
+    public boolean deleteMissionById(@PathVariable("id") Long id) {
+        return missionService.deleteMissionById(id);
     }
 
     @DeleteMapping(value = "api/missions/delete")
-    public void deleteAllMissions() {
-        missionService.deleteAllMissions();
+    public boolean deleteAllMissions() {
+        return missionService.deleteAllMissions();
     }
 
     @PutMapping(value = "api/missions/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateMission(@PathVariable("id") int id, @RequestBody Mission mission) {
-        missionService.updateMission(id, mission);
+    public Mission updateMission(@PathVariable("id") Long id, @RequestBody Mission mission) {
+        return missionService.updateMission(id, mission);
     }
 
-    @PatchMapping(value = "api/missions/is-done/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void isMissionDone(@PathVariable("id") int id) {
-        missionService.isMissionDone(id);
+    @PatchMapping(value = "api/missions/complete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean completeMission(@PathVariable("id") Long id) {
+        return missionService.completeMission(id);
+    }
+
+    @PatchMapping(value = "api/missions/cancel-complete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean cancelCompleteMission(@PathVariable("id") Long id) {
+        return missionService.cancelCompleteMission(id);
     }
 
 }

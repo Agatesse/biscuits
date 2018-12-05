@@ -9,13 +9,13 @@ public interface KidRepository {
 
     void createKid(Kid kid);
 
-    Kid findKidById(int id);
+    Kid findKidById(Long id);
 
     List<Kid> findKidsByNickname(String nickname);
 
-    void deleteKidById(int id);
+    void deleteKidById(Long id);
 
     void deleteKids();
 
-    void updateKid(int id, Kid kid);
+    void updateKid(Long id, Kid kid);
 }

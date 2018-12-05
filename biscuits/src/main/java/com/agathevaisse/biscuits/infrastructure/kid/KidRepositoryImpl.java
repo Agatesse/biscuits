@@ -42,7 +42,7 @@ public class KidRepositoryImpl implements KidRepository {
     }
 
     @Override
-    public Kid findKidById(int id) {
+    public Kid findKidById(Long id) {
         return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new Object[]{id}, new KidMapper());
     }
 
@@ -54,7 +54,7 @@ public class KidRepositoryImpl implements KidRepository {
     }
 
     @Override
-    public void deleteKidById(int id) {
+    public void deleteKidById(Long id) {
         jdbcTemplate.update(DELETE_BY_ID_SQL, id);
     }
 
@@ -64,7 +64,7 @@ public class KidRepositoryImpl implements KidRepository {
     }
 
     @Override
-    public void updateKid(int id, Kid kid) {
+    public void updateKid(Long id, Kid kid) {
         jdbcTemplate.update(UPDATE_BY_PUT_SQL, kid.getNickname(), kid.getBiscuitsEarned(), kid.getId());
     }
 }

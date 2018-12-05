@@ -22,7 +22,7 @@ public class KidService {
         kidRepository.createKid(kid);
     }
 
-    public Kid findKidById(int id) {
+    public Kid findKidById(Long id) {
         return kidRepository.findKidById(id);
     }
 
@@ -30,7 +30,7 @@ public class KidService {
         return kidRepository.findKidsByNickname(nickname);
     }
 
-    public void deleteKidById(int id) {
+    public void deleteKidById(Long id) {
         kidRepository.deleteKidById(id);
     }
 
@@ -38,7 +38,7 @@ public class KidService {
         kidRepository.deleteKids();
     }
 
-    public void updateKid(int id, Kid kid) {
+    public void updateKid(Long id, Kid kid) {
         kidRepository.updateKid(id, kid);
     }
 }

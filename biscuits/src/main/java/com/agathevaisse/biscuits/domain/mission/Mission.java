@@ -1,5 +1,7 @@
 package com.agathevaisse.biscuits.domain.mission;
 
+import com.agathevaisse.biscuits.domain.kid.Kid;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,27 +11,29 @@ public class Mission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String action;
     private String imageURL;
     private boolean isDone;
     private int biscuitsToEarn;
+    private Kid kid;
 
     public Mission() {
     }
 
-    public Mission(String action, int biscuitsToEarn) {
+    public Mission(String action, int biscuitsToEarn, Kid kid) {
         this.action = action;
         this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg";
         this.isDone = false;
         this.biscuitsToEarn = biscuitsToEarn;
+        this.kid = kid;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,7 +49,7 @@ public class Mission {
         return imageURL;
     }
 
-    public void setimageURL(String imageURL) {
+    public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
 
@@ -65,21 +69,30 @@ public class Mission {
         this.biscuitsToEarn = biscuitsToEarn;
     }
 
+    public Kid getKid() {
+        return kid;
+    }
+
+    public void setKid(Kid kid) {
+        this.kid = kid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Mission)) return false;
         Mission mission = (Mission) o;
-        return getId() == mission.getId() &&
-                isDone() == mission.isDone() &&
+        return isDone() == mission.isDone() &&
                 getBiscuitsToEarn() == mission.getBiscuitsToEarn() &&
+                Objects.equals(getId(), mission.getId()) &&
                 Objects.equals(getAction(), mission.getAction()) &&
-                Objects.equals(getImageURL(), mission.getImageURL());
+                Objects.equals(getImageURL(), mission.getImageURL()) &&
+                Objects.equals(getKid(), mission.getKid());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getAction(), getImageURL(), isDone(), getBiscuitsToEarn());
+        return Objects.hash(getId(), getAction(), getImageURL(), isDone(), getBiscuitsToEarn(), getKid());
     }
 
     @Override
@@ -87,13 +100,14 @@ public class Mission {
         return "Mission{" +
                 "id=" + id +
                 ", action='" + action + '\'' +
-                ", image='" + imageURL + '\'' +
+                ", imageURL='" + imageURL + '\'' +
                 ", isDone=" + isDone +
                 ", biscuitsToEarn=" + biscuitsToEarn +
+                ", kid=" + kid +
                 '}';
     }
 
-   public boolean switchDone() {
+    public boolean switchDone() {
         if (this.isDone()) {
             this.setDone(false);
         } else {
@@ -103,7 +117,7 @@ public class Mission {
     }
 
     public Mission initializeMission(Mission mission) {
-        mission.setimageURL("src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg");
+        mission.setImageURL("src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg");
         mission.setDone(false);
         return mission;
     }
