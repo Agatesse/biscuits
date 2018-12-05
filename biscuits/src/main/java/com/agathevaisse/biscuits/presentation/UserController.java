@@ -1,15 +1,16 @@
 package com.agathevaisse.biscuits.presentation;
 
+import com.agathevaisse.biscuits.application.UserService;
 import com.agathevaisse.biscuits.domain.authentication.messages.request.SignInForm;
 import com.agathevaisse.biscuits.domain.authentication.messages.request.SignUpForm;
 import com.agathevaisse.biscuits.domain.authentication.messages.response.JwtResponse;
 import com.agathevaisse.biscuits.domain.authentication.messages.response.ResponseMessage;
 import com.agathevaisse.biscuits.domain.authentication.user.RoleName;
 import com.agathevaisse.biscuits.domain.authentication.user.User;
-import com.agathevaisse.biscuits.domain.authentication.user.UserRepository;
 import com.agathevaisse.biscuits.security.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,17 +20,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
-public class AuthenticationController {
+@RequestMapping("/api")
+public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -37,7 +39,7 @@ public class AuthenticationController {
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping("/sign-in")
+    @PostMapping("/auth/sign-in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody SignInForm loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -51,19 +53,18 @@ public class AuthenticationController {
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/auth/sign-up")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userService.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userService.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        // Creating user's account
         User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
@@ -79,8 +80,23 @@ public class AuthenticationController {
             }
 
         user.setRole(role);
-        userRepository.save(user);
+        userService.createUser(user);
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/account/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+        userService.updateUser(id, user);
+    }
+
+    @DeleteMapping(value = "/account/delete/{id}")
+    public void deleteUser(@PathVariable("id") int id) {
+        userService.deleteUser(id);
+    }
+
+    @GetMapping(value = ("/account/{username}"))
+    public Optional<User> findUserByUsername(@PathVariable("username") String username) {
+        return userService.findUserByUsername(username);
     }
 }
