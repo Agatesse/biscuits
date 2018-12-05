@@ -45,7 +45,7 @@ public class MissionController {
         missionService.deleteAllMissions();
     }
 
-    @PatchMapping(value = "api/missions/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "api/missions/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateMission(@PathVariable("id") int id, @RequestBody Mission mission) {
         missionService.updateMission(id, mission);
     }
