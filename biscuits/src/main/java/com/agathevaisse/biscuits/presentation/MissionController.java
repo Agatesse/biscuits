@@ -22,7 +22,6 @@ public class MissionController {
 
     @PostMapping(value = "api/missions/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean createMission(@RequestBody final Mission mission) {
-        logger.info(mission.toString());
         return missionService.createMission(mission);
     }
 
