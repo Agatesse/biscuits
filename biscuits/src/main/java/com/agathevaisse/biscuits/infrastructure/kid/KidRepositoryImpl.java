@@ -28,7 +28,7 @@ public class KidRepositoryImpl implements KidRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(MissionRepositoryImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(KidRepositoryImpl.class);
 
     private final static String INSERT_SQL = "insert into biscuits_kid(kid_nickname, kid_image, kid_biscuits) values (?, ?, ?)";
     private final static String SELECT_ALL_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuits_kid";

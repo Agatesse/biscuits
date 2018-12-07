@@ -86,13 +86,13 @@ public class UserController {
     }
 
     @PutMapping(value = "/account/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateUser(@PathVariable("id") Long id, @RequestBody User user) {
-        userService.updateUser(id, user);
+    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping(value = "/account/delete/{id}")
-    public void deleteUser(@PathVariable("id") int id) {
-        userService.deleteUser(id);
+    public boolean deleteUser(@PathVariable("id") int id) {
+        return userService.deleteUser(id);
     }
 
     @GetMapping(value = ("/account/{username}"))

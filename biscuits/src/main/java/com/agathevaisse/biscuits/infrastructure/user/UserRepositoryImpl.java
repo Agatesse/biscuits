@@ -2,7 +2,10 @@ package com.agathevaisse.biscuits.infrastructure.user;
 
 import com.agathevaisse.biscuits.domain.authentication.user.User;
 import com.agathevaisse.biscuits.domain.authentication.user.UserRepository;
+import com.agathevaisse.biscuits.infrastructure.mission.MissionRepositoryImpl;
 import com.agathevaisse.biscuits.infrastructure.user.UserMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -24,12 +27,14 @@ public class UserRepositoryImpl implements UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryImpl.class);
+
     private final static String INSERT_SQL = "insert into biscuits_user(user_username, user_email, user_password, user_role) values (?, ?, ?, ?)";
-    private final String SELECT_ALL_SQL = "select user_id, user_username, user_email, user_password, user_role from biscuits_user";
-    private final String SELECT_BY_ID_SQL = "select user_id, user_username, user_email, user_password, user_role from biscuits_user where user_id = ?";
-    private final String DELETE_BY_ID_SQL = "delete from biscuits_user where user_id = ?";
-    private final String DELETE_ALL_SQL = "delete from biscuits_user";
-    private final String UPDATE_BY_PUT_SQL = "update biscuits_user set user_username = ?, user_email = ?, user_password = ?  where user_id = ?";
+    private final static String SELECT_ALL_SQL = "select user_id, user_username, user_email, user_password, user_role from biscuits_user";
+    private final static String SELECT_BY_ID_SQL = "select user_id, user_username, user_email, user_password, user_role from biscuits_user where user_id = ?";
+    private final static String DELETE_BY_ID_SQL = "delete from biscuits_user where user_id = ?";
+    private final static String DELETE_ALL_SQL = "delete from biscuits_user";
+    private final static String UPDATE_BY_PUT_SQL = "update biscuits_user set user_username = ?, user_email = ?, user_password = ?  where user_id = ?";
 
     @Override
     public void createUser(User user) {
@@ -43,27 +48,38 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User updateUser(Long id, User user) {
-        final Optional<User> optUser = findUserById(id);
-        if (!optUser.isPresent()) {
+        try {
+            final Optional<User> optUser = findUserById(id);
+            if (!optUser.isPresent()) {
+                return null;
+            }
+            User oldUser = optUser.get();
+            if (user.getUsername() == null) {
+                user.setUsername(oldUser.getUsername());
+            }
+            if (user.getEmail() == null) {
+                user.setEmail(oldUser.getEmail());
+            }
+            if (user.getPassword() == null) {
+                user.setPassword(oldUser.getPassword());
+            }
+            jdbcTemplate.update(UPDATE_BY_PUT_SQL, user.getUsername(), user.getEmail(), user.getPassword(), id);
+            return user;
+        } catch (Exception e) {
+            logger.error("Update! -> Message: {} ", e);
             return null;
         }
-        User oldUser = optUser.get();
-        if (user.getUsername() == null) {
-            user.setUsername(oldUser.getUsername());
-        }
-        if (user.getEmail() == null) {
-            user.setEmail(oldUser.getEmail());
-        }
-        if (user.getPassword() == null) {
-            user.setPassword(oldUser.getPassword());
-        }
-        jdbcTemplate.update(UPDATE_BY_PUT_SQL, user.getUsername(), user.getEmail(), user.getPassword(), id);
-        return user;
     }
 
     @Override
-    public void deleteUser(int id) {
-        jdbcTemplate.update(DELETE_BY_ID_SQL, id);
+    public boolean deleteUser(int id) {
+        try {
+            jdbcTemplate.update(DELETE_BY_ID_SQL, id);
+            return true;
+        } catch (Exception e) {
+            logger.error("Update user failed! -> Message: {} ", e);
+            return false;
+        }
     }
 
     @Override
