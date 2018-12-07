@@ -3,7 +3,7 @@ package com.agathevaisse.biscuits.domain.kid;
 import java.util.Objects;
 
 public class Kid {
-    private int id;
+    private Long id;
     private String nickname;
     private String imageURL;
     private int biscuitsEarned;
@@ -17,11 +17,11 @@ public class Kid {
         this.biscuitsEarned = 0;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -37,8 +37,8 @@ public class Kid {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageURL() {
+        this.imageURL = "imageURL";
     }
 
     public int getBiscuitsEarned() {
@@ -54,8 +54,8 @@ public class Kid {
         if (this == o) return true;
         if (!(o instanceof Kid)) return false;
         Kid kid = (Kid) o;
-        return getId() == kid.getId() &&
-                getBiscuitsEarned() == kid.getBiscuitsEarned() &&
+        return getBiscuitsEarned() == kid.getBiscuitsEarned() &&
+                Objects.equals(getId(), kid.getId()) &&
                 Objects.equals(getNickname(), kid.getNickname()) &&
                 Objects.equals(getImageURL(), kid.getImageURL());
     }
@@ -73,11 +73,5 @@ public class Kid {
                 ", imageURL='" + imageURL + '\'' +
                 ", biscuitsEarned=" + biscuitsEarned +
                 '}';
-    }
-
-    public Kid initializeKid(Kid kid) {
-        kid.setImageURL("imageURL");
-        kid.setBiscuitsEarned(0);
-        return kid;
     }
 }

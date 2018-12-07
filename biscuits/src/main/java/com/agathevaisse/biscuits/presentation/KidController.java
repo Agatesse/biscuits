@@ -16,8 +16,8 @@ public class KidController {
     KidService kidService;
 
     @PostMapping(value = "api/kids/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createKid(@RequestBody Kid kid) {
-        kidService.createKid(kid);
+    public boolean createKid(@RequestBody Kid kid) {
+        return kidService.createKid(kid);
     }
 
     @GetMapping(value = "api/kids/all")
@@ -26,7 +26,7 @@ public class KidController {
     }
 
     @GetMapping(value = "api/kids/{id}")
-    public Kid findKidById(@PathVariable("id") int id) {
+    public Kid findKidById(@PathVariable("id") Long id) {
         return kidService.findKidById(id);
     }
 
@@ -36,17 +36,17 @@ public class KidController {
     }
 
     @DeleteMapping(value = "api/kids/delete/{id}")
-    public void deleteKidById(@PathVariable("id") int id) {
-        kidService.deleteKidById(id);
+    public boolean deleteKidById(@PathVariable("id") Long id) {
+        return kidService.deleteKidById(id);
     }
 
     @DeleteMapping(value = "api/kids/delete")
-    public void deleteKids() {
-        kidService.deleteKids();
+    public boolean deleteKids() {
+        return kidService.deleteKids();
     }
 
-    @PatchMapping(value = "api/kids/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateKid(@PathVariable("id") int id, @RequestBody Kid kid) {
-        kidService.updateKid(id, kid);
+    @PutMapping(value = "api/kids/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Kid updateKid(@PathVariable("id") Long id, @RequestBody Kid kid) {
+        return kidService.updateKid(id, kid);
     }
 }

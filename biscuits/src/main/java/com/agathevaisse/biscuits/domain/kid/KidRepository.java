@@ -1,21 +1,19 @@
 package com.agathevaisse.biscuits.domain.kid;
 
-import com.agathevaisse.biscuits.domain.kid.Kid;
-
 import java.util.List;
 
 public interface KidRepository {
     List<Kid> getKids();
 
-    void createKid(Kid kid);
+    boolean createKid(Kid kid);
 
-    Kid findKidById(int id);
+    Kid findKidById(Long id);
 
     List<Kid> findKidsByNickname(String nickname);
 
-    void deleteKidById(int id);
+    boolean deleteKidById(Long id);
 
-    void deleteKids();
+    boolean deleteKids();
 
-    void updateKid(int id, Kid kid);
+    Kid updateKid(Long id, Kid kid);
 }

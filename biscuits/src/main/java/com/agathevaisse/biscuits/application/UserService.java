@@ -25,8 +25,8 @@ public class UserService {
         return userRepository.updateUser(id, user);
     }
 
-    public void deleteUser(int id) {
-        userRepository.deleteUser(id);
+    public boolean deleteUser(int id) {
+        return userRepository.deleteUser(id);
     }
 
     public Optional<User> findUserByUsername(String username) { return userRepository.findUserByUsername(username);}
