@@ -27,6 +27,8 @@ public class KidService {
         return kidRepository.findKidById(id);
     }
 
+    public List<Kid> findKidsByUser(Long id) { return kidRepository.findKidsByUser(id); }
+
     public List<Kid> findKidsByNickname(String nickname) {
         return kidRepository.findKidsByNickname(nickname);
     }

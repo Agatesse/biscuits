@@ -1,5 +1,7 @@
 package com.agathevaisse.biscuits.domain.kid;
 
+import com.agathevaisse.biscuits.domain.authentication.user.User;
+
 import java.util.Objects;
 
 public class Kid {
@@ -7,14 +9,16 @@ public class Kid {
     private String nickname;
     private String imageURL;
     private int biscuitsEarned;
+    private User user;
 
     public Kid() {
     }
 
-    public Kid(String nickname) {
+    public Kid(String nickname, User user) {
         this.nickname = nickname;
         this.imageURL = "imageURL";
         this.biscuitsEarned = 0;
+        this.user = user;
     }
 
     public Long getId() {
@@ -47,6 +51,18 @@ public class Kid {
 
     public void setBiscuitsEarned(int biscuitsEarned) {
         this.biscuitsEarned = biscuitsEarned;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

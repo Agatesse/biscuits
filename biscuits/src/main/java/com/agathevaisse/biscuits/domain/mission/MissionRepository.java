@@ -8,6 +8,7 @@ public interface MissionRepository {
         boolean createMission(Mission mission);
         Mission findMissionById(Long id);
         List<Mission> findMissionsByWord(String word);
+        List<Mission> findMissionsByKid(Long id);
         boolean deleteMissionById(Long id);
         boolean deleteMissions();
         Mission updateMission(Long id, Mission mission);

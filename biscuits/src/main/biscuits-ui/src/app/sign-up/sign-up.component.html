@@ -1,0 +1,99 @@
+<section class="hero is-info is-fullheight-with-navbar">
+  <div class="hero-body">
+    <div class="container">
+      <div class="column is-4 is-offset-4">
+        <h3 class="title has-text-dark">
+          Sign Up
+        </h3>
+
+        <form [formGroup]="signUpForm" (ngSubmit)=onSubmit()>
+          <div class="field">
+            <label class="label has-text-warning">Username</label>
+            <div class="control has-icons-left has-icons-right">
+              <input type="text" formControlName="username" class="input form-control" placeholder="Your username" name="username"
+                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+              <span class="icon is-left">
+                <fa-icon [icon]="faUserSecret"></fa-icon>
+              </span>
+              <span class="icon is-right">
+                <fa-icon [icon]="faCheck"></fa-icon>
+              </span>
+            </div>
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <p *ngIf="f.username.errors.required" class="help is-danger has-text-weight-bold">Username is required</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label has-text-warning">Email</label>
+            <div class="control has-icons-left has-icons-right">
+              <input type="email" formControlName="email" class="input form-control" placeholder="Your email" name="email"
+                     [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+              <span class="icon is-left">
+                <fa-icon [icon]="faEnvelope"></fa-icon>
+              </span>
+              <span class="icon is-right">
+                <fa-icon [icon]="faCheck"></fa-icon>
+              </span>
+            </div>
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <p *ngIf="f.email.errors.required" class="help is-danger has-text-weight-bold">Email is required</p>
+              <p *ngIf="f.email.errors.email" class="help is-danger has-text-weight-bold">Email must be a valid email address</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label has-text-warning">Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input type="password" formControlName="password" class="input from-control" placeholder="Your password" name="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+              <span class="icon is-left">
+                <fa-icon [icon]="faUnlock"></fa-icon>
+              </span>
+              <span class="icon is-right">
+                <fa-icon [icon]="faCheck"></fa-icon>
+              </span>
+
+            </div>
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <p *ngIf="f.password.errors.required" class="help is-danger has-text-weight-bold">Password is required</p>
+              <p *ngIf="f.password.errors.minlength" class="help is-danger has-text-weight-bold">Password must be at least 6 characters</p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label has-text-warning">Confirm Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input type="password" formControlName="confirmPassword" class="input from-control" placeholder="Confirm your password" name="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"/>
+              <span class="icon is-left">
+                <fa-icon [icon]="faUnlock"></fa-icon>
+              </span>
+              <span class="icon is-right">
+                <fa-icon [icon]="faCheck"></fa-icon>
+              </span>
+            </div>
+            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+              <p *ngIf="f.confirmPassword.errors.required" class="help is-danger has-text-weight-bold">Password must be confirmed</p>
+              <p *ngIf="f.confirmPassword.errors.minlength" class="help is-danger has-text-weight-bold">Password must be at least 6 characters</p>
+            </div>
+          </div>
+          <div class="field is-grouped has-text-centered">
+            <div class="control">
+              <button type="submit" class="button is-primary is-medium">Sign Up</button>
+            </div>
+            <p *ngIf="f.submitted && isSignUpFailed" class="help is-danger has-text-weight-bold">
+              Signup failed!<br/>{{errorMessage}}
+            </p>
+            <button type="reset" class="button is-text has-text-grey-light" (click)="cancelSignUp()">Cancel</button>
+          </div>
+        </form>
+
+        <p class="has-text-right has-text-white is-size-7">Already have an account? <a class="has-text-warning is-size-6" (click)="goToSignIn()">Sign in!</a></p>
+
+      </div>
+    </div>
+  </div>
+  <div *ngIf="notificationIsActive" class="notification is-success">
+    <button class="delete"></button>
+    Sign-up is ok!
+  </div>
+
+</section>

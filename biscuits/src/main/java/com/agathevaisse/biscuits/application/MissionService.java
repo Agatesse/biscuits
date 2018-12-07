@@ -19,6 +19,7 @@ public class MissionService {
     public boolean createMission(Mission mission){return missionRepository.createMission(mission);}
     public Mission findMissionById(Long id) {return missionRepository.findMissionById(id);}
     public List<Mission> findMissionsByWord(String word) {return missionRepository.findMissionsByWord(word);}
+    public List<Mission> findMissionsByKid(Long id) { return missionRepository.findMissionsByKid(id);}
     public boolean deleteMissionById(Long id) {return missionRepository.deleteMissionById(id);}
     public boolean deleteMissions() {return missionRepository.deleteMissions();}
     public Mission updateMission(Long id, Mission mission) {return missionRepository.updateMission(id, mission);}

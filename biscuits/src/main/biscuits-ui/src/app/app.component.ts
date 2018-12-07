@@ -1,5 +1,4 @@
-import {Component} from '@angular/core';
-import {TokenStorageService} from "./authentication/auth/services/token-storage.service";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,23 +6,5 @@ import {TokenStorageService} from "./authentication/auth/services/token-storage.
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private roles: string[];
-  private authority: string;
-
-  constructor(private tokenStorage: TokenStorageService) {
-  }
-
-  ngOnInit() {
-    if (this.tokenStorage.getToken()) {
-      this.roles = this.tokenStorage.getAuthorities();
-      this.roles.every(role => {
-        if (role === 'ROLE_ADMIN') {
-          this.authority = 'admin';
-          return false;
-        }
-        this.authority = 'user';
-        return true;
-      });
-    }
-  }
+  title = 'biscuits-ui';
 }

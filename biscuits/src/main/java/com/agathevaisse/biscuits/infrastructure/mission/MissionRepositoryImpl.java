@@ -51,7 +51,6 @@ public class MissionRepositoryImpl implements MissionRepository {
 
     @Override
     public boolean createMission(Mission mission) {
-        logger.info(mission.toString());
         try {
             mission.setImageURL();
             mission.setDone(false);
@@ -81,6 +80,18 @@ public class MissionRepositoryImpl implements MissionRepository {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             logger.error("No mission found with this word! -> Message {}", e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Mission> findMissionsByKid(Long id) {
+        try {
+            return getMissions().stream()
+                    .filter(mission -> mission.getKid().getId().equals(id))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("No mission found for this kid! -> Message {}", e);
             return null;
         }
     }

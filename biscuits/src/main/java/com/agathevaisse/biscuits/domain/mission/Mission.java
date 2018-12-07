@@ -1,10 +1,6 @@
 package com.agathevaisse.biscuits.domain.mission;
 
 import com.agathevaisse.biscuits.domain.kid.Kid;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Objects;
 
 public class Mission {

@@ -12,7 +12,8 @@ create table biscuits_kid (
   kid_id serial primary key,
   kid_nickname character varying not null,
   kid_image character varying not null,
-  kid_biscuits integer not null
+  kid_biscuits integer not null,
+  kid_user_id bigint not null references biscuits_user (user_id) on delete cascade
 );
 
 create table biscuits_mission (
@@ -21,5 +22,5 @@ create table biscuits_mission (
   mission_image character varying not null,
   mission_done boolean not null,
   mission_biscuits integer not null,
-  mission_kid_id bigint not null references biscuits_kid (kid_id)
+  mission_kid_id bigint not null references biscuits_kid (kid_id) on delete cascade
 );

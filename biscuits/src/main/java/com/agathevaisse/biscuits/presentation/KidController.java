@@ -30,7 +30,12 @@ public class KidController {
         return kidService.findKidById(id);
     }
 
-    @GetMapping(value = "api/kids/search/{nickname}")
+    @GetMapping(value = "api/kids/find-kids-by-user/{id}")
+    public List<Kid> findKidsByUser(@PathVariable("id") Long id) {
+        return kidService.findKidsByUser(id);
+    }
+
+    @GetMapping(value = "api/kids/find-kids-by-nickname/{nickname}")
     public List<Kid> findKidsByNickname(@PathVariable("nickname") String nickname) {
         return kidService.findKidsByNickname(nickname);
     }
@@ -40,7 +45,7 @@ public class KidController {
         return kidService.deleteKidById(id);
     }
 
-    @DeleteMapping(value = "api/kids/delete")
+    @DeleteMapping(value = "api/kids/delete/all")
     public boolean deleteKids() {
         return kidService.deleteKids();
     }

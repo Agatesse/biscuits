@@ -1,0 +1,27 @@
+<section class="hero is-link is-fullheight-with-navbar">
+<div class="hero-body">
+  <div *ngIf="notificationIsActive" (activateSuccessNotification)="activateSuccessNotification($event)" class="notification is-success">
+    <button class="delete"></button>
+    Welcome !
+  </div>
+  <div class="container">
+    <p class="title">
+      Fun to-do list for clever kids!
+    </p>
+
+    <div *ngIf="info.token; else loggedOut">
+      <h5 class="text-primary">Your Information</h5>
+      <p>
+        <strong>Username:</strong> {{info.username}}<br/>
+        <strong>Roles:</strong> {{info.authorities}}<br/>
+        <strong>Token:</strong> {{info.token}}.
+      </p>
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+    </div>
+
+    <ng-template #loggedOut>
+      Join the game.
+    </ng-template>
+  </div>
+</div>
+</section>
