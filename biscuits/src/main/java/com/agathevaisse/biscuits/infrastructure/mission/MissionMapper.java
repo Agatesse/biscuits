@@ -12,13 +12,13 @@ public class MissionMapper implements RowMapper<Mission> {
         Mission mission = new Mission();
         mission.setId(rs.getLong("mission_id"));
         mission.setAction(rs.getString("mission_action"));
-        mission.setImageURL(rs.getString("mission_image"));
+        mission.setImageURL();
         mission.setDone(rs.getBoolean("mission_done"));
         mission.setBiscuitsToEarn(rs.getInt("mission_biscuits"));
         Kid kid = new Kid();
         kid.setId(rs.getLong("mission_kid_id"));
         kid.setNickname(rs.getString("kid_nickname"));
-        kid.setImageURL(rs.getString("kid_image"));
+        kid.setImageURL();
         kid.setBiscuitsEarned(rs.getInt("kid_biscuits"));
         mission.setKid(kid);
         return mission;

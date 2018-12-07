@@ -10,7 +10,7 @@ public class KidMapper implements RowMapper<Kid> {
         Kid kid = new Kid();
         kid.setId(rs.getLong("kid_id"));
         kid.setNickname(rs.getString("kid_nickname"));
-        kid.setImageURL(rs.getString("kid_image"));
+        kid.setImageURL();
         kid.setBiscuitsEarned(rs.getInt("kid_biscuits"));
         return kid;
     }

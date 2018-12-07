@@ -9,8 +9,6 @@ import java.util.Objects;
 
 public class Mission {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String action;
     private String imageURL;
@@ -49,8 +47,8 @@ public class Mission {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageURL() {
+        this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg";
     }
 
     public boolean isDone() {
@@ -105,20 +103,5 @@ public class Mission {
                 ", biscuitsToEarn=" + biscuitsToEarn +
                 ", kid=" + kid +
                 '}';
-    }
-
-    public boolean switchDone() {
-        if (this.isDone()) {
-            this.setDone(false);
-        } else {
-            this.setDone(true);
-        }
-        return this.isDone();
-    }
-
-    public Mission initializeMission(Mission mission) {
-        mission.setImageURL("src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg");
-        mission.setDone(false);
-        return mission;
     }
 }

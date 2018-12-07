@@ -36,23 +36,25 @@ public class MissionRepositoryImpl implements MissionRepository {
     private static final Logger logger = LoggerFactory.getLogger(MissionRepositoryImpl.class);
 
     private final static String INSERT_SQL = "insert into biscuits_mission(mission_action, mission_image, mission_done, mission_biscuits, mission_kid_id) values (?, ?, ?, ?, ?)";
-    private final String SELECT_ALL_SQL = "select * from biscuits_mission inner join biscuits_kid on biscuits_mission.mission_kid_id = biscuits_kid.kid_id";
-    private final String SELECT_BY_ID_SQL = "select mission_id, mission_action, mission_image, mission_done, mission_biscuits, mission_kid_id from biscuits_mission where mission_id = ?";
-    private final String DELETE_BY_ID_SQL = "delete from biscuits_mission where mission_id = ?";
-    private final String DELETE_ALL_SQL = "delete from biscuits_mission";
-    private final String UPDATE_MISSION_BY_PUT_SQL = "UPDATE public.biscuits_mission SET mission_action=?, mission_image=?, mission_done=?, mission_biscuits=?, mission_kid_id=? WHERE mission_id=?";
-    private final String UPDATE_ISDONE_BY_PATCH_SQL = "update biscuits_mission set mission_done = ? where mission_id = ?";
+    private final static String SELECT_ALL_SQL = "select * from biscuits_mission inner join biscuits_kid on biscuits_mission.mission_kid_id = biscuits_kid.kid_id";
+    private final static String SELECT_BY_ID_SQL = "select * from biscuits_mission inner join biscuits_kid on biscuits_mission.mission_kid_id = biscuits_kid.kid_id where mission_id = ?";
+    private final static String DELETE_BY_ID_SQL = "delete from biscuits_mission where mission_id = ?";
+    private final static String DELETE_ALL_SQL = "delete from biscuits_mission";
+    private final static String UPDATE_MISSION_BY_PUT_SQL = "UPDATE public.biscuits_mission SET mission_action=?, mission_image=?, mission_done=?, mission_biscuits=?, mission_kid_id=? WHERE mission_id=?";
+    private final static String UPDATE_ISDONE_BY_PATCH_SQL = "update biscuits_mission set mission_done = ? where mission_id = ?";
 
 
     @Override
-    public List<Mission> loadAllMissions() {
+    public List<Mission> getMissions() {
         return jdbcTemplate.query(SELECT_ALL_SQL, new MissionMapper());
     }
 
     @Override
     public boolean createMission(Mission mission) {
+        logger.info(mission.toString());
         try {
-            mission.initializeMission(mission);
+            mission.setImageURL();
+            mission.setDone(false);
             jdbcTemplate.update(INSERT_SQL, mission.getAction(), mission.getImageURL(), mission.isDone(), mission.getBiscuitsToEarn(), mission.getKid().getId());
             return true;
         } catch (Exception e) {
@@ -63,14 +65,24 @@ public class MissionRepositoryImpl implements MissionRepository {
 
     @Override
     public Mission findMissionById(Long id) {
-        return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new Object[]{id}, new MissionMapper());
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new Object[]{id}, new MissionMapper());
+        } catch (Exception e) {
+            logger.error("No mission found with this id! -> Message {}", e);
+            return null;
+        }
     }
 
     @Override
-    public List<Mission> searchMissionsWithOneWord(String word) {
-        return loadAllMissions().stream()
-                .filter(mission -> mission.getAction().trim().toLowerCase().contains(word.trim().toLowerCase()))
-                .collect(Collectors.toList());
+    public List<Mission> findMissionsByWord(String word) {
+        try {
+            return getMissions().stream()
+                    .filter(mission -> mission.getAction().trim().toLowerCase().contains(word.trim().toLowerCase()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("No mission found with this word! -> Message {}", e);
+            return null;
+        }
     }
 
     @Override
@@ -85,12 +97,12 @@ public class MissionRepositoryImpl implements MissionRepository {
     }
 
     @Override
-    public boolean deleteAllMissions() {
+    public boolean deleteMissions() {
         try {
             jdbcTemplate.update(DELETE_ALL_SQL);
             return true;
         } catch (Exception e) {
-            logger.error("Delete Mission Failed! -> Message: {} ", e);
+            logger.error("Delete missions Failed! -> Message: {} ", e);
             return false;
         }
 
@@ -98,23 +110,30 @@ public class MissionRepositoryImpl implements MissionRepository {
 
     @Override
     public Mission updateMission(Long id, Mission mission) {
-        mission.setId(id);
-        logger.info(mission.toString());
-        final Optional<Mission> optMission = Optional.ofNullable(findMissionById(id));
-        if(!optMission.isPresent()) {
+        try {
+            mission.setId(id);
+            final Optional<Mission> optMission = Optional.ofNullable(findMissionById(id));
+            if (!optMission.isPresent()) {
+                return null;
+            }
+            Mission oldMission = optMission.get();
+            if (null == mission.getAction()) {
+                mission.setAction(oldMission.getAction());
+            }
+            if (mission.getImageURL() == null) {
+                mission.setImageURL();
+            }
+            if (0 == mission.getBiscuitsToEarn()) {
+                mission.setBiscuitsToEarn(oldMission.getBiscuitsToEarn());
+            }
+            mission.setDone(oldMission.isDone());
+            mission.setKid(oldMission.getKid());
+            jdbcTemplate.update(UPDATE_MISSION_BY_PUT_SQL, mission.getAction(), mission.getImageURL(), mission.isDone(), mission.getBiscuitsToEarn(), mission.getKid().getId(), mission.getId());
+            return findMissionById(id);
+        } catch (Exception e) {
+            logger.error("Update mission Failed! -> Message: {} ", e);
             return null;
         }
-        Mission oldMission = optMission.get();
-        if (null == mission.getAction()) {
-            mission.setAction(oldMission.getAction());
-        }
-        if (0 == mission.getBiscuitsToEarn()) {
-            mission.setBiscuitsToEarn(oldMission.getBiscuitsToEarn());
-        }
-        mission.initializeMission(mission);
-        mission.setKid(oldMission.getKid());
-       jdbcTemplate.update(UPDATE_MISSION_BY_PUT_SQL, mission.getAction(), mission.getImageURL(), mission.isDone(), mission.getBiscuitsToEarn(), mission.getKid().getId(), mission.getId());
-       return findMissionById(id);
     }
 
    @Override
@@ -137,6 +156,7 @@ public class MissionRepositoryImpl implements MissionRepository {
             Mission mission = findMissionById(id);
             mission.setDone(false);
             jdbcTemplate.update(UPDATE_ISDONE_BY_PATCH_SQL, mission.isDone(),mission.getId());
+            removeBiscuits(mission.getKid().getId(), mission.getBiscuitsToEarn());
             return true;
         } catch (Exception e) {
             logger.error("Cancel Complete Mission failed! -> Message: {} ", e);
@@ -144,13 +164,32 @@ public class MissionRepositoryImpl implements MissionRepository {
         }
     }
 
-    public int addBiscuits(int biscuitsToEarn, Long kidId) {
-        Kid kid = kidService.findKidById(kidId);
-        int biscuitsFromKid = kid.getBiscuitsEarned();
-        int result = biscuitsFromKid + biscuitsToEarn;
-        kid.setBiscuitsEarned(result);
-        kidService.updateKid(kid.getId(), kid);
-        return result;
+    private boolean addBiscuits(int biscuitsToEarn, Long kidId) {
+        try {
+            Kid kid = kidService.findKidById(kidId);
+            int biscuitsFromKid = kid.getBiscuitsEarned();
+            int result = biscuitsFromKid + biscuitsToEarn;
+            kid.setBiscuitsEarned(result);
+            kidService.updateKid(kid.getId(), kid);
+            return true;
+        } catch (Exception e) {
+            logger.error("Add biscuits failed! -> Message: {} ", e);
+            return false;
+        }
+    }
+
+    private boolean removeBiscuits(Long kidId, int biscuitsToEarn) {
+        try {
+            Kid kid = kidService.findKidById(kidId);
+            int biscuitsFromKid = kid.getBiscuitsEarned();
+            int result = biscuitsFromKid - biscuitsToEarn;
+            kid.setBiscuitsEarned(result);
+            kidService.updateKid(kid.getId(), kid);
+            return false;
+        } catch (Exception e) {
+            logger.error("Add biscuits failed! -> Message: {} ", e);
+            return false;
+        }
     }
 }
 

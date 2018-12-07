@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,8 +19,8 @@ public class KidService {
         return kidRepository.getKids();
     }
 
-    public void createKid(Kid kid) {
-        kidRepository.createKid(kid);
+    public boolean createKid(Kid kid) {
+         return kidRepository.createKid(kid);
     }
 
     public Kid findKidById(Long id) {
@@ -30,15 +31,15 @@ public class KidService {
         return kidRepository.findKidsByNickname(nickname);
     }
 
-    public void deleteKidById(Long id) {
-        kidRepository.deleteKidById(id);
+    public boolean deleteKidById(Long id) {
+        return kidRepository.deleteKidById(id);
     }
 
-    public void deleteKids() {
-        kidRepository.deleteKids();
+    public boolean deleteKids() {
+        return kidRepository.deleteKids();
     }
 
-    public void updateKid(Long id, Kid kid) {
-        kidRepository.updateKid(id, kid);
+    public Kid updateKid(Long id, Kid kid) {
+        return kidRepository.updateKid(id, kid);
     }
 }

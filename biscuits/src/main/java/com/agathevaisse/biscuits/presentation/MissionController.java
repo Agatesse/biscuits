@@ -2,6 +2,9 @@ package com.agathevaisse.biscuits.presentation;
 
 import com.agathevaisse.biscuits.application.MissionService;
 import com.agathevaisse.biscuits.domain.mission.Mission;
+import com.agathevaisse.biscuits.infrastructure.mission.MissionRepositoryImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +18,11 @@ public class MissionController {
     @Autowired
     MissionService missionService;
 
+    private static final Logger logger = LoggerFactory.getLogger(MissionController.class);
+
     @PostMapping(value = "api/missions/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public boolean createMission(@RequestBody Mission mission) {
+    public boolean createMission(@RequestBody final Mission mission) {
+        logger.info(mission.toString());
         return missionService.createMission(mission);
     }
 
@@ -41,8 +47,8 @@ public class MissionController {
     }
 
     @DeleteMapping(value = "api/missions/delete")
-    public boolean deleteAllMissions() {
-        return missionService.deleteAllMissions();
+    public boolean deleteMissions() {
+        return missionService.deleteMissions();
     }
 
     @PutMapping(value = "api/missions/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

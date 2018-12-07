@@ -37,8 +37,8 @@ public class Kid {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageURL() {
+        this.imageURL = "imageURL";
     }
 
     public int getBiscuitsEarned() {
@@ -73,11 +73,5 @@ public class Kid {
                 ", imageURL='" + imageURL + '\'' +
                 ", biscuitsEarned=" + biscuitsEarned +
                 '}';
-    }
-
-    public Kid initializeKid(Kid kid) {
-        kid.setImageURL("imageURL");
-        kid.setBiscuitsEarned(0);
-        return kid;
     }
 }

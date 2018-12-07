@@ -1,14 +1,19 @@
 package com.agathevaisse.biscuits.infrastructure.kid;
 
+import com.agathevaisse.biscuits.domain.authentication.user.User;
 import com.agathevaisse.biscuits.domain.kid.Kid;
 import com.agathevaisse.biscuits.domain.kid.KidRepository;
 import com.agathevaisse.biscuits.infrastructure.kid.KidMapper;
+import com.agathevaisse.biscuits.infrastructure.mission.MissionRepositoryImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -23,48 +28,110 @@ public class KidRepositoryImpl implements KidRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(MissionRepositoryImpl.class);
+
     private final static String INSERT_SQL = "insert into biscuits_kid(kid_nickname, kid_image, kid_biscuits) values (?, ?, ?)";
     private final static String SELECT_ALL_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuits_kid";
     private final static String SELECT_BY_ID_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuits_kid where kid_id = ?";
     private final static String DELETE_BY_ID_SQL = "delete from biscuits_kid where kid_id = ?";
-    private final static String DELETE_ALL_SQL = "delete from biscuits_kid";
+    private final static String DELETE_ALL_SQL = "delete * from biscuits_kid";
     private final static String UPDATE_BY_PUT_SQL = "update biscuits_kid set kid_nickname = ?, kid_biscuits = ?  where kid_id = ?";
 
     @Override
     public List<Kid> getKids() {
-        return jdbcTemplate.query(SELECT_ALL_SQL, new KidMapper());
+        try {
+            return jdbcTemplate.query(SELECT_ALL_SQL, new KidMapper());
+        } catch (Exception e) {
+            logger.error("No kid found! -> Message: {} ", e);
+            return null;
+        }
     }
 
     @Override
-    public void createKid(Kid kid) {
-        kid.initializeKid(kid);
-        jdbcTemplate.update(INSERT_SQL, kid.getNickname(), kid.getImageURL(), kid.getBiscuitsEarned());
+    public boolean createKid(Kid kid) {
+        try {
+            kid.setImageURL();
+            kid.setBiscuitsEarned(0);
+            jdbcTemplate.update(INSERT_SQL, kid.getNickname(), kid.getImageURL(), kid.getBiscuitsEarned());
+            return true;
+        } catch (Exception e) {
+            logger.error("Kid creation failed! -> Message: {} ", e);
+            return false;
+        }
     }
 
     @Override
     public Kid findKidById(Long id) {
-        return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new Object[]{id}, new KidMapper());
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new Object[]{id}, new KidMapper());
+        } catch (Exception e) {
+            logger.error("No kid found with this id! -> Message: {} ", e);
+            return null;
+        }
     }
 
     @Override
     public List<Kid> findKidsByNickname(String nickname) {
-        return getKids().stream()
-                .filter(kid -> kid.getNickname().trim().toLowerCase().contains(nickname.trim().toLowerCase()))
-                .collect(Collectors.toList());
+        try {
+            return getKids().stream()
+                    .filter(kid -> kid.getNickname().trim().toLowerCase().contains(nickname.trim().toLowerCase()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("No kid found with this nickname! -> Message: {} ", e);
+            return null;
+        }
+
     }
 
     @Override
-    public void deleteKidById(Long id) {
-        jdbcTemplate.update(DELETE_BY_ID_SQL, id);
+    public boolean deleteKidById(Long id) {
+        try {
+            jdbcTemplate.update(DELETE_BY_ID_SQL, id);
+            return true;
+        } catch (Exception e) {
+            logger.error("Delete kid failed! -> Message: {} ", e);
+            return false;
+        }
+
     }
 
     @Override
-    public void deleteKids() {
-        jdbcTemplate.update(DELETE_ALL_SQL);
+    public boolean deleteKids() {
+        try {
+            jdbcTemplate.update(DELETE_ALL_SQL);
+            return true;
+        } catch (Exception e) {
+            logger.error("Delete kids failed! -> Message: {} ", e);
+            return false;
+        }
+
     }
 
     @Override
-    public void updateKid(Long id, Kid kid) {
-        jdbcTemplate.update(UPDATE_BY_PUT_SQL, kid.getNickname(), kid.getBiscuitsEarned(), kid.getId());
+    public Kid updateKid(Long id, Kid kid) {
+        try {
+            kid.setId(id);
+            final Optional<Kid> optKid = Optional.ofNullable(findKidById(id));
+            if (!optKid.isPresent()) {
+                return null;
+            }
+            Kid oldKid = optKid.get();
+            if (kid.getNickname() == null) {
+                kid.setNickname(oldKid.getNickname());
+            }
+            if (kid.getImageURL() == null) {
+                kid.setImageURL();
+            }
+            if (kid.getBiscuitsEarned() == 0) {
+                kid.setBiscuitsEarned(oldKid.getBiscuitsEarned());
+            }
+            jdbcTemplate.update(UPDATE_BY_PUT_SQL, kid.getNickname(), kid.getBiscuitsEarned(), kid.getId());
+            return kid;
+
+        } catch (Exception e) {
+            logger.error("Update kid failed! -> Message: {} ", e);
+            return null;
+        }
+
     }
 }
