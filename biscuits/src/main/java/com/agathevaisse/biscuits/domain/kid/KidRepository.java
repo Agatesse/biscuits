@@ -9,6 +9,8 @@ public interface KidRepository {
 
     Kid findKidById(Long id);
 
+    List<Kid> findKidsByUser(Long id);
+
     List<Kid> findKidsByNickname(String nickname);
 
     boolean deleteKidById(Long id);

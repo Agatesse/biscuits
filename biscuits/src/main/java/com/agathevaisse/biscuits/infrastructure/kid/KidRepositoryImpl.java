@@ -30,11 +30,11 @@ public class KidRepositoryImpl implements KidRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(KidRepositoryImpl.class);
 
-    private final static String INSERT_SQL = "insert into biscuits_kid(kid_nickname, kid_image, kid_biscuits) values (?, ?, ?)";
-    private final static String SELECT_ALL_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuits_kid";
-    private final static String SELECT_BY_ID_SQL = "select kid_id, kid_nickname, kid_image, kid_biscuits from biscuits_kid where kid_id = ?";
+    private final static String INSERT_SQL = "insert into biscuits_kid(kid_nickname, kid_image, kid_biscuits, kid_user_id) values (?, ?, ?, ?)";
+    private final static String SELECT_ALL_SQL = "select * from biscuits_kid inner join biscuits_user on biscuits_kid.kid_user_id = biscuits_user.user_id";
+    private final static String SELECT_BY_ID_SQL = "select * from biscuits_kid inner join biscuits_user on biscuits_kid.kid_user_id = biscuits_user.user_id where kid_id = ?";
     private final static String DELETE_BY_ID_SQL = "delete from biscuits_kid where kid_id = ?";
-    private final static String DELETE_ALL_SQL = "delete * from biscuits_kid";
+    private final static String DELETE_ALL_SQL = "delete from biscuits_kid";
     private final static String UPDATE_BY_PUT_SQL = "update biscuits_kid set kid_nickname = ?, kid_biscuits = ?  where kid_id = ?";
 
     @Override
@@ -52,7 +52,7 @@ public class KidRepositoryImpl implements KidRepository {
         try {
             kid.setImageURL();
             kid.setBiscuitsEarned(0);
-            jdbcTemplate.update(INSERT_SQL, kid.getNickname(), kid.getImageURL(), kid.getBiscuitsEarned());
+            jdbcTemplate.update(INSERT_SQL, kid.getNickname(), kid.getImageURL(), kid.getBiscuitsEarned(), kid.getUser().getId());
             return true;
         } catch (Exception e) {
             logger.error("Kid creation failed! -> Message: {} ", e);
@@ -66,6 +66,18 @@ public class KidRepositoryImpl implements KidRepository {
             return jdbcTemplate.queryForObject(SELECT_BY_ID_SQL, new Object[]{id}, new KidMapper());
         } catch (Exception e) {
             logger.error("No kid found with this id! -> Message: {} ", e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Kid> findKidsByUser(Long id) {
+        try {
+            return getKids().stream()
+                    .filter(kid -> kid.getUser().getId().equals(id))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("No kid found for this user! -> Message: {} ", e);
             return null;
         }
     }
@@ -124,6 +136,9 @@ public class KidRepositoryImpl implements KidRepository {
             }
             if (kid.getBiscuitsEarned() == 0) {
                 kid.setBiscuitsEarned(oldKid.getBiscuitsEarned());
+            }
+            if(kid.getUser() == null) {
+                kid.setUser((oldKid.getUser()));
             }
             jdbcTemplate.update(UPDATE_BY_PUT_SQL, kid.getNickname(), kid.getBiscuitsEarned(), kid.getId());
             return kid;

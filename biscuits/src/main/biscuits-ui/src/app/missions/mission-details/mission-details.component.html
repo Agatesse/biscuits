@@ -1,20 +1,23 @@
-  <div class="card large">
+  <div class="card">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
-          <figure class="image is-96x96">
-            <img [src]="mission.imageURL" alt="Secret Mission">
+          <figure class="image is-48x48">
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
           </figure>
         </div>
         <div class="media-content">
-          <p class="title is-4 no-padding has-text-black">{{mission.action}}</p>
-          <p class="subtitle is-6 has-text-primary"><span>{{mission.biscuitsToEarn}}</span> <span clas="icon is-small"><i class="fas fa-cookie"></i></span></p>
+          <p class="title is-4 has-text-dark">{{mission.action}}</p>
+          <p class="subtitle is-6 has-text-dark"><span>{{mission.biscuitsToEarn}}</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
+        </div>
+        <div class="media-right">
+          <a class="delete" (click)="deleteMission()"></a>
         </div>
       </div>
       <footer class="card-footer">
-        <a href="#" class="card-footer-item"><i class="fas fa-times" (click)="deleteMission()"></i></a>
-        <a href="#" class="card-footer-item"><i class="fas fa-edit" (click)="updateMission()"></i></a>
-        <a href="#" class="card-footer-item"><i class="fas fa-check" (click)="isMissionDone()"></i></a>
+        <a class="card-footer-item"><span class="icon" (click)="updateMission()"><fa-icon [icon]="faEdit"></fa-icon></span><span></span></a>
+        <a class="card-footer-item"><span class="icon" (click)="isMissionDone()"><fa-icon [icon]="faThumbsDown"></fa-icon></span><span></span></a>
+        <a class="card-footer-item"><span class="icon"  (click)="isMissionDone()"><fa-icon [icon]="faThumbsUp"></fa-icon></span><span></span></a>
       </footer>
     </div>
   </div>
