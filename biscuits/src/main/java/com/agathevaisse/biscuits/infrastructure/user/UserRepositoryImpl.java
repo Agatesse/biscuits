@@ -35,6 +35,8 @@ public class UserRepositoryImpl implements UserRepository {
     private final static String DELETE_BY_ID_SQL = "delete from biscuits_user where user_id = ?";
     private final static String DELETE_ALL_SQL = "delete from biscuits_user";
     private final static String UPDATE_BY_PUT_SQL = "update biscuits_user set user_username = ?, user_email = ?, user_password = ?  where user_id = ?";
+    private final static String SELECT_ALL_USERNAMES_SQL = "select user_username from biscuits_user";
+    private final static String SELECT_ALL_EMAILS_SQL = "select user_email from biscuits_user";
 
     @Override
     public void createUser(User user) {
@@ -45,6 +47,12 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> getUsers() {
         return jdbcTemplate.query(SELECT_ALL_SQL, new UserMapper());
     }
+
+    @Override
+    public List<String> getUsernames() { return jdbcTemplate.queryForList(SELECT_ALL_USERNAMES_SQL, String.class); }
+
+    @Override
+    public List<String> getEmails() { return jdbcTemplate.queryForList(SELECT_ALL_EMAILS_SQL, String.class);}
 
     @Override
     public User updateUser(Long id, User user) {

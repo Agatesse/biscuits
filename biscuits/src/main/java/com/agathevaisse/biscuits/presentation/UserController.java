@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -98,5 +99,15 @@ public class UserController {
     @GetMapping(value = ("/account/{username}"))
     public Optional<User> findUserByUsername(@PathVariable("username") String username) {
         return userService.findUserByUsername(username);
+    }
+
+    @GetMapping(value = ("/auth/get-usernames"))
+    public List<String> getUsernames(){
+        return userService.getUsernames();
+    }
+
+    @GetMapping(value = ("/auth/get-emails"))
+    public List<String> getEmailss(){
+        return userService.getEmails();
     }
 }

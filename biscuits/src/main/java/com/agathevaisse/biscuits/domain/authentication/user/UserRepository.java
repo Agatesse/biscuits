@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface UserRepository{
     void createUser(User user);
     List<User> getUsers();
+    List<String> getUsernames();
+    List<String> getEmails();
     User updateUser(Long id, User user);
     boolean deleteUser(int id);
     Optional<User> findUserByUsername(String username);

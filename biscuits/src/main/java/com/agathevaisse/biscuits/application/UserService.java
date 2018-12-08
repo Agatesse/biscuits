@@ -21,6 +21,14 @@ public class UserService {
         return userRepository.getUsers();
     }
 
+    public List<String> getUsernames() {
+        return userRepository.getUsernames();
+    }
+
+    public List<String> getEmails() {
+        return userRepository.getEmails();
+    }
+
     public User updateUser(Long id, User user) {
         return userRepository.updateUser(id, user);
     }
