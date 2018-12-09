@@ -40,7 +40,7 @@ public class UserController {
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping("/auth/sign-in")
+    @PostMapping("/auth/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody SignInForm loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -54,7 +54,7 @@ public class UserController {
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
-    @PostMapping("/auth/sign-up")
+    @PostMapping("/auth/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
         if (userService.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
@@ -107,7 +107,7 @@ public class UserController {
     }
 
     @GetMapping(value = ("/auth/get-emails"))
-    public List<String> getEmailss(){
+    public List<String> getEmails(){
         return userService.getEmails();
     }
 }
