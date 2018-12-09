@@ -13,7 +13,7 @@ export class MissionService {
   constructor(private http: HttpClient) {
   }
 
-  getMissions() {
+  getMissions(): Observable<Mission[]> {
   let getMissions = this.baseUrl + '/all';
     return this.http.get<Mission[]>(getMissions);
   }

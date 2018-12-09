@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {faUserEdit, faCheck, faEnvelope, faUnlock, faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import {faUserEdit, faCheck, faEnvelope, faUserSecret} from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SignUpInfo} from "../authentication/core/sign-up-info";
-import {AuthService} from "../authentication/services/auth.service";
+import {UserService} from './services/user.service';
+import {User} from './models/User';
+import {TokenStorageService} from '../authentication/services/token-storage.service';
 
 @Component({
   selector: 'app-account',
@@ -14,63 +15,58 @@ export class AccountComponent implements OnInit {
   faUserSecret = faUserSecret;
   faCheck = faCheck;
   faEnvelope = faEnvelope;
-  faUnlock = faUnlock;
-  updateAccountForm: FormGroup;
+  user: User;
+  updateUserForm: FormGroup;
+  private allowEdit: boolean = false;
   private submitted: boolean = false;
-  private signUpInfo: SignUpInfo;
-  private isSignedUp: boolean = false;
-  private isSignUpFailed: boolean = false;
-  private errorMessage: string = '';
+  private isUpdated: boolean = false;
+  private isNotUpdated: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private tokenStorageService: TokenStorageService) {
+    this.user = new User(null, null, null, null, null);
   }
 
   ngOnInit() {
-    this.updateAccountForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
-    });
+    let username: string = this.tokenStorageService.getUserName();
+    this.findUserByUsername(username);
+    this.updateUserForm = this.formBuilder.group({
+      email: ['', [Validators.required,Validators.email]]
+    })
   }
 
-  get f() { return this.updateAccountForm.controls; }
+ findUserByUsername(username: string) {
+    this.userService.findUserByUsername(username).subscribe(
+    data => {
+      this.user = data;
+    },
+    error => {
+      console.log(error);
+    }
+  );
+};
+
+  switchEdit() {
+    this.allowEdit = !this.allowEdit;
+  }
+
+  get f() { return this.updateUserForm.controls; }
 
   onSubmit() {
-
     this.submitted = true;
-    console.log(this.submitted);
-
-    // stop here if form is invalid
-    if (this.updateAccountForm.invalid) {
+    this.allowEdit = false;
+    if (this.updateUserForm.invalid) {
       return;
     }
-
-    if (this.updateAccountForm.value.password !== this.updateAccountForm.value.confirmPassword) {
-      return;
-    }
-
-    console.log(this.updateAccountForm);
-
-    this.signUpInfo = new SignUpInfo(
-      this.updateAccountForm.value.username,
-      this.updateAccountForm.value.email,
-      this.updateAccountForm.value.password,
-      this.updateAccountForm.value.confirmPassword
-    );
-
-    this.authService.signUp(this.signUpInfo).subscribe(
+    this.user.email = this.updateUserForm.controls.email.value;
+    this.userService.updateUser(this.user).subscribe(
       data => {
         console.log(data);
-        this.isSignedUp = true;
-        this.isSignUpFailed = false;
+        this.isUpdated = true;
       },
       error => {
         console.log(error);
-        this.errorMessage = error.error.message;
-        this.isSignUpFailed = true;
+        this.isNotUpdated = true;
       }
     );
   }
-
 }
