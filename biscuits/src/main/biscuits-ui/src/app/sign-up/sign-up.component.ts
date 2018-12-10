@@ -67,7 +67,7 @@ export class SignUpComponent implements OnInit {
         this.isSignedUp = true;
         this.isSignUpFailed = false;
         this.notificationIsActive = true;
-        this.cancelSignUp();
+        this.goToSignIn();
       },
       error => {
         console.log(error);

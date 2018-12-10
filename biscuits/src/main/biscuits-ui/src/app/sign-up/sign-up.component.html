@@ -1,18 +1,18 @@
-<section class="hero is-info is-fullheight-with-navbar">
+<section class="hero is-dark is-fullheight-with-navbar">
   <div class="hero-body">
     <div class="container">
       <div class="column is-4 is-offset-4">
-        <h3 class="title has-text-dark">
+        <h3 class="title has-text-danger">
           Sign Up
         </h3>
 
         <form [formGroup]="signUpForm" (ngSubmit)=onSubmit()>
           <div class="field">
-            <label class="label has-text-warning">Username</label>
+            <label class="label has-text-primary">Username</label>
             <div class="control has-icons-left has-icons-right">
               <input type="text" formControlName="username" class="input form-control" placeholder="Your username" name="username"
                      [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
-              <span class="icon is-left">
+              <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faUserSecret"></fa-icon>
               </span>
               <span class="icon is-right">
@@ -25,11 +25,11 @@
           </div>
 
           <div class="field">
-            <label class="label has-text-warning">Email</label>
+            <label class="label has-text-primary">Email</label>
             <div class="control has-icons-left has-icons-right">
               <input type="email" formControlName="email" class="input form-control" placeholder="Your email" name="email"
                      [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-              <span class="icon is-left">
+              <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faEnvelope"></fa-icon>
               </span>
               <span class="icon is-right">
@@ -43,10 +43,10 @@
           </div>
 
           <div class="field">
-            <label class="label has-text-warning">Password</label>
+            <label class="label has-text-primary">Password</label>
             <div class="control has-icons-left has-icons-right">
               <input type="password" formControlName="password" class="input from-control" placeholder="Your password" name="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
-              <span class="icon is-left">
+              <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faUnlock"></fa-icon>
               </span>
               <span class="icon is-right">
@@ -60,10 +60,10 @@
             </div>
           </div>
           <div class="field">
-            <label class="label has-text-warning">Confirm Password</label>
+            <label class="label has-text-primary">Confirm Password</label>
             <div class="control has-icons-left has-icons-right">
               <input type="password" formControlName="confirmPassword" class="input from-control" placeholder="Confirm your password" name="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"/>
-              <span class="icon is-left">
+              <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faUnlock"></fa-icon>
               </span>
               <span class="icon is-right">
@@ -82,11 +82,11 @@
             <p *ngIf="f.submitted && isSignUpFailed" class="help is-danger has-text-weight-bold">
               Signup failed!<br/>{{errorMessage}}
             </p>
-            <button type="reset" class="button is-text has-text-grey-light" (click)="cancelSignUp()">Cancel</button>
+            <button type="reset" class="button is-text has-text-danger" (click)="cancelSignUp()">Cancel</button>
           </div>
         </form>
 
-        <p class="has-text-right has-text-white is-size-7">Already have an account? <a class="has-text-warning is-size-6" (click)="goToSignIn()">Sign in!</a></p>
+        <p class="has-text-right has-text-light is-size-7">Already have an account? <a class="has-text-primary is-size-6" (click)="goToSignIn()">Sign in!</a></p>
 
       </div>
     </div>

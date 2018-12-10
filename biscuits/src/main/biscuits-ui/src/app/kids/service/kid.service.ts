@@ -22,9 +22,19 @@ export class KidService {
     return this.http.post<User>(createKid, kid, httpOptions);
   }
 
-  getKids(): Observable<Kid[]> {
-    let getKids = this.kidUrl + '/all';
+  getKids(userId: number): Observable<Kid[]> {
+    let getKids = this.kidUrl + '/findkidsbyuser/' + userId;
     return this.http.get<Kid[]>(getKids) as Observable<Kid[]>;
+  }
+
+   updateKid(kidId: number, kid: Kid): Observable<Kid> {
+  let updateKidUrl = this.kidUrl + "/update/" + kidId;
+    return this.http.put<Kid>(updateKidUrl, Kid, httpOptions);
+  }
+
+  deleteKid(kidId: number) {
+    let deleteKidUrl = this.kidUrl + "/delete/" + kidId;
+    return this.http.delete(deleteKidUrl);
   }
 
 }

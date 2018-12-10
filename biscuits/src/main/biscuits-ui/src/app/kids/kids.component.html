@@ -1,115 +1,57 @@
-<section class="hero is-info is-fullheight-with-navbar">
+<section class="hero is-dark is-fullheight-with-navbar">
   <div class="hero-body">
     <div class="container">
       <div class="column is-10 is-offset-2">
-        <h3 class="title has-text-dark">
+        <h3 class="title has-text-danger">
           Kids
         </h3>
       </div>
-        <div class="row columns is-multiline">
-        <div class="column is-one-third">
-          <div class="card large">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-96x96">
-                    <img src="https://i.imgsafe.org/a4/a4bb9acc5e.jpeg" alt="image">
-                  </figure>
+      <div class="row columns is-multiline">
+      <div class="column is-one-third is-two-thirds-mobile">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title has-text-danger">
+              Add kid
+            </p>
+          </header>
+          <div class="card-content">
+            <form [formGroup]="createKidForm" (ngSubmit)=onSubmit()>
+              <label class="label has-text-primary">Nickname</label>
+              <div class="field has-addons">
+                <div class="control has-icons-left">
+                  <input type="text" formControlName="nickname" class="input form-control" name="nickname"
+                  [ngClass]="{ 'is-invalid': submitted && f.nickname.errors }"/>
+                  <span class="icon is-left has-text-primary">
+                    <fa-icon [icon]="faUserSecret"></fa-icon>
+                  </span>
                 </div>
-                <div class="media-content">
-                  <p class="title is-4 no-padding has-text-primary">Walter </p>
-                  <p class="subtitle is-6 has-text-dark"><span>126</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
-                  <p class="title is-7 has-text-success"><a>1 treasure(s)</a></p>
-                </div>
-                <div class="media-right">
-                  <a class="icon"><fa-icon [icon]="faEdit"></fa-icon></a>
-                </div>
-              </div>
-              <div class="media-content">
-                <progress class="progress is-small" value="15" max ="100"></progress>
-              </div>
-              <div class="content">
-                10 / 15 missions
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-one-third">
-          <div class="card large">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-96x96">
-                    <img src="https://i.imgsafe.org/a4/a4bb9acc5e.jpeg" alt="image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-4 no-padding has-text-dark">Walter</p>
-                  <p class="subtitle is-6 has-text-dark"><span>126 biscuits</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
-                </div>
-              </div>
-              <div class="media-content">
-                <progress class="progress is-small" value="15" max ="100"></progress>
-              </div>
-              <div class="content">
-                10 / 15 missions
+                <div class="control">
+                  <button type="submit" class="button is-primary">
+                   <span class="icon">
+                    <fa-icon [icon]="faCheck"></fa-icon>
+                  </span>
+                  <span>Join!</span>
+                </button>
               </div>
             </div>
-          </div>
-        </div>
-
-          <div class="column is-one-third">
-            <div class="card large">
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-left">
-                    <figure class="image is-96x96">
-                      <img src="https://i.imgsafe.org/a4/a4bb9acc5e.jpeg" alt="image">
-                    </figure>
-                  </div>
-                  <div class="media-content">
-                    <p class="title is-4 no-padding has-text-dark">Walter</p>
-                    <p class="subtitle is-6 has-text-dark"><span>126 biscuits</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
-                  </div>
-                </div>
-                <div class="media-content">
-                  <progress class="progress is-small" value="15" max ="100"></progress>
-                </div>
-                <div class="content">
-                  10 / 15 missions
-                </div>
-              </div>
+            <div *ngIf="submitted && f.nickname.errors" class="invalid-feedback">
+              <p *ngIf="f.nickname.errors.required" class="help is-danger has-text-weight-bold">Nickname is required</p>
+              <p *ngIf="f.submitted && isNotCreated" class="help is-danger has-text-weight-bold">
+                Add kid failed!<br/>{{errorMessage}}
+              </p>
             </div>
-          </div>
-
-          <div class="column is-one-third">
-            <div class="card large">
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-left">
-                    <figure class="image is-96x96">
-                      <img src="https://i.imgsafe.org/a4/a4bb9acc5e.jpeg" alt="image">
-                    </figure>
-                  </div>
-                  <div class="media-content">
-                    <p class="title is-4 no-padding has-text-dark">Walter</p>
-                    <p class="subtitle is-6 has-text-dark"><span>126 biscuits</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
-                  </div>
-                </div>
-                <div class="media-content">
-                  <progress class="progress is-small" value="15" max ="100"></progress>
-                </div>
-                <div class="content">
-                  10 / 15 missions
-                </div>
-              </div>
-            </div>
-          </div>
-
+          </form>
         </div>
       </div>
-
+    </div>
   </div>
+    <div class="row columns is-multiline">
+      <div class="column is-one-third" *ngFor="let kid of kids">
+        <app-kid-details [kid]="kid"></app-kid-details>
+      </div>
+    </div>
+  </div>
+</div>
 </section>
 
 

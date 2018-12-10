@@ -1,41 +1,41 @@
 
-<section class="hero is-info is-fullheight-with-navbar">
+<section class="hero is-dark is-fullheight-with-navbar">
   <div class="hero-body">
     <div class="container">
       <div class="column is-4 is-offset-4">
-       <h3 class="title has-text-dark">
+       <h3 class="title has-text-danger">
           Account
         </h3>
 
         <form [formGroup]="updateUserForm" (ngSubmit)=onSubmit()>
           <div class="field">
-            <label class="label has-text-warning">Username</label>
+            <label class="label has-text-primary">Username</label>
             <div class="control has-icons-left">
               <input disabled type="text" class="input form-control" value={{user.username}} name="username"
                      [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
-              <span class="icon is-left">
+              <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faUserSecret"></fa-icon>
               </span>
             </div>
           </div>
-          <label class="label has-text-warning">Email</label>
+          <label class="label has-text-primary">Email</label>
           <div class="field has-addons">
             <div class="control has-icons-left">
               <input *ngIf="!allowEdit" disabled type="email" formControlName="email" class="input form-control" value={{user.email}} name="email">
               <input *ngIf="allowEdit" type="email" formControlName="email" class="input form-control" value={{user.email}} name="email"
                      [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-              <span class="icon is-left">
+              <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faEnvelope"></fa-icon>
               </span>
             </div>
             <div class="control">
-              <button *ngIf="!allowEdit" (click)="switchEdit()"class="button is-dark">
+              <button *ngIf="!allowEdit" (click)="switchEdit()"class="button is-primary">
                  <span class="icon">
                 <fa-icon [icon]="faUserEdit"></fa-icon>
               </span>
                 <span>Edit</span>
               </button>
-              <button *ngIf="allowEdit" type="submit" class="button is-dark">
+              <button *ngIf="allowEdit" type="submit" class="button is-primary">
                  <span class="icon">
                 <fa-icon [icon]="faCheck"></fa-icon>
               </span>

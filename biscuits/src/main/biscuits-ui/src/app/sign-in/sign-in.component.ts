@@ -5,6 +5,7 @@ import {TokenStorageService} from '../authentication/services/token-storage.serv
 import {SignInInfo} from '../authentication/core/sign-in-info';
 import {faUnlock, faUserSecret, faCheck} from '@fortawesome/free-solid-svg-icons';
 import {Router, Routes} from "@angular/router";
+import {HeaderService} from "../header/service/header.service"
 
 @Component({
   selector: 'app-sign-in',
@@ -12,7 +13,7 @@ import {Router, Routes} from "@angular/router";
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  @Output() activateSuccessNotification = new EventEmitter<boolean>();
+
   private signInForm: FormGroup;
   private submitted: boolean = false;
   private isSignedIn: boolean = false;
@@ -23,9 +24,8 @@ export class SignInComponent implements OnInit {
   faUserSecret = faUserSecret;
   faUnlock = faUnlock;
   faCheck = faCheck;
-  notificationIsActive: boolean = false;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthService, private tokenStorage: TokenStorageService, private headerService: HeaderService) {
   }
 
   ngOnInit() {
@@ -56,12 +56,11 @@ export class SignInComponent implements OnInit {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUsername(data.username);
         this.tokenStorage.saveAuthorities(data.authorities);
-
+        this.tokenStorage.saveUser(data.id);
         this.isSignInFailed = false;
         this.isSignedIn = true;
         this.roles = this.tokenStorage.getAuthorities();
-        this.notificationIsActive = false;
-        this.activateSuccessNotification.emit(this.notificationIsActive);
+        this.headerService.toggleNavBar(this.isSignedIn);
         this.cancelSignIn();
       },
       error => {
@@ -73,11 +72,11 @@ export class SignInComponent implements OnInit {
   }
 
   cancelSignIn() {
-    this.router.navigateByUrl('/home');
+    this.router.navigate(['/home']);
   }
 
   goToSignUp() {
-    this.router.navigateByUrl('/sign-up');
+    this.router.navigate(['/sign-up']);
   }
 }
 

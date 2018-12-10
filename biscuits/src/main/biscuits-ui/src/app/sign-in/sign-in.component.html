@@ -1,60 +1,60 @@
-<section class="hero is-info is-fullheight-with-navbar">
-<div class="hero-body">
-  <div class="container">
-    <div class="column is-4 is-offset-4">
-      <h3 class="title has-text-dark">
-        Sign In
-      </h3>
-      <form [formGroup]="signInForm" (ngSubmit)=onSubmit()>
-        <div class="field">
-          <label class="label has-text-warning">Username</label>
-          <div class="control has-icons-left has-icons-right">
-            <input type="text" formControlName="username" class="input form-control" placeholder="Your username"
-                   name="username"
-                   [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
-            <span class="icon is-left">
+<section class="hero is-dark is-fullheight-with-navbar">
+  <div class="hero-body">
+    <div class="container">
+      <div class="column is-4 is-offset-4">
+        <h3 class="title has-text-danger">
+          Sign In
+        </h3>
+        <form [formGroup]="signInForm" (ngSubmit)=onSubmit()>
+          <div class="field">
+            <label class="label has-text-primary">Username</label>
+            <div class="control has-icons-left has-icons-right">
+              <input type="text" formControlName="username" class="input form-control" placeholder="Your username"
+              name="username"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+              <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faUserSecret"></fa-icon>
               </span>
-            <span class="icon is-right">
+              <span class="icon is-right">
                 <fa-icon [icon]="faCheck"></fa-icon>
               </span>
+            </div>
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <p *ngIf="f.username.errors.required" class="help is-danger has-text-weight-bold">Username is required</p>
+            </div>
           </div>
-          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <p *ngIf="f.username.errors.required" class="help is-danger has-text-weight-bold">Username is required</p>
-          </div>
-        </div>
 
-        <div class="field">
-          <label class="label has-text-warning">Password</label>
-          <div class="control has-icons-left has-icons-right">
-            <input type="password" formControlName="password" class="input from-control" name="password" placeholder="Your password"
-                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
-            <span class="icon is-left">
+          <div class="field">
+            <label class="label has-text-primary">Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input type="password" formControlName="password" class="input from-control" name="password" placeholder="Your password"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+              <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faUnlock"></fa-icon>
               </span>
-            <span class="icon is-right">
+              <span class="icon is-right">
                 <fa-icon [icon]="faCheck"></fa-icon>
               </span>
 
+            </div>
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <p *ngIf="f.password.errors.required" class="help is-danger has-text-weight-bold">Password is required</p>
+              <p *ngIf="f.password.errors.minlength" class="help is-danger has-text-weight-bold">Password must be at least 6 characters</p>
+            </div>
           </div>
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <p *ngIf="f.password.errors.required" class="help is-danger has-text-weight-bold">Password is required</p>
-            <p *ngIf="f.password.errors.minlength" class="help is-danger has-text-weight-bold">Password must be at least 6 characters</p>
+          <div class="field is-grouped has-text-centered">
+            <div class="control">
+              <button type="submit" class="button is-primary is-medium">Sign In</button>
+            </div>
+            <p *ngIf="f.submitted && isSignedInFailed" class="help is-danger has-text-weight-bold">
+              Sign in failed!<br/>{{errorMessage}}
+            </p>
+            <button type="reset" class="button is-text has-text-danger" (click)="cancelSignIn()">Cancel</button>
           </div>
-        </div>
-        <div class="field is-grouped has-text-centered">
-          <div class="control">
-            <button type="submit" class="button is-primary is-medium">Sign In</button>
-          </div>
-          <p *ngIf="f.submitted && isSignedInFailed" class="help is-danger has-text-weight-bold">
-            Sign in failed!<br/>{{errorMessage}}
-          </p>
-          <button type="reset" class="button is-text has-text-grey-light" (click)="cancelSignIn()">Cancel</button>
-        </div>
-      </form>
-      <p class="has-text-right has-text-white is-size-7">Doesn't have an account? <a class="has-text-warning is-size-6"  routerLink="sign-up" (click)="goToSignUp()">Sign up!</a></p>
+        </form>
+        <p class="has-text-right has-text-light is-size-7">Doesn't have an account? <a class="has-text-primary is-size-6"  routerLink="sign-up" (click)="goToSignUp()">Sign up!</a></p>
 
+      </div>
     </div>
   </div>
-</div>
 </section>

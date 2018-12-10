@@ -30,12 +30,12 @@ public class KidController {
         return kidService.findKidById(id);
     }
 
-    @GetMapping(value = "api/kids/find-kids-by-user/{id}")
+    @GetMapping(value = "api/kids/findkidsbyuser/{id}")
     public List<Kid> findKidsByUser(@PathVariable("id") Long id) {
         return kidService.findKidsByUser(id);
     }
 
-    @GetMapping(value = "api/kids/find-kids-by-nickname/{nickname}")
+    @GetMapping(value = "api/kids/findkidsbynickname/{nickname}")
     public List<Kid> findKidsByNickname(@PathVariable("nickname") String nickname) {
         return kidService.findKidsByNickname(nickname);
     }
