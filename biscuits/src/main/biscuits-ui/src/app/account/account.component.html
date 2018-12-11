@@ -11,8 +11,7 @@
           <div class="field">
             <label class="label has-text-primary">Username</label>
             <div class="control has-icons-left">
-              <input disabled type="text" class="input form-control" value={{user.username}} name="username"
-                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+              <input disabled type="text" class="input form-control" value={{user.username}} name="username"/>
               <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faUserSecret"></fa-icon>
               </span>
@@ -42,10 +41,10 @@
                 <span>Update</span>
               </button>
             </div>
-            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-              <p *ngIf="f.email.errors.required" class="help is-danger has-text-weight-bold">Email is required</p>
-              <p *ngIf="f.email.errors.email" class="help is-danger has-text-weight-bold">Email must be a valid email address</p>
-            </div>
+          </div>
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <p *ngIf="f.email.errors.required" class="help is-danger has-text-weight-bold">Email is required</p>
+            <p *ngIf="f.email.errors.email" class="help is-danger has-text-weight-bold">Email must be a valid email address</p>
           </div>
 
           <p *ngIf="f.submitted && isNotUpdated" class="help is-danger has-text-weight-bold">
