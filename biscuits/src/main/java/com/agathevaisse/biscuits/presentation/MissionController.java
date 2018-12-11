@@ -35,12 +35,12 @@ public class MissionController {
         return missionService.findMissionById(id);
     }
 
-    @GetMapping(value = "api/missions/find-missions-by-word/{word}")
+    @GetMapping(value = "api/missions/findmissionsbyword/{word}")
     public List<Mission> findMissionByWord(@PathVariable("word") String word) {
         return missionService.findMissionsByWord(word);
     }
 
-    @GetMapping(value = "api/missions/find-missions-by-kid/{id}")
+    @GetMapping(value = "api/missions/findmissionsbykid/{id}")
     public List<Mission> findMissionsByKid(@PathVariable("id") Long id) {
         return missionService.findMissionsByKid(id);
     }
@@ -65,7 +65,7 @@ public class MissionController {
         return missionService.completeMission(id);
     }
 
-    @PatchMapping(value = "api/missions/cancel-complete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "api/missions/cancelcomplete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean cancelCompleteMission(@PathVariable("id") Long id) {
         return missionService.cancelCompleteMission(id);
     }

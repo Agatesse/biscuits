@@ -15,8 +15,6 @@ export class MissionDetailsComponent implements OnInit {
 
   @Input() mission: Mission;
 
-
-
   constructor(private router: Router, private missionService: MissionService, private missionsComponent: MissionsComponent) {
   }
 

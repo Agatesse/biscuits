@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {faCookieBite, faUserPlus, faSignInAlt, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import {Router} from "@angular/router";
 import {TokenStorageService} from '../authentication/services/token-storage.service';
+import {HeaderService} from './service/header.service'
 
 @Component({
   selector: 'app-header',
@@ -16,22 +17,20 @@ export class HeaderComponent implements OnInit {
   toggled: boolean = false;
   private authority: string;
   private roles: string[];
+  isSignedIn: boolean = false;
 
-  constructor(private tokenStorage: TokenStorageService, private router: Router) {
+  constructor(private tokenStorage: TokenStorageService, private router: Router, private headerService: HeaderService){
+
   }
 
   ngOnInit() {
-    if (this.tokenStorage.getToken()) {
-      this.roles = this.tokenStorage.getAuthorities();
-      this.roles.every(role => {
-        if (role === 'ROLE_ADMIN') {
-          this.authority = 'admin';
-          return false;
-        }
-        this.authority = 'user';
-        return true;
-      });
+    if(this.tokenStorage.getToken) {
+      this.isSignedIn = true;
     }
+    this.headerService.updateNavBar.subscribe(
+      data => {
+        this.isSignedIn = data;
+      })
   }
 
   toggleBurger() {
@@ -40,6 +39,9 @@ export class HeaderComponent implements OnInit {
 
   signOut() {
     this.tokenStorage.signOut();
-  /*  this.router.navigateByUrl('/home')*/
+    this.authority = null;
+    this.roles = [];
+    this.headerService.toggleNavBar(false);
+    this.router.navigate(['/sign-in']).then(() => {this.router.navigate(['/home'])});
   }
 }

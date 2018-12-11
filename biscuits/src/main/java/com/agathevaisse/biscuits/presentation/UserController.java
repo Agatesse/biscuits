@@ -8,6 +8,7 @@ import com.agathevaisse.biscuits.domain.authentication.messages.response.Respons
 import com.agathevaisse.biscuits.domain.authentication.user.RoleName;
 import com.agathevaisse.biscuits.domain.authentication.user.User;
 import com.agathevaisse.biscuits.security.jwt.JwtProvider;
+import com.agathevaisse.biscuits.security.services.UserPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,9 +50,9 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getId(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/auth/signup")
@@ -101,12 +102,12 @@ public class UserController {
         return userService.findUserByUsername(username);
     }
 
-    @GetMapping(value = ("/auth/get-usernames"))
+    @GetMapping(value = ("/auth/getusernames"))
     public List<String> getUsernames(){
         return userService.getUsernames();
     }
 
-    @GetMapping(value = ("/auth/get-emails"))
+    @GetMapping(value = ("/auth/getemails"))
     public List<String> getEmails(){
         return userService.getEmails();
     }

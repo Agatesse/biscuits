@@ -1,8 +1,8 @@
-<nav class="navbar is-warning" role="navigation" aria-label="main navigation">
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand" routerLink="home">
-    <a class="navbar-item">
+    <a class="navbar-item has-text-light">
       <span class="icon"><fa-icon [icon]="faCookieBite" size="2x"></fa-icon></span>
-      <span class="biscuits">Biscuits</span>
+      <span class="biscuits has-text-light">Biscuits</span>
     </a>
     <div class="navbar-burger burger" data-target="navbarLinks" aria-label="menu" aria-expanded="false" (click)="toggleBurger()" [ngClass]="{'is-active': toggled}">
       <span aria-hidden="true"></span>
@@ -13,19 +13,16 @@
 
   <div id="navbarLinks" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" routerLink="account">
+      <a class="navbar-item has-text-dark" routerLink="account">
         Account
       </a>
-      <a class="navbar-item" routerLink="kids">
+      <a class="navbar-item has-text-dark" routerLink="kids">
         Kids
       </a>
-      <a class="navbar-item" routerLink="missions">
+      <a class="navbar-item has-text-dark" routerLink="missions">
         Missions
       </a>
-      <a class="navbar-item" routerLink="biscuits-box">
-        Biscuits Box
-      </a>
-      <a class="navbar-item" routerLink="treasures">
+      <a class="navbar-item has-text-dark" routerLink="treasures">
         Treasures
       </a>
     </div>
@@ -33,7 +30,7 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="field is-grouped">
-          <p class="control" *ngIf="!authority">
+          <p class="control" *ngIf="!isSignedIn">
             <a class="button is-dark" routerLink="sign-up">
               <span class="icon">
                 <fa-icon [icon]="faUserPlus"></fa-icon>
@@ -43,7 +40,7 @@
               </span>
             </a>
           </p>
-          <p class="control" *ngIf="!authority">
+          <p class="control" *ngIf="!isSignedIn">
             <a class="button is-light" routerLink="sign-in">
               <span class="icon">
                 <fa-icon [icon]="faSignInAlt"></fa-icon>
@@ -51,7 +48,7 @@
               <span>Sign In</span>
             </a>
           </p>
-          <p class="control" *ngIf="authority === 'user'">
+          <p class="control" *ngIf="isSignedIn">
             <a class="button is-dark" (click)="signOut()">
               <span class="icon">
                 <fa-icon [icon]="faSignOutAlt"></fa-icon>
@@ -68,7 +65,7 @@
     <div class="navbar-start">
       <div class="navbar-item">
         <div class="field is-grouped">
-          <p class="control" *ngIf="!authority">
+          <p class="control" *ngIf="!isSignedIn">
             <a class="button is-dark" routerLink="sign-up">
               <span class="icon">
                 <fa-icon [icon]="faUserPlus"></fa-icon>
@@ -78,7 +75,7 @@
               </span>
             </a>
           </p>
-          <p class="control" *ngIf="!authority">
+          <p class="control" *ngIf="!isSignedIn">
             <a class="button is-light" routerLink="sign-in">
               <span class="icon">
                 <fa-icon [icon]="faSignInAlt"></fa-icon>
@@ -86,7 +83,7 @@
               <span>Sign In</span>
             </a>
           </p>
-          <p class="control" *ngIf="authority === 'user'">
+          <p class="control" *ngIf="isSignedIn">
             <a class="button is-dark" (click)="signOut()">
               <span class="icon">
                 <fa-icon [icon]="faSignOutAlt"></fa-icon>

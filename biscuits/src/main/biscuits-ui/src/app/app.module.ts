@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -37,6 +36,13 @@ import {HttpClientModule} from '@angular/common/http';
 import { MissionDetailsComponent } from './missions/mission-details/mission-details.component';
 import { AddMissionComponent } from './missions/add-mission/add-mission.component';
 import { EditMissionComponent } from './missions/edit-mission/edit-mission.component';
+import { KidDetailsComponent } from './kids/kid-details/kid-details.component';
+import {UserService} from './account/service/user.service';
+import {TokenStorageService} from './authentication/services/token-storage.service';
+import {AuthService} from './authentication/services/auth.service';
+import {HeaderService} from './header/service/header.service';
+import {KidService} from './kids/service/kid.service';
+import {MissionService} from './missions/services/mission.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +59,8 @@ import { EditMissionComponent } from './missions/edit-mission/edit-mission.compo
     DashboardComponent,
     MissionDetailsComponent,
     AddMissionComponent,
-    EditMissionComponent
+    EditMissionComponent,
+    KidDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +70,14 @@ import { EditMissionComponent } from './missions/edit-mission/edit-mission.compo
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+  UserService,
+  HeaderService,
+  TokenStorageService,
+  AuthService,
+  KidService,
+  MissionService  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

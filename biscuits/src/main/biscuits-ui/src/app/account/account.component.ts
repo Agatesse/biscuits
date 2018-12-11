@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {faUserEdit, faCheck, faEnvelope, faUserSecret} from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from './services/user.service';
-import {User} from './models/User';
+import {UserService} from './service/user.service';
+import {User} from './model/User';
 import {TokenStorageService} from '../authentication/services/token-storage.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    let username: string = this.tokenStorageService.getUserName();
+    let username: string = this.tokenStorageService.getUsername();
     this.findUserByUsername(username);
     this.updateUserForm = this.formBuilder.group({
       email: ['', [Validators.required,Validators.email]]
