@@ -16,6 +16,7 @@ export class KidService {
   private _kidUrl: string = 'http://localhost:8080/api/kids';
   private _createKidUrl: string = this._kidUrl + '/create';
   private _getKidsUrl : string = this._kidUrl + '/findkidsbyuser/';
+  private _getKid: string = this._kidUrl + '/findkidsbynickname/';
   private _updateKidUrl : string = this._kidUrl + '/update/';
   private _deleteKidUrl : string = this._kidUrl + '/delete/';
 
@@ -28,6 +29,11 @@ export class KidService {
   getKids(userId: number): Observable<Kid[]> {
     const getKids = this._getKidsUrl + userId;
     return this.http.get<Kid[]>(getKids) as Observable<Kid[]>;
+  }
+
+  getKid(kidNickname: string): Observable<Kid> {
+    const getKid = this._getKid + kidNickname;
+    return this.http.get<Kid>(getKid) as Observable<Kid>;
   }
 
    updateKid(kidId: number, kid: Kid): Observable<Kid> {

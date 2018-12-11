@@ -1,4 +1,4 @@
-  <div class="card">
+  <div class="card" *ngIf="kid">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
@@ -20,4 +20,53 @@
         <a class="card-footer-item"><span class="icon"  (click)="isMissionDone()"><fa-icon [icon]="faThumbsUp"></fa-icon></span><span></span></a>
       </footer>
     </div>
+  </div>
+
+  <div [ngClass]="{'is-active': isEditToggled}" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-danger">{{mission.action}}</p>
+        <button class="delete is-danger" aria-label="close" (click)="toggleEdit()"></button>
+      </header>
+      <section class="modal-card-body">
+       <form [formGroup]="updateMissionForm" (ngSubmit)=onSubmit()>
+        <div class="field">
+          <label class="label has-text-primary">Action</label>
+          <div class="control has-icons-left">
+            <input type="text" class="input form-control" formControlName="action" value={{mission.action}} name="action"
+            [ngClass]="{ 'is-invalid': submitted && f.action.errors }"/>
+            <span class="icon is-left has-text-primary">
+              <fa-icon [icon]="faUserSecret"></fa-icon>
+            </span>
+          </div>
+          <div *ngIf="submitted && f.action.errors" class="invalid-feedback">
+            <p *ngIf="f.action.errors.required" class="help is-danger has-text-weight-bold">Action is required</p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label has-text-primary">Biscuits to Earn</label>
+          <div class="control has-icons-left">
+            <input type="text" class="input form-control" formControlName="biscuits" value={{mission.biscuitsToEarn}} name="biscuits"
+            [ngClass]="{ 'is-invalid': submitted && f.biscuits.errors }"/>
+            <span class="icon is-left has-text-primary">
+              <fa-icon [icon]="faUserSecret"></fa-icon>
+            </span>
+          </div>
+          <div *ngIf="submitted && f.biscuits.errors" class="invalid-feedback">
+            <p *ngIf="f.biscuits.errors.required" class="help is-danger has-text-weight-bold">Biscuits is required</p>
+          </div>
+        </div>
+        <div class="field is-grouped has-text-centered">
+          <div class="control">
+            <button type="submit" class="button is-primary">Save changes</button>
+          </div>
+          <button type="reset" class="button is-text has-text-dark" (click)="deleteMission()">Delete</button>
+          <p *ngIf="f.submitted && isNotUpdated" class="help is-danger has-text-weight-bold">
+            Update failed!<br/>{{errorMessage}}
+          </p>
+        </div>
+      </form>
+    </section>
+  </div>
   </div>

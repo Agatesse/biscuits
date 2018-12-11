@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.tokenStorage.getToken) {
+    
+    if(this.tokenStorage.getToken()) {
       this.isSignedIn = true;
     }
     this.headerService.updateNavBar.subscribe(
@@ -43,5 +44,6 @@ export class HeaderComponent implements OnInit {
     this.roles = [];
     this.headerService.toggleNavBar(false);
     this.router.navigate(['/sign-in']).then(() => {this.router.navigate(['/home'])});
+    console.log(this.isSignedIn);
   }
 }
