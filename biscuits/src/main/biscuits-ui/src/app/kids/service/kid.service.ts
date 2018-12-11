@@ -13,28 +13,31 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class KidService {
-  private kidUrl = 'http://localhost:8080/api/kids';
+  private _kidUrl: string = 'http://localhost:8080/api/kids';
+  private _createKidUrl: string = this._kidUrl + '/create';
+  private _getKidsUrl : string = this._kidUrl + '/findkidsbyuser/';
+  private _updateKidUrl : string = this._kidUrl + '/update/';
+  private _deleteKidUrl : string = this._kidUrl + '/delete/';
 
   constructor(private http: HttpClient) { }
 
   createKid(kid: Kid){
-    let createKid = this.kidUrl + '/create';
-    return this.http.post<User>(createKid, kid, httpOptions);
+    return this.http.post<User>(this._createKidUrl, kid, httpOptions);
   }
 
   getKids(userId: number): Observable<Kid[]> {
-    let getKids = this.kidUrl + '/findkidsbyuser/' + userId;
+    const getKids = this._getKidsUrl + userId;
     return this.http.get<Kid[]>(getKids) as Observable<Kid[]>;
   }
 
    updateKid(kidId: number, kid: Kid): Observable<Kid> {
-  let updateKidUrl = this.kidUrl + "/update/" + kidId;
-    return this.http.put<Kid>(updateKidUrl, Kid, httpOptions);
+  const updateKid: string = this._updateKidUrl + kidId;
+    return this.http.put<Kid>(updateKid, kid, httpOptions);
   }
 
   deleteKid(kidId: number) {
-    let deleteKidUrl = this.kidUrl + "/delete/" + kidId;
-    return this.http.delete(deleteKidUrl);
+    const deleteKid = this._deleteKidUrl + kidId;
+    return this.http.delete(deleteKid);
   }
 
 }

@@ -53,10 +53,12 @@ export class KidDetailsComponent implements OnInit {
     }
     this.kid.nickname = this.updateKidForm.controls.nickname.value;
     this.kidService.updateKid(this.kid.id, this.kid).subscribe(
-      data => {
-        console.log(data);
+      () => {
         this.isUpdated = true;
+        console.log(this.isUpdated);
+        console.log(this.toggleEdit);
         this.toggleEdit();
+        console.log(this.toggleEdit);
       },
       error => {
         console.log(error);

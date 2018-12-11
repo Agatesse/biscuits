@@ -5,6 +5,8 @@ import com.agathevaisse.biscuits.domain.kid.Kid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ public class KidController {
 
     @Autowired
     KidService kidService;
+
+    private static final Logger logger = LoggerFactory.getLogger(KidController.class);
 
     @PostMapping(value = "api/kids/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean createKid(@RequestBody Kid kid) {
@@ -52,6 +56,7 @@ public class KidController {
 
     @PutMapping(value = "api/kids/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Kid updateKid(@PathVariable("id") Long id, @RequestBody Kid kid) {
+        logger.info(kid.toString());
         return kidService.updateKid(id, kid);
     }
 }

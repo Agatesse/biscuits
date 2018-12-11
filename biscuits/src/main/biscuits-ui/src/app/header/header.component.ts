@@ -24,6 +24,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.tokenStorage.getToken) {
+      this.isSignedIn = true;
+    }
     this.headerService.updateNavBar.subscribe(
       data => {
         this.isSignedIn = data;

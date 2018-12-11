@@ -65,6 +65,8 @@ export class KidsComponent implements OnInit {
         console.log(data);
         this.isCreated = true;
         this.getKids();
+        this.submitted = false;
+        this.createKidForm.reset();
       },
       error => {
         console.log(error);
