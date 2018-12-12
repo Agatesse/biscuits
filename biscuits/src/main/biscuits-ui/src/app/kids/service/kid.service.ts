@@ -15,14 +15,15 @@ const httpOptions = {
 export class KidService {
   private _kidUrl: string = 'http://localhost:8080/api/kids';
   private _createKidUrl: string = this._kidUrl + '/create';
-  private _getKidsUrl : string = this._kidUrl + '/findkidsbyuser/';
+  private _getKidsUrl: string = this._kidUrl + '/findkidsbyuser/';
   private _getKid: string = this._kidUrl + '/findkidsbynickname/';
-  private _updateKidUrl : string = this._kidUrl + '/update/';
-  private _deleteKidUrl : string = this._kidUrl + '/delete/';
+  private _updateKidUrl: string = this._kidUrl + '/update/';
+  private _deleteKidUrl: string = this._kidUrl + '/delete/';
 
   constructor(private http: HttpClient) { }
 
-  createKid(kid: Kid){
+  createKid(kid: Kid) {
+    console.log(kid);
     return this.http.post<User>(this._createKidUrl, kid, httpOptions);
   }
 

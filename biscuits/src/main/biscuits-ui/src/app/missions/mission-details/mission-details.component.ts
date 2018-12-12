@@ -15,15 +15,14 @@ import {Kid} from '../../kids/model/Kid';
 })
 export class MissionDetailsComponent implements OnInit {
 
-  @Input() kid: Kid;
+  @Input() mission: Mission;
 
   faCookieBite = faCookieBite;
   faThumbsUp = faThumbsUp;
   faThumbsDown = faThumbsDown;
   faCheck = faCheck;
-  faEdit = faEdit
+  faEdit = faEdit;
   updateMissionForm: FormGroup;
-  mission: Mission;
   private submitted: boolean = false;
   private isUpdated: boolean = false;
   private isNotUpdated: boolean = false;
@@ -36,7 +35,7 @@ export class MissionDetailsComponent implements OnInit {
     this.updateMissionForm = this.formBuilder.group({
       action: ['', Validators.required],
       biscuits: ['', Validators.required]
-    })
+    });
   }
 
   toggleEdit() {
@@ -55,13 +54,9 @@ export class MissionDetailsComponent implements OnInit {
     this.missionService.updateMission(this.mission.id, this.mission).subscribe(
       () => {
         this.isUpdated = true;
-        console.log(this.isUpdated);
-        console.log(this.toggleEdit);
         this.toggleEdit();
-        console.log(this.toggleEdit);
       },
       error => {
-        console.log(error);
         this.isNotUpdated = true;
       }
     );
@@ -70,24 +65,22 @@ export class MissionDetailsComponent implements OnInit {
   deleteMission() {
   	this.missionService.deleteMission(this.mission.id).subscribe(
   		data => {
-  			console.log(data);
   			this.missionsComponent.getMissions();
   		},
   		error => {
-  			console.log(error);
   			this.missionsComponent.getMissions();
   		});
   }
 
-  isMissionDone() {
-    this.missionService.isMissionDone(this.mission.id)
+  completeMission() {
+    this.missionService.completeMission(this.mission.id)
       .subscribe(
-        data => {
-          console.log(data);
-          this.mission = data as Mission;
-          console.log(this.mission.isDone);
+        () => {
+          this.isUpdated = true;
+          this.toggleEdit();
         },
-        error => console.log(error));
+        error => {
+        this.isNotUpdated = true;
+  });
   }
-
 }

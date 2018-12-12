@@ -23,15 +23,15 @@ export class AccountComponent implements OnInit {
   private isNotUpdated: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private tokenStorageService: TokenStorageService) {
-    this.user = new User(null, null, null, null, null);
+    this.user = new User();
   }
 
   ngOnInit() {
-    let username: string = this.tokenStorageService.getUsername();
+    const username: string = this.tokenStorageService.getUsername();
     this.findUserByUsername(username);
     this.updateUserForm = this.formBuilder.group({
-      email: ['', [Validators.required,Validators.email]]
-    })
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
  findUserByUsername(username: string) {
@@ -43,7 +43,7 @@ export class AccountComponent implements OnInit {
       console.log(error);
     }
   );
-};
+}
 
   switchEdit() {
     this.allowEdit = !this.allowEdit;

@@ -1,4 +1,4 @@
-  <div class="card" *ngIf="kid">
+  <div class="card">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
@@ -15,9 +15,9 @@
         </div>
       </div>
       <footer class="card-footer">
-        <a class="card-footer-item"><span class="icon" (click)="updateMission()"><fa-icon [icon]="faEdit"></fa-icon></span><span></span></a>
-        <a class="card-footer-item"><span class="icon" (click)="isMissionDone()"><fa-icon [icon]="faThumbsDown"></fa-icon></span><span></span></a>
-        <a class="card-footer-item"><span class="icon"  (click)="isMissionDone()"><fa-icon [icon]="faThumbsUp"></fa-icon></span><span></span></a>
+        <a class="card-footer-item"><span class="icon" (click)="toggleEdit()"><fa-icon [icon]="faEdit"></fa-icon></span><span></span></a>
+        <a class="card-footer-item"><span class="icon" ><fa-icon [icon]="faThumbsDown"></fa-icon></span><span></span></a>
+        <a class="card-footer-item"><span class="icon" (click)="completeMission()"><fa-icon [icon]="faThumbsUp"></fa-icon></span><span></span></a>
       </footer>
     </div>
   </div>

@@ -24,7 +24,7 @@ export class KidDetailsComponent implements OnInit {
   faThumbsDown = faThumbsDown;
   faUserSecret = faUserSecret;
   faCheck = faCheck;
-  faEdit = faEdit
+  faEdit = faEdit;
   updateKidForm: FormGroup;
   private submitted: boolean = false;
   private isUpdated: boolean = false;
@@ -71,7 +71,8 @@ export class KidDetailsComponent implements OnInit {
   	console.log(this.kid.id);
   	this.kidService.deleteKid(this.kid.id).subscribe(
   		data => {
-  			console.log(data);
+        console.log(data);
+        this.submitted = false;
   			this.kidsComponent.getKids();
   		},
   		error => {

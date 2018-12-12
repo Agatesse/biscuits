@@ -13,17 +13,24 @@ const httpOptions = {
 })
 export class UserService {
 
-  private accountUrl = 'http://localhost:8080/api/account';
+  private _accountUrl = 'http://localhost:8080/api/account/';
+  private _byIdUrl = this._accountUrl + 'findbyid/';
+  private _updateUrl = this._accountUrl + 'update/';
 
   constructor(private http: HttpClient) { }
 
   findUserByUsername(username: string): Observable<User> {
-    let getUserUrl = this.accountUrl + "/" + username;
+    const getUserUrl = this._accountUrl + username;
+    return this.http.get<User>(getUserUrl) as Observable<User>;
+  }
+
+  getUserById(id: number): Observable<User> {
+    const getUserUrl = this._byIdUrl + id;
     return this.http.get<User>(getUserUrl) as Observable<User>;
   }
 
   updateUser(user: User): Observable<User> {
-  let updateUserUrl = this.accountUrl + "/update/" + user.id;
+  const updateUserUrl = this._updateUrl + user.id;
     return this.http.put<User>(updateUserUrl, user, httpOptions);
   }
 }

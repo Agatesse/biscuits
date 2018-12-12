@@ -16,7 +16,7 @@ export class MissionService {
   private _createMissionUrl: string = this._missionUrl + '/create';
   private _updateMissionUrl: string = this._missionUrl + '/update/';
   private _deleteMissionUrl: string = this._missionUrl + '/delete/';
-  private _isMissionDoneUrl: string = this._missionUrl + '/isdone/'
+  private _completeMissionUrl: string = this._missionUrl + '/complete/';
 
   constructor(private http: HttpClient) {
   }
@@ -40,9 +40,9 @@ export class MissionService {
     return this.http.delete(deleteMission);
   }
 
-  isMissionDone(missionId: number): Observable<Mission> {
-    const isMissionDone = this._isMissionDoneUrl + missionId;
-    return this.http.patch<Mission>(isMissionDone, missionId, httpOptions);
+  completeMission(missionId: number) {
+    const completeMission = this._completeMissionUrl + missionId;
+    return this.http.put(completeMission, missionId);
   }
 
 }
