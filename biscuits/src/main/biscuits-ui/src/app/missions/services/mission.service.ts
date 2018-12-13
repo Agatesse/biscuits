@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient,HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs/internal/Observable";
-import {Mission} from "../model/Mission";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs/internal/Observable';
+import {Mission} from '../model/Mission';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,7 +11,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MissionService {
-  private _missionUrl: string = 'http://localhost:8080/api/missions';
+  private _missionUrl = 'http://localhost:8080/api/missions';
   private _getMissionsUrl: string = this._missionUrl + '/findmissionsbykid/';
   private _createMissionUrl: string = this._missionUrl + '/create';
   private _updateMissionUrl: string = this._missionUrl + '/update/';
@@ -42,7 +42,7 @@ export class MissionService {
 
   completeMission(missionId: number) {
     const completeMission = this._completeMissionUrl + missionId;
-    return this.http.put(completeMission, missionId);
+    return this.http.patch(completeMission, missionId, httpOptions);
   }
 
 }

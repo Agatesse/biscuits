@@ -23,9 +23,10 @@ export class KidsComponent implements OnInit {
   private kids: Kid[];
   kid: Kid;
   createKidForm: FormGroup;
-  private submitted: boolean = false;
-  private isCreated: boolean = false;
-  private isNotCreated: boolean = false;
+  private submitted = false;
+  private isCreated = false;
+  private isNotCreated = false;
+  selectedKid: Kid;
 
   constructor(private kidService: KidService, private formBuilder: FormBuilder, private router: Router, private userService: UserService,
               private tokenStorageService: TokenStorageService) {
@@ -82,5 +83,11 @@ export class KidsComponent implements OnInit {
     error => {
       console.log(error);
       });
+  }
+
+  goToMissions(kid: Kid) {
+    this.selectedKid = kid;
+    this.kidService.toggleIsSelected(this.selectedKid);
+    this.router.navigate(['missions']);
   }
 }

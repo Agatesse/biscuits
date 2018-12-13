@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../../account/model/User';
 import {Kid} from '../model/Kid';
-import {Mission} from '../../missions/model/Mission';
+import {Subject, BehaviorSubject} from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,6 +19,7 @@ export class KidService {
   private _getKid: string = this._kidUrl + '/findkidsbynickname/';
   private _updateKidUrl: string = this._kidUrl + '/update/';
   private _deleteKidUrl: string = this._kidUrl + '/delete/';
+  private _selectedKid: Subject<Kid> = new BehaviorSubject<Kid>(null);
 
   constructor(private http: HttpClient) { }
 
@@ -47,4 +48,11 @@ export class KidService {
     return this.http.delete(deleteKid);
   }
 
+  get updateSelectedKid(): Subject<Kid> {
+    return this._selectedKid;
+  }
+
+  toggleIsSelected(value: Kid) {
+    this.updateSelectedKid.next(value);
+  }
 }

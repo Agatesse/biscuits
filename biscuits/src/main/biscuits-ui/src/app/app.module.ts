@@ -39,6 +39,7 @@ import {AuthService} from './authentication/services/auth.service';
 import {HeaderService} from './header/service/header.service';
 import {KidService} from './kids/service/kid.service';
 import {MissionService} from './missions/services/mission.service';
+import { MissionsTestComponent } from './missions-test/missions-test.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {MissionService} from './missions/services/mission.service';
     TreasuresComponent,
     KidsComponent,
     MissionDetailsComponent,
-    KidDetailsComponent
+    KidDetailsComponent,
+    MissionsTestComponent
   ],
   imports: [
     BrowserModule,

@@ -48,6 +48,9 @@
     <div class="row columns is-multiline">
       <div class="column is-one-third" *ngFor="let kid of kids">
         <app-kid-details [kid]="kid"></app-kid-details>
+        <div>
+        <button class="button is-primary card-footer-item" (click)="goToMissions(kid)">Go to missions!</button>
+      </div>
       </div>
     </div>
   </div>

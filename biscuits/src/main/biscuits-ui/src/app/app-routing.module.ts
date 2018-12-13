@@ -7,6 +7,7 @@ import {AccountComponent} from './account/account.component';
 import {HomeComponent} from './home/home.component';
 import {KidsComponent} from './kids/kids.component';
 import {TreasuresComponent} from './treasures/treasures.component';
+import { MissionsTestComponent } from './missions-test/missions-test.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'missions',
     component: MissionsComponent
+  },
+  {
+    path: 'bla',
+    component: MissionsTestComponent
   },
   {
     path: 'kids',

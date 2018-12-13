@@ -14,24 +14,22 @@ export class HeaderComponent implements OnInit {
   faUserPlus = faUserPlus;
   faSignInAlt = faSignInAlt;
   faSignOutAlt = faSignOutAlt;
-  toggled: boolean = false;
+  toggled = false;
   private authority: string;
   private roles: string[];
-  isSignedIn: boolean = false;
+  isSignedIn = false;
 
-  constructor(private tokenStorage: TokenStorageService, private router: Router, private headerService: HeaderService){
-
-  }
+  constructor(private tokenStorage: TokenStorageService, private router: Router,
+     private headerService: HeaderService) { }
 
   ngOnInit() {
-    
-    if(this.tokenStorage.getToken()) {
+    if (this.tokenStorage.getToken()) {
       this.isSignedIn = true;
     }
     this.headerService.updateNavBar.subscribe(
       data => {
         this.isSignedIn = data;
-      })
+      });
   }
 
   toggleBurger() {

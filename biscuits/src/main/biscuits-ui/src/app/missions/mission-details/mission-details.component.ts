@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
 import {faCookieBite, faEdit, faThumbsDown, faThumbsUp, faCheck} from '@fortawesome/free-solid-svg-icons';
 import {Mission} from '../model/Mission';
@@ -16,6 +16,7 @@ import {Kid} from '../../kids/model/Kid';
 export class MissionDetailsComponent implements OnInit {
 
   @Input() mission: Mission;
+  @Output() isMissionUpdated = new EventEmitter<boolean>();
 
   faCookieBite = faCookieBite;
   faThumbsUp = faThumbsUp;
@@ -28,7 +29,8 @@ export class MissionDetailsComponent implements OnInit {
   private isNotUpdated: boolean = false;
   private isEditToggled: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private missionService: MissionService, private missionsComponent: MissionsComponent) {
+  constructor(private formBuilder: FormBuilder, private router: Router,
+     private missionService: MissionService, private missionsComponent: MissionsComponent) {
   }
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class MissionDetailsComponent implements OnInit {
   }
 
   toggleEdit() {
-  	this.isEditToggled = !this.isEditToggled;
+  this.isEditToggled = !this.isEditToggled;
   }
 
   get f() { return this.updateMissionForm.controls; }
@@ -63,24 +65,29 @@ export class MissionDetailsComponent implements OnInit {
   }
 
   deleteMission() {
-  	this.missionService.deleteMission(this.mission.id).subscribe(
-  		data => {
-  			this.missionsComponent.getMissions();
-  		},
+  this.missionService.deleteMission(this.mission.id).subscribe(
+  data => {
+    this.isUpdated = true;
+    this.isMissionUpdated.emit( this.isUpdated);
+	},
   		error => {
-  			this.missionsComponent.getMissions();
+        console.log(error);
+  			this.isNotUpdated = true;
   		});
   }
 
-  completeMission() {
-    this.missionService.completeMission(this.mission.id)
+
+  completeMission(mission: Mission) {
+    console.log(mission);
+    this.missionService.completeMission(mission.id)
       .subscribe(
         () => {
           this.isUpdated = true;
-          this.toggleEdit();
+          this.isMissionUpdated.emit( this.isUpdated);
         },
         error => {
-        this.isNotUpdated = true;
+          console.log(error);
+          this.isNotUpdated = true;
   });
   }
 }
