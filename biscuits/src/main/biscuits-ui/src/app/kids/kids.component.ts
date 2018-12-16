@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {faCheck, faCookieBite, faEdit, faPlus, faThumbsDown, faThumbsUp, faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {faCheck, faArrowRight, faCookieBite, faArrowUp, faPlus, faThumbsDown, faThumbsUp, faUserSecret} from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import {KidService} from './service/kid.service';
-import {User} from '../account/model/User';
+import {User} from '../user/model/User';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Kid} from './model/Kid';
-import {UserService} from '../account/service/user.service';
+import {UserService} from '../user/service/user.service';
 import {TokenStorageService} from '../authentication/services/token-storage.service';
 
 @Component({
@@ -15,11 +15,16 @@ import {TokenStorageService} from '../authentication/services/token-storage.serv
 })
 export class KidsComponent implements OnInit {
 
+    @ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any>;
+
   faCookieBite = faCookieBite;
   faThumbsUp = faThumbsUp;
   faThumbsDown = faThumbsDown;
+  faPlus = faPlus;
   faUserSecret = faUserSecret;
   faCheck = faCheck;
+  faArrowRight = faArrowRight;
+  faArrowUp = faArrowUp;
   private kids: Kid[];
   kid: Kid;
   createKidForm: FormGroup;
@@ -89,5 +94,13 @@ export class KidsComponent implements OnInit {
     this.selectedKid = kid;
     this.kidService.toggleIsSelected(this.selectedKid);
     this.router.navigate(['missions']);
+  }
+
+  goToTop() {
+    let top = document.getElementById('top');
+    if (top !== null) {
+      top.scrollIntoView();
+      top = null;
+    }
   }
 }

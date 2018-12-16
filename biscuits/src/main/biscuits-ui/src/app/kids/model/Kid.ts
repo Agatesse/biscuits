@@ -1,4 +1,4 @@
-import {User} from '../../account/model/User';
+import {User} from '../../user/model/User';
 
 export class Kid {
 /*   private _id: number;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {User} from '../../account/model/User';
+import {User} from '../../user/model/User';
 import {Kid} from '../model/Kid';
 import {Subject, BehaviorSubject} from 'rxjs';
 
@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class KidService {
-  private _kidUrl: string = 'http://localhost:8080/api/kids';
+  private _kidUrl = 'http://localhost:8080/api/kids';
   private _createKidUrl: string = this._kidUrl + '/create';
   private _getKidsUrl: string = this._kidUrl + '/findkidsbyuser/';
   private _getKid: string = this._kidUrl + '/findkidsbynickname/';

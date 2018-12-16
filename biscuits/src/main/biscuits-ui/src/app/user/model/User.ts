@@ -11,6 +11,7 @@ export class User {
   public get id(): number {
     return this._id;
   }
+
   public set id(value: number) {
     this._id = value;
   }
@@ -18,6 +19,7 @@ export class User {
   public get username(): string {
     return this._username;
   }
+
   public set username(value: string) {
     this._username = value;
   }
@@ -25,6 +27,7 @@ export class User {
   public get email(): string {
     return this._email;
   }
+
   public set email(value: string) {
     this._email = value;
   }
@@ -32,6 +35,7 @@ export class User {
   public get password(): string {
     return this._password;
   }
+
   public set password(value: string) {
     this._password = value;
   }
@@ -39,6 +43,7 @@ export class User {
   public get role(): string {
     return this._role;
   }
+
   public set role(value: string) {
     this._role = value;
   }

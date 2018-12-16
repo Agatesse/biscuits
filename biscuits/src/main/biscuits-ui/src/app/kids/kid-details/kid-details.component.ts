@@ -1,13 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Mission} from '../../missions/model/Mission';
 import {Router} from '@angular/router';
-import {MissionService} from '../../missions/services/mission.service';
-import {MissionsComponent} from '../../missions/missions.component';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Kid} from '../model/Kid';
 import {KidService} from '../service/kid.service';
 import {KidsComponent} from '../kids.component';
-import {faCheck, faCookieBite, faEdit, faPlus, faThumbsDown, faThumbsUp, faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import {faArrowRight, faCheck, faCookieBite, faEdit, faThumbsDown, faThumbsUp, faUserSecret} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -25,23 +22,24 @@ export class KidDetailsComponent implements OnInit {
   faUserSecret = faUserSecret;
   faCheck = faCheck;
   faEdit = faEdit;
+  faArrowRight = faArrowRight;
   updateKidForm: FormGroup;
-  private submitted: boolean = false;
-  private isUpdated: boolean = false;
-  private isNotUpdated: boolean = false;
-  private isEditToggled: boolean = false;
+  private submitted = false;
+  private isUpdated = false;
+  private isNotUpdated = false;
+  private isEditToggled = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private kidService: KidService, private kidsComponent: KidsComponent) {
+  constructor(private formBuilder: FormBuilder, private kidService: KidService, private kidsComponent: KidsComponent) {
   }
 
   ngOnInit() {
-  	this.updateKidForm = this.formBuilder.group({
+  this.updateKidForm = this.formBuilder.group({
       nickname: ['', Validators.required]
-    })
+    });
   }
 
   toggleEdit() {
-  	this.isEditToggled = !this.isEditToggled;
+  this.isEditToggled = !this.isEditToggled;
   }
 
    get f() { return this.updateKidForm.controls; }
@@ -55,10 +53,7 @@ export class KidDetailsComponent implements OnInit {
     this.kidService.updateKid(this.kid.id, this.kid).subscribe(
       () => {
         this.isUpdated = true;
-        console.log(this.isUpdated);
-        console.log(this.toggleEdit);
         this.toggleEdit();
-        console.log(this.toggleEdit);
       },
       error => {
         console.log(error);
@@ -68,9 +63,8 @@ export class KidDetailsComponent implements OnInit {
   }
 
   deleteKid() {
-  	console.log(this.kid.id);
-  	this.kidService.deleteKid(this.kid.id).subscribe(
-  		data => {
+  this.kidService.deleteKid(this.kid.id).subscribe(
+  data => {
         console.log(data);
         this.submitted = false;
   			this.kidsComponent.getKids();

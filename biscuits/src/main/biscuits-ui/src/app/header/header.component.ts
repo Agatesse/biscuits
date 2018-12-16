@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {faCookieBite, faUserPlus, faSignInAlt, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
+import {faCookieBite, faUserPlus, faSignInAlt, faSignOutAlt, faCogs} from '@fortawesome/free-solid-svg-icons';
 import {Router} from "@angular/router";
 import {TokenStorageService} from '../authentication/services/token-storage.service';
 import {HeaderService} from './service/header.service'
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -14,13 +15,14 @@ export class HeaderComponent implements OnInit {
   faUserPlus = faUserPlus;
   faSignInAlt = faSignInAlt;
   faSignOutAlt = faSignOutAlt;
+  faCogs = faCogs;
   toggled = false;
   private authority: string;
   private roles: string[];
   isSignedIn = false;
 
   constructor(private tokenStorage: TokenStorageService, private router: Router,
-     private headerService: HeaderService) { }
+     private headerService: HeaderService, private translateService: TranslateService) { }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -35,6 +37,10 @@ export class HeaderComponent implements OnInit {
   toggleBurger() {
     this.toggled = this.toggled !== true;
   }
+
+  translate(language: string) {
+    this.translateService.use('fr');
+}
 
   signOut() {
     this.tokenStorage.signOut();

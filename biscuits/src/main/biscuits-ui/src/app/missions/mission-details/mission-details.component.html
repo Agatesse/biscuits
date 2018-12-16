@@ -10,14 +10,11 @@
           <p class="title is-4 has-text-dark">{{mission.action}}</p>
           <p class="subtitle is-6 has-text-dark"><span>{{mission.biscuitsToEarn}}</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
         </div>
-        <div class="media-right">
-          <a class="delete" (click)="deleteMission()"></a>
-        </div>
       </div>
       <footer class="card-footer">
         <a class="card-footer-item"><span class="icon" (click)="toggleEdit()"><fa-icon [icon]="faEdit"></fa-icon></span><span></span></a>
-        <a class="card-footer-item"><span class="icon" ><fa-icon [icon]="faThumbsDown"></fa-icon></span><span></span></a>
-        <a class="card-footer-item"><span class="icon" (click)="completeMission(mission)"><fa-icon [icon]="faThumbsUp"></fa-icon></span><span></span></a>
+        <a class="card-footer-item has-text-primary"><span class="icon" (click)="cancelCompleteMission(mission)"><fa-icon [icon]="faCheck"></fa-icon></span></a>
+        <a class="card-footer-item has-text-danger"><span class="icon" (click)="completeMission(mission)"><fa-icon [icon]="faTimes"></fa-icon></span></a>
       </footer>
     </div>
   </div>

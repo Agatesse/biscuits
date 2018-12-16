@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -23,23 +25,30 @@ import {
   faThumbsUp,
   faThumbsDown,
   faSignOutAlt,
-  faPlus
+  faPlus,
+  faCogs,
+  faArrowRight,
+  faArrowUp,
+  faArrowLeft,
+  faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons';
-import { AccountComponent } from './account/account.component';
+import { UserComponent } from './user/user.component';
 import { MissionsComponent } from './missions/missions.component';
-import { TreasuresComponent } from './treasures/treasures.component';
 import { KidsComponent } from './kids/kids.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { MissionDetailsComponent } from './missions/mission-details/mission-details.component';
 import { KidDetailsComponent } from './kids/kid-details/kid-details.component';
-import {UserService} from './account/service/user.service';
+import {UserService} from './user/service/user.service';
 import {TokenStorageService} from './authentication/services/token-storage.service';
 import {AuthService} from './authentication/services/auth.service';
 import {HeaderService} from './header/service/header.service';
 import {KidService} from './kids/service/kid.service';
 import {MissionService} from './missions/services/mission.service';
-import { MissionsTestComponent } from './missions-test/missions-test.component';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -48,13 +57,11 @@ import { MissionsTestComponent } from './missions-test/missions-test.component';
     HomeComponent,
     SignInComponent,
     SignUpComponent,
-    AccountComponent,
+    UserComponent,
     MissionsComponent,
-    TreasuresComponent,
     KidsComponent,
     MissionDetailsComponent,
-    KidDetailsComponent,
-    MissionsTestComponent
+    KidDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +69,14 @@ import { MissionsTestComponent } from './missions-test/missions-test.component';
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  })
   ],
   providers: [
   UserService,
@@ -70,7 +84,7 @@ import { MissionsTestComponent } from './missions-test/missions-test.component';
   TokenStorageService,
   AuthService,
   KidService,
-  MissionService  
+  MissionService
   ],
   bootstrap: [AppComponent]
 })
@@ -91,5 +105,10 @@ export class AppModule {
     library.add(faPlus);
     library.add(faThumbsDown);
     library.add(faSignOutAlt);
+    library.add(faCogs);
+    library.add(faArrowRight);
+    library.add(faArrowUp);
+    library.add(faArrowLeft);
+    library.add(faExclamationCircle);
   }
 }

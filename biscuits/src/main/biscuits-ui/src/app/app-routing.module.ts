@@ -3,11 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import {MissionsComponent} from './missions/missions.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
 import {SignInComponent} from './sign-in/sign-in.component';
-import {AccountComponent} from './account/account.component';
+import {UserComponent} from './user/user.component';
 import {HomeComponent} from './home/home.component';
 import {KidsComponent} from './kids/kids.component';
-import {TreasuresComponent} from './treasures/treasures.component';
-import { MissionsTestComponent } from './missions-test/missions-test.component';
 
 
 const routes: Routes = [
@@ -17,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    component: AccountComponent
+    component: UserComponent
   },
   {
     path: 'sign-in',
@@ -32,16 +30,8 @@ const routes: Routes = [
     component: MissionsComponent
   },
   {
-    path: 'bla',
-    component: MissionsTestComponent
-  },
-  {
     path: 'kids',
     component: KidsComponent
-  },
-  {
-    path: 'treasures',
-    component: TreasuresComponent
   },
   {
     path: '',

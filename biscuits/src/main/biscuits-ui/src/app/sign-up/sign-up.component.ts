@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SignUpInfo} from '../authentication/core/sign-up-info';
 import {AuthService} from '../authentication/services/auth.service';
-import {faUserSecret, faCheck, faEnvelope, faUnlock} from '@fortawesome/free-solid-svg-icons';
-import {Router} from "@angular/router";
+import {faCheck, faEnvelope, faUnlock, faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -36,7 +36,9 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  get f() { return this.signUpForm.controls; }
+  get f() {
+    return this.signUpForm.controls;
+  }
 
   onSubmit() {
 

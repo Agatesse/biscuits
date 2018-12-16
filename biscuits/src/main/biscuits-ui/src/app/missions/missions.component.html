@@ -2,9 +2,13 @@
   <div class="hero-body">
     <div class="container">
       <div class="column is-10 is-offset-2">
-        <h3 class="title has-text-danger">
-          Missions of {{selectedKid.nickname}}
-        </h3>
+        <h2 class="title has-text-danger">
+          {{selectedKid.nickname}}'s missions
+        </h2>
+      </div>
+
+      <div class="buttons is-right">
+        <a class="button is-primary" (click)="goToKids()">Return to Kids</a>
       </div>
 
       <div class="row columns is-multiline">
@@ -18,56 +22,64 @@
             <div class="card-content">
               <form [formGroup]="createMissionForm" (ngSubmit)=onSubmit()>
                 <div class="field">
-                <label class="label has-text-primary">Action</label>
-                <div class="field has-addons">
-                  <div class="control has-icons-left">
-                    <input type="text" formControlName="action" class="input form-control" name="action" placeholder="Describe mission in few words"
-                    [ngClass]="{ 'is-invalid': submitted && f.action.errors }"/>
-<!--                     <span class="icon is-left has-text-primary">
-                      <fa-icon [icon]="faUserSecret"></fa-icon>
-                    </span> -->
+                  <label class="label has-text-primary">Action</label>
+                  <div class="field has-addons">
+                    <div class="control has-icons-left">
+                      <input type="text" formControlName="action" class="input form-control" name="action"
+                             placeholder="Describe mission in few words"
+                             [ngClass]="{ 'is-invalid': submitted && f.action.errors }"/>
+                      <span class="icon is-left has-text-dark">
+                      <fa-icon [icon]="faExclamationCircle"></fa-icon>
+                    </span>
+                    </div>
                   </div>
-              </div>
-              <div *ngIf="submitted && f.action.errors" class="invalid-feedback">
-                <p *ngIf="f.action.errors.required" class="help is-danger has-text-weight-bold">Action is required</p>
-              </div>
-            </div>
-
-            <div class="field">
-                <label class="label has-text-primary">Biscuits to earn</label>
-                <div class="field has-addons">
-                  <div class="control has-icons-left">
-                    <input type="text" formControlName="biscuits" class="input form-control" name="biscuits" placeholder="How many biscuits ?"
-                    [ngClass]="{ 'is-invalid': submitted && f.biscuits.errors }"/>
-<!--                     <span class="icon is-left has-text-primary">
-                      <fa-icon [icon]="faUserSecret"></fa-icon>
-                    </span> -->
+                  <div *ngIf="submitted && f.action.errors" class="invalid-feedback">
+                    <p *ngIf="f.action.errors.required" class="help is-danger has-text-weight-bold">Action is
+                      required</p>
                   </div>
-              </div>
-              <div *ngIf="submitted && f.biscuits.errors" class="invalid-feedback">
-                <p *ngIf="f.biscuits.errors.required" class="help is-danger has-text-weight-bold">Biscuits is required</p>
-              </div>
-            </div>  
-            <div class="field is-grouped has-text-centered">
-                <div class="control">
-                  <button type="submit" class="button is-primary is-medium">Launch!</button>
                 </div>
-                <p *ngIf="f.submitted && isNotCreated" class="help is-danger has-text-weight-bold">
+
+                <div class="field">
+                  <label class="label has-text-primary">Biscuits to earn</label>
+                  <div class="field has-addons">
+                    <div class="control has-icons-left">
+                      <input type="text" formControlName="biscuits" class="input form-control" name="biscuits"
+                             placeholder="How many biscuits ?"
+                             [ngClass]="{ 'is-invalid': submitted && f.biscuits.errors }"/>
+                      <span class="icon is-left has-text-dark">
+                      <fa-icon [icon]="faCookieBite"></fa-icon>
+                    </span>
+                    </div>
+                  </div>
+                  <div *ngIf="submitted && f.biscuits.errors" class="invalid-feedback">
+                    <p *ngIf="f.biscuits.errors.required" class="help is-danger has-text-weight-bold">Biscuits is
+                      required</p>
+                  </div>
+                </div>
+                <div class="field is-grouped has-text-centered">
+                  <div class="control">
+                    <button type="submit" class="button is-primary is-medium">Let's do it!</button>
+                  </div>
+                  <p *ngIf="f.submitted && isNotCreated" class="help is-danger has-text-weight-bold">
                     Add mission failed!<br/>{{errorMessage}}
                   </p>
-              </div>
-            </form>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
       <div class="row columns is-multiline">
         <div class="column is-one-third is-two-thirds-mobile" *ngFor="let mission of missions">
-          <app-mission-details [mission]="mission" (isMissionUpdated)="reloadMissionsAfterUpdate($event)"></app-mission-details>
+          <app-mission-details [mission]="mission"
+                               (isMissionUpdated)="reloadMissionsAfterUpdate($event)"></app-mission-details>
+        </div>
+      </div>
+      <div class="buttons is-right">
+        <a class="button is-primary">Go to top</a>
       </div>
     </div>
-  </div>
   </div>
 </section>
 

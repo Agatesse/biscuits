@@ -2,17 +2,17 @@
   <div class="hero-body">
     <div class="container">
       <div class="column is-10 is-offset-2">
-        <h3 class="title has-text-danger">
+        <h1 id="top" class="title has-text-danger">
           Kids
-        </h3>
+        </h1>
       </div>
       <div class="row columns is-multiline">
-      <div class="column is-one-third is-two-thirds-mobile">
+      <div class="column is-one-third is-four-fifths-mobile">
         <div class="card">
           <header class="card-header">
-            <p class="card-header-title has-text-danger">
+            <div class="card-header-title has-text-danger">
               Add kid
-            </p>
+            </div>
           </header>
           <div class="card-content">
             <form [formGroup]="createKidForm" (ngSubmit)=onSubmit()>
@@ -21,14 +21,14 @@
                 <div class="control has-icons-left">
                   <input type="text" formControlName="nickname" class="input form-control" name="nickname"
                   [ngClass]="{ 'is-invalid': submitted && f.nickname.errors }"/>
-                  <span class="icon is-left has-text-primary">
+                  <span class="icon is-left has-text-dark">
                     <fa-icon [icon]="faUserSecret"></fa-icon>
                   </span>
                 </div>
                 <div class="control">
                   <button type="submit" class="button is-primary">
                    <span class="icon">
-                    <fa-icon [icon]="faCheck"></fa-icon>
+                    <fa-icon [icon]="faPlus"></fa-icon>
                   </span>
                   <span>Join!</span>
                 </button>
@@ -46,12 +46,15 @@
     </div>
   </div>
     <div class="row columns is-multiline">
-      <div class="column is-one-third" *ngFor="let kid of kids">
+      <div class="column is-one-third is-four-fifths-mobile" *ngFor="let kid of kids">
         <app-kid-details [kid]="kid"></app-kid-details>
-        <div>
-        <button class="button is-primary card-footer-item" (click)="goToMissions(kid)">Go to missions!</button>
+        <div class="button is-primary card-footer">
+        <button class="button is-primary card-footer-item" (click)="goToMissions(kid)"><span class="icon"><fa-icon [icon]="faArrowRight"></fa-icon></span><span>Go to missions!</span></button>
       </div>
       </div>
+    </div>
+    <div class="buttons is-right">
+    <a class="button is-primary" (click)="goToTop()"><span class="icon"><fa-icon [icon]="faArrowUp"></fa-icon></span><span>Go to top</span></a>
     </div>
   </div>
 </div>

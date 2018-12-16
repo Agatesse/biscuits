@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../model/User';
 
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -17,7 +17,8 @@ export class UserService {
   private _byIdUrl = this._accountUrl + 'findbyid/';
   private _updateUrl = this._accountUrl + 'update/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   findUserByUsername(username: string): Observable<User> {
     const getUserUrl = this._accountUrl + username;
@@ -30,7 +31,7 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
-  const updateUserUrl = this._updateUrl + user.id;
+    const updateUserUrl = this._updateUrl + user.id;
     return this.http.put<User>(updateUserUrl, user, httpOptions);
   }
 }

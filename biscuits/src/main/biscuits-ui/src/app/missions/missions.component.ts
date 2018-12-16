@@ -2,7 +2,7 @@ import { Component, OnInit, AfterContentInit, OnChanges } from '@angular/core';
 import {Observable} from 'rxjs';
 import {Mission} from './model/Mission';
 import {MissionService} from './services/mission.service';
-import {faCookieBite, faEdit, faPlus, faThumbsDown, faThumbsUp, faCheck} from '@fortawesome/free-solid-svg-icons';
+import {faCookieBite, faEdit, faPlus, faThumbsDown, faThumbsUp, faExclamationCircle, faCheck} from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import {Kid} from '../kids/model/Kid';
 import {KidService} from '../kids/service/kid.service';
@@ -21,6 +21,7 @@ export class MissionsComponent implements OnInit, OnChanges, AfterContentInit {
   faThumbsUp = faThumbsUp;
   faThumbsDown = faThumbsDown;
   faCheck = faCheck;
+  faExclamationCircle = faExclamationCircle;
   private missions: Mission[];
   mission: Mission;
   createMissionForm: FormGroup;
@@ -75,13 +76,27 @@ export class MissionsComponent implements OnInit, OnChanges, AfterContentInit {
       reloadMissionsAfterUpdate(isMissionUpdated: boolean) {
             this.getMissions();
       }
+
+      goToKids() {
+        this.router.navigate(['/kids']);
+      }
+
+      goToTop() {
+        let top = document.getElementById('top');
+        if (top !== null) {
+          top.scrollIntoView();
+          top = null;
+        }
+      }
       
       get f() { return this.createMissionForm.controls; }
       
       onSubmit() {
-        console.log(this.selectedKid);
         this.submitted = true;
         if (this.createMissionForm.invalid) {
+          return;
+        }
+        if (this.createMissionForm.controls.biscuits.value < 1) {
           return;
         }
         this.mission = new Mission ();

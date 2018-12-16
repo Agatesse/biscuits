@@ -3,15 +3,15 @@
     <div class="media">
       <div class="media-left">
         <figure class="image is-96x96">
-          <img src="https://i.imgsafe.org/a4/a4bb9acc5e.jpeg" alt="image">
+          <img src="../../../assets/images/secret-agent-stamp.jpg" alt="image">
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4 no-padding has-text-primary">{{kid.nickname}}</p>
+        <p class="title is-4 no-padding has-text-danger">{{kid.nickname}}</p>
         <p class="subtitle is-6 has-text-dark"><span>{{kid.biscuitsEarned}}</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span></p>
       </div>
       <div class="media-right">
-        <button class="button is-primary" (click)="toggleEdit()"> <span class="icon"><fa-icon [icon]="faEdit"></fa-icon></span></button>
+        <button class="button is-primary" (click)="toggleEdit()"><span class="icon"><fa-icon [icon]="faEdit"></fa-icon></span></button>
       </div>
     </div>
   </div>

@@ -17,6 +17,7 @@ export class MissionService {
   private _updateMissionUrl: string = this._missionUrl + '/update/';
   private _deleteMissionUrl: string = this._missionUrl + '/delete/';
   private _completeMissionUrl: string = this._missionUrl + '/complete/';
+  private _cancelCompleteMissionUrl: string = this._missionUrl + '/cancelcomplete/';
 
   constructor(private http: HttpClient) {
   }
@@ -43,6 +44,11 @@ export class MissionService {
   completeMission(missionId: number) {
     const completeMission = this._completeMissionUrl + missionId;
     return this.http.patch(completeMission, missionId, httpOptions);
+  }
+
+  cancelCompleteMission(missionId: number) {
+    const cancelCompleteMission = this._cancelCompleteMissionUrl + missionId;
+    return this.http.patch(cancelCompleteMission, missionId, httpOptions);
   }
 
 }

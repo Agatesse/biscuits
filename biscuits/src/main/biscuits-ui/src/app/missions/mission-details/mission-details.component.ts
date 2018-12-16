@@ -1,11 +1,11 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
-import {faCookieBite, faEdit, faThumbsDown, faThumbsUp, faCheck} from '@fortawesome/free-solid-svg-icons';
+import {faCookieBite, faEdit, faThumbsDown, faThumbsUp, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Mission} from '../model/Mission';
 import {MissionService} from '../services/mission.service';
 import {MissionsComponent} from '../missions.component';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Kid} from '../../kids/model/Kid';
 
 @Component({
@@ -23,11 +23,12 @@ export class MissionDetailsComponent implements OnInit {
   faThumbsDown = faThumbsDown;
   faCheck = faCheck;
   faEdit = faEdit;
+  faTimes = faTimes;
   updateMissionForm: FormGroup;
-  private submitted: boolean = false;
-  private isUpdated: boolean = false;
-  private isNotUpdated: boolean = false;
-  private isEditToggled: boolean = false;
+  private submitted = false;
+  private isUpdated = false;
+  private isNotUpdated = false;
+  private isEditToggled = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router,
      private missionService: MissionService, private missionsComponent: MissionsComponent) {
@@ -53,6 +54,12 @@ export class MissionDetailsComponent implements OnInit {
     }
     this.mission.action = this.updateMissionForm.controls.action.value;
     this.mission.biscuitsToEarn = this.updateMissionForm.controls.biscuits.value;
+    if (!this.updateMissionForm.controls.action.value) {
+      this.mission.action = this.mission.action;
+    }
+    if (!this.updateMissionForm.controls.biscuits.value) {
+      this.mission.biscuitsToEarn = this.mission.biscuitsToEarn;
+    }
     this.missionService.updateMission(this.mission.id, this.mission).subscribe(
       () => {
         this.isUpdated = true;
@@ -84,6 +91,22 @@ export class MissionDetailsComponent implements OnInit {
         () => {
           this.isUpdated = true;
           this.isMissionUpdated.emit( this.isUpdated);
+          console.log(this.mission.isDone);
+        },
+        error => {
+          console.log(error);
+          this.isNotUpdated = true;
+  });
+  }
+
+  cancelCompleteMission(mission: Mission) {
+    console.log(mission);
+    this.missionService.cancelCompleteMission(mission.id)
+      .subscribe(
+        () => {
+          this.isUpdated = true;
+          this.isMissionUpdated.emit( this.isUpdated);
+          console.log(this.mission.isDone);
         },
         error => {
           console.log(error);
