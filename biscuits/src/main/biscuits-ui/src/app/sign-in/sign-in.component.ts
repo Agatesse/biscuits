@@ -1,11 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../authentication/services/auth.service';
 import {TokenStorageService} from '../authentication/services/token-storage.service';
 import {SignInInfo} from '../authentication/core/sign-in-info';
-import {faUnlock, faUserSecret, faCheck} from '@fortawesome/free-solid-svg-icons';
-import {Router, Routes} from "@angular/router";
-import {HeaderService} from "../header/service/header.service"
+import {faCheck, faUnlock, faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import {Router} from '@angular/router';
+import {HeaderService} from '../header/service/header.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -39,7 +39,9 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  get f() { return this.signInForm.controls; }
+  get f() {
+    return this.signInForm.controls;
+  }
 
   onSubmit() {
 
@@ -61,7 +63,7 @@ export class SignInComponent implements OnInit {
         this.isSignedIn = true;
         this.roles = this.tokenStorage.getAuthorities();
         this.headerService.toggleNavBar(this.isSignedIn);
-        this.cancelSignIn();
+        this.goToKids();
       },
       error => {
         console.log(error);
@@ -73,6 +75,10 @@ export class SignInComponent implements OnInit {
 
   cancelSignIn() {
     this.router.navigate(['/home']);
+  }
+
+  goToKids() {
+    this.router.navigate(['/kids']);
   }
 
   goToSignUp() {

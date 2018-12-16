@@ -102,6 +102,11 @@ public class UserController {
         return userService.findUserByUsername(username);
     }
 
+    @GetMapping(value = ("/account/findbyid/{id}"))
+    public Optional<User> findUserById(@PathVariable("id") Long id) {
+        return userService.findUserById(id);
+    }
+
     @GetMapping(value = ("/auth/getusernames"))
     public List<String> getUsernames(){
         return userService.getUsernames();

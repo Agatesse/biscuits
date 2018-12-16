@@ -1,84 +1,84 @@
-<section class="hero is-info is-fullheight-with-navbar">
+<section class="hero is-dark is-fullheight-with-navbar">
   <div class="hero-body">
     <div class="container">
       <div class="column is-10 is-offset-2">
-        <h3 class="title has-text-dark">
-          Missions
-        </h3>
+        <h2 class="title has-text-danger">
+          {{selectedKid.nickname}}'s missions
+        </h2>
       </div>
 
-      <div class="row columns is-multiline">
-        <div class="column is-four-fifths is-three-fifths-mobile">
-          <div class="tabs is-left">
-            <ul>
-              <li class="is-active">
-                <a>
-                  <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
-                  <span></span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
-                  <span>Agathe</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
-                  <span>Hanaé</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
-                  <span>Momiji</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="column is-one-third is-two-thirds-mobile">
-        <div class="card">
-          <div class="card-content">
-            <div class="media">
-              <div class="media-content" (click)="addMission()">
-                <span class="icon"><fa-icon [icon]="faPlus"></fa-icon></span>
-              </div>
-              <footer class="card-footer">
-                <p>New Mission</p>
-                           </footer>
-            </div>
-          </div>
-        </div>
-        </div>
-        <div class="column is-one-third is-two-thirds-mobile" *ngFor="let mission of missions">
+      <div class="buttons is-right">
+        <a class="button is-primary" (click)="goToKids()"><span class="icon"><fa-icon [icon]="faArrowLeft"></fa-icon></span><span>Return to Kids</span></a>
+      </div>
+
+      <div class="row columns is-multiline is-four-fifths-mobile is-two-third-tablet">
+        <div class="column is-one-third-desktop">
           <div class="card">
+            <header class="card-header">
+              <p class="card-header-title has-text-danger">
+                Add Mission
+              </p>
+            </header>
             <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                  </figure>
+              <form [formGroup]="createMissionForm" (ngSubmit)=onSubmit()>
+                <div class="field">
+                  <label class="label has-text-primary">Action</label>
+                  <div class="field has-addons">
+                    <div class="control has-icons-left">
+                      <input type="text" formControlName="action" class="input form-control" name="action"
+                             placeholder="Describe mission in few words"
+                             [ngClass]="{ 'is-invalid': submitted && f.action.errors }"/>
+                      <span class="icon is-left has-text-dark">
+                      <fa-icon [icon]="faExclamationCircle"></fa-icon>
+                    </span>
+                    </div>
+                  </div>
+                  <div *ngIf="submitted && f.action.errors" class="invalid-feedback">
+                    <p *ngIf="f.action.errors.required" class="help is-danger has-text-weight-bold">Action is
+                      required</p>
+                  </div>
                 </div>
-                <div class="media-content">
-                  <p class="title is-4 has-text-dark">{{mission.action}}</p>
-                  <p class="subtitle is-6 has-text-dark"><span>{{mission.biscuitsToEarn}}</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
+
+                <div class="field">
+                  <label class="label has-text-primary">Biscuits to earn</label>
+                  <div class="field has-addons">
+                    <div class="control has-icons-left">
+                      <input type="text" formControlName="biscuits" class="input form-control" name="biscuits"
+                             placeholder="How many biscuits ?"
+                             [ngClass]="{ 'is-invalid': submitted && f.biscuits.errors }"/>
+                      <span class="icon is-left has-text-dark">
+                      <fa-icon [icon]="faCookieBite"></fa-icon>
+                    </span>
+                    </div>
+                  </div>
+                  <div *ngIf="submitted && f.biscuits.errors" class="invalid-feedback">
+                    <p *ngIf="f.biscuits.errors.required" class="help is-danger has-text-weight-bold">Biscuits is
+                      required</p>
+                  </div>
                 </div>
-                <div class="media-right">
-                  <a class="delete" (click)="deleteMission(mission)"></a>
+                <div class="field is-grouped has-text-centered">
+                  <div class="control">
+                    <button type="submit" class="button is-primary is-medium">Let's do it!</button>
+                  </div>
+                  <p *ngIf="f.submitted && isNotCreated" class="help is-danger has-text-weight-bold">
+                    Add mission failed!<br/>{{errorMessage}}
+                  </p>
                 </div>
-              </div>
-              <footer class="card-footer">
-                <a class="card-footer-item" (click)="editMission(mission)"><span class="icon"><fa-icon [icon]="faEdit"></fa-icon></span><span></span></a>
-                <a class="card-footer-item"><span class="icon" (click)="isMissionDone()"><fa-icon [icon]="faThumbsDown"></fa-icon></span><span></span></a>
-                <a class="card-footer-item"><span class="icon"  (click)="isMissionDone()"><fa-icon [icon]="faThumbsUp"></fa-icon></span><span></span></a>
-              </footer>
+              </form>
             </div>
           </div>
-
         </div>
       </div>
+
+      <div class="row columns is-four-fifths-mobile is-two-third-tablet">
+        <div class="column is-one-third-desktop" *ngFor="let mission of missions">
+          <app-mission-details [mission]="mission"
+                               (isMissionUpdated)="reloadMissionsAfterUpdate($event)"></app-mission-details>
+        </div>
+      </div>
+      <div class="buttons is-right">
+          <a class="button is-primary" (click)="goToTop()"><span class="icon"><fa-icon [icon]="faArrowUp"></fa-icon></span><span>Go to top</span></a>
+          </div>
     </div>
   </div>
 </section>

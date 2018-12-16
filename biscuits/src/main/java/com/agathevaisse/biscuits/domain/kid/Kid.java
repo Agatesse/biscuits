@@ -4,11 +4,19 @@ import com.agathevaisse.biscuits.domain.authentication.user.User;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class Kid {
     private Long id;
+
+    @NotBlank
+    @Size(min = 3, max = 50)
     private String nickname;
     private String imageURL;
     private int biscuitsEarned;
+    
+    @NotBlank
     private User user;
 
     public Kid() {
@@ -16,7 +24,7 @@ public class Kid {
 
     public Kid(String nickname, User user) {
         this.nickname = nickname;
-        this.imageURL = "imageURL";
+        this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-agent-stamp.jpg";
         this.biscuitsEarned = 0;
         this.user = user;
     }
@@ -42,7 +50,7 @@ public class Kid {
     }
 
     public void setImageURL() {
-        this.imageURL = "imageURL";
+        this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-agent-stamp.jpg";
     }
 
     public int getBiscuitsEarned() {

@@ -21,6 +21,7 @@ public class KidController {
 
     @PostMapping(value = "api/kids/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean createKid(@RequestBody Kid kid) {
+        logger.info("" + kid);
         return kidService.createKid(kid);
     }
 

@@ -3,21 +3,73 @@
       <div class="media">
         <div class="media-left">
           <figure class="image is-48x48">
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+            <img src="../../../assets/images/secret-mission-stamp.jpg" alt="Placeholder image">
           </figure>
         </div>
         <div class="media-content">
           <p class="title is-4 has-text-dark">{{mission.action}}</p>
           <p class="subtitle is-6 has-text-dark"><span>{{mission.biscuitsToEarn}}</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
+          <div *ngIf="!mission.done">NOT DONE {{mission.done}}</div>
+          <div *ngIf="mission.done">DONE {{mission.done}}</div>
         </div>
         <div class="media-right">
-          <a class="delete" (click)="deleteMission()"></a>
+            <button class="button is-primary" (click)="toggleEdit()"><span class="icon"><fa-icon [icon]="faEdit"></fa-icon></span></button>
         </div>
       </div>
       <footer class="card-footer">
-        <a class="card-footer-item"><span class="icon" (click)="updateMission()"><fa-icon [icon]="faEdit"></fa-icon></span><span></span></a>
-        <a class="card-footer-item"><span class="icon" (click)="isMissionDone()"><fa-icon [icon]="faThumbsDown"></fa-icon></span><span></span></a>
-        <a class="card-footer-item"><span class="icon"  (click)="isMissionDone()"><fa-icon [icon]="faThumbsUp"></fa-icon></span><span></span></a>
+        <a *ngIf="!mission.done" class="card-footer-item has-text-danger"><span class="icon"><fa-icon [icon]="faTimes"></fa-icon></span><span>Not done</span></a>
+        <a *ngIf="mission.done" (click)="cancelCompleteMission(mission)" class="card-footer-item has-text-dark"><span class="icon"><fa-icon [icon]="faTimes"></fa-icon></span><span>Not done</span></a>
+        <a *ngIf="mission.done" class="card-footer-item has-text-primary"><span class="icon"><fa-icon [icon]="faCheck"></fa-icon></span><span>Done</span></a>
+        <a *ngIf="!mission.done" (click)="completeMission(mission)" class="card-footer-item has-text-dark"><span class="icon"><fa-icon [icon]="faCheck"></fa-icon></span><span>Done</span></a>
       </footer>
     </div>
+  </div>
+
+  <div [ngClass]="{'is-active': isEditToggled}" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-danger">{{mission.action}}</p>
+        <button class="delete is-danger" aria-label="close" (click)="toggleEdit()"></button>
+      </header>
+      <section class="modal-card-body">
+       <form [formGroup]="updateMissionForm" (ngSubmit)=onSubmit()>
+        <div class="field">
+          <label class="label has-text-primary">Action</label>
+          <div class="control has-icons-left">
+            <input type="text" class="input form-control" formControlName="action" value={{mission.action}} name="action"
+            [ngClass]="{ 'is-invalid': submitted && f.action.errors }"/>
+            <span class="icon is-left has-text-primary">
+              <fa-icon [icon]="faUserSecret"></fa-icon>
+            </span>
+          </div>
+          <div *ngIf="submitted && f.action.errors" class="invalid-feedback">
+            <p *ngIf="f.action.errors.required" class="help is-danger has-text-weight-bold">Action is required</p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label has-text-primary">Biscuits to Earn</label>
+          <div class="control has-icons-left">
+            <input type="text" class="input form-control" formControlName="biscuits" value={{mission.biscuitsToEarn}} name="biscuits"
+            [ngClass]="{ 'is-invalid': submitted && f.biscuits.errors }"/>
+            <span class="icon is-left has-text-primary">
+              <fa-icon [icon]="faUserSecret"></fa-icon>
+            </span>
+          </div>
+          <div *ngIf="submitted && f.biscuits.errors" class="invalid-feedback">
+            <p *ngIf="f.biscuits.errors.required" class="help is-danger has-text-weight-bold">Biscuits is required</p>
+          </div>
+        </div>
+        <div class="field is-grouped has-text-centered">
+          <div class="control">
+            <button type="submit" class="button is-primary">Save changes</button>
+          </div>
+          <button type="reset" class="button is-text has-text-dark" (click)="deleteMission()">Delete</button>
+          <p *ngIf="f.submitted && isNotUpdated" class="help is-danger has-text-weight-bold">
+            Update failed!<br/>{{errorMessage}}
+          </p>
+        </div>
+      </form>
+    </section>
+  </div>
   </div>

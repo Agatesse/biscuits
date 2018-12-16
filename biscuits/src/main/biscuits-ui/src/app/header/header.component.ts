@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {faCookieBite, faUserPlus, faSignInAlt, faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
+import {faCookieBite, faUserPlus, faSignInAlt, faSignOutAlt, faCogs} from '@fortawesome/free-solid-svg-icons';
 import {Router} from "@angular/router";
 import {TokenStorageService} from '../authentication/services/token-storage.service';
 import {HeaderService} from './service/header.service'
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -14,28 +15,32 @@ export class HeaderComponent implements OnInit {
   faUserPlus = faUserPlus;
   faSignInAlt = faSignInAlt;
   faSignOutAlt = faSignOutAlt;
-  toggled: boolean = false;
+  faCogs = faCogs;
+  toggled = false;
   private authority: string;
   private roles: string[];
-  isSignedIn: boolean = false;
+  isSignedIn = false;
 
-  constructor(private tokenStorage: TokenStorageService, private router: Router, private headerService: HeaderService){
-
-  }
+  constructor(private tokenStorage: TokenStorageService, private router: Router,
+     private headerService: HeaderService, private translateService: TranslateService) { }
 
   ngOnInit() {
-    if(this.tokenStorage.getToken) {
+    if (this.tokenStorage.getToken()) {
       this.isSignedIn = true;
     }
     this.headerService.updateNavBar.subscribe(
       data => {
         this.isSignedIn = data;
-      })
+      });
   }
 
   toggleBurger() {
     this.toggled = this.toggled !== true;
   }
+
+  translate(language: string) {
+    this.translateService.use('fr');
+}
 
   signOut() {
     this.tokenStorage.signOut();
@@ -43,5 +48,6 @@ export class HeaderComponent implements OnInit {
     this.roles = [];
     this.headerService.toggleNavBar(false);
     this.router.navigate(['/sign-in']).then(() => {this.router.navigate(['/home'])});
+    console.log(this.isSignedIn);
   }
 }

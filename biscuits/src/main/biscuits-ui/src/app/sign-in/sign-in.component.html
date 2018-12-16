@@ -2,21 +2,18 @@
   <div class="hero-body">
     <div class="container">
       <div class="column is-4 is-offset-4">
-        <h3 class="title has-text-danger">
+        <h1 class="title has-text-danger">
           Sign In
-        </h3>
+        </h1>
         <form [formGroup]="signInForm" (ngSubmit)=onSubmit()>
           <div class="field">
             <label class="label has-text-primary">Username</label>
-            <div class="control has-icons-left has-icons-right">
+            <div class="control has-icons-left">
               <input type="text" formControlName="username" class="input form-control" placeholder="Your username"
-              name="username"
-              [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
-              <span class="icon is-left has-text-primary">
+                     name="username"
+                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+              <span class="icon is-left has-text-dark">
                 <fa-icon [icon]="faUserSecret"></fa-icon>
-              </span>
-              <span class="icon is-right">
-                <fa-icon [icon]="faCheck"></fa-icon>
               </span>
             </div>
             <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
@@ -26,20 +23,18 @@
 
           <div class="field">
             <label class="label has-text-primary">Password</label>
-            <div class="control has-icons-left has-icons-right">
-              <input type="password" formControlName="password" class="input from-control" name="password" placeholder="Your password"
-              [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
-              <span class="icon is-left has-text-primary">
+            <div class="control has-icons-left">
+              <input type="password" formControlName="password" class="input from-control" name="password"
+                     placeholder="Your password"
+                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+              <span class="icon is-left has-text-dark">
                 <fa-icon [icon]="faUnlock"></fa-icon>
               </span>
-              <span class="icon is-right">
-                <fa-icon [icon]="faCheck"></fa-icon>
-              </span>
-
             </div>
             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
               <p *ngIf="f.password.errors.required" class="help is-danger has-text-weight-bold">Password is required</p>
-              <p *ngIf="f.password.errors.minlength" class="help is-danger has-text-weight-bold">Password must be at least 6 characters</p>
+              <p *ngIf="f.password.errors.minlength" class="help is-danger has-text-weight-bold">Password must be at
+                least 6 characters</p>
             </div>
           </div>
           <div class="field is-grouped has-text-centered">
@@ -52,7 +47,8 @@
             <button type="reset" class="button is-text has-text-danger" (click)="cancelSignIn()">Cancel</button>
           </div>
         </form>
-        <p class="has-text-right has-text-light is-size-7">Doesn't have an account? <a class="has-text-primary is-size-6"  routerLink="sign-up" (click)="goToSignUp()">Sign up!</a></p>
+        <p class="has-text-right has-text-light is-size-7">Doesn't have an account? <a
+          class="has-text-primary is-size-6" routerLink="sign-up" (click)="goToSignUp()">Sign up!</a></p>
 
       </div>
     </div>

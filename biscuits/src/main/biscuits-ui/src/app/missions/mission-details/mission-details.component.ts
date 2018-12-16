@@ -1,10 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
-import {faCookieBite, faEdit, faThumbsDown, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
+import {faCookieBite, faEdit, faThumbsDown, faThumbsUp, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Mission} from '../model/Mission';
 import {MissionService} from '../services/mission.service';
 import {MissionsComponent} from '../missions.component';
 import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Kid} from '../../kids/model/Kid';
 
 @Component({
   selector: 'app-mission-details',
@@ -14,45 +16,98 @@ import {Router} from '@angular/router';
 export class MissionDetailsComponent implements OnInit {
 
   @Input() mission: Mission;
+  @Output() isMissionUpdated = new EventEmitter<boolean>();
 
-  constructor(private router: Router, private missionService: MissionService, private missionsComponent: MissionsComponent) {
+  faCookieBite = faCookieBite;
+  faThumbsUp = faThumbsUp;
+  faThumbsDown = faThumbsDown;
+  faCheck = faCheck;
+  faEdit = faEdit;
+  faTimes = faTimes;
+  updateMissionForm: FormGroup;
+  private submitted = false;
+  private isUpdated = false;
+  private isNotUpdated = false;
+  private isEditToggled = false;
+
+  constructor(private formBuilder: FormBuilder, private router: Router,
+     private missionService: MissionService, private missionsComponent: MissionsComponent) {
   }
 
   ngOnInit() {
+    this.updateMissionForm = this.formBuilder.group({
+      action: ['', Validators.required],
+      biscuits: ['', Validators.required]
+    });
   }
 
-  addMission(): void {
-      this.router.navigate(['add-mission']);
+  toggleEdit() {
+  this.isEditToggled = !this.isEditToggled;
   }
 
-  updateMission() {
-    /*    this.missionService.updateMission(this.mission.id, this.mission.action, this.mission.isDone, this.mission.biscuitsToEarn)
-          .subscribe(
-            data => {
-              console.log(data);
-              this.mission = data as Mission;
-            },
-            error => console.log(error));*/
+  get f() { return this.updateMissionForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    if (this.updateMissionForm.invalid) {
+      return;
+    }
+    this.mission.action = this.updateMissionForm.controls.action.value;
+    this.mission.biscuitsToEarn = this.updateMissionForm.controls.biscuits.value;
+    if (!this.updateMissionForm.controls.action.value) {
+      this.mission.action = this.mission.action;
+    }
+    if (!this.updateMissionForm.controls.biscuits.value) {
+      this.mission.biscuitsToEarn = this.mission.biscuitsToEarn;
+    }
+    this.missionService.updateMission(this.mission.id, this.mission).subscribe(
+      () => {
+        this.isUpdated = true;
+        this.toggleEdit();
+      },
+      error => {
+        this.isNotUpdated = true;
+      }
+    );
   }
 
-  removeMission() {
-    this.missionService.deleteMission(this.mission.id)
+  deleteMission() {
+  this.missionService.deleteMission(this.mission.id).subscribe(
+  data => {
+    this.isUpdated = true;
+    this.isMissionUpdated.emit( this.isUpdated);
+	},
+  		error => {
+        console.log(error);
+  			this.isNotUpdated = true;
+  		});
+  }
+
+
+  completeMission(mission: Mission) {
+    console.log(mission);
+    this.missionService.completeMission(mission.id)
       .subscribe(
-        data => {
-          console.log(data);
-          this.missionsComponent.reloadData();
+        () => {
+          this.isUpdated = true;
+          this.isMissionUpdated.emit(this.isUpdated);
         },
-        error => console.log(error));
+        error => {
+          console.log(error);
+          this.isNotUpdated = true;
+  });
   }
 
-  isMissionDone() {
-    this.missionService.isMissionDone(this.mission.id)
+  cancelCompleteMission(mission: Mission) {
+    this.missionService.cancelCompleteMission(mission.id)
       .subscribe(
-        data => {
-          console.log(data);
-          this.mission = data as Mission;
-          console.log(this.mission.isDone);
+        () => {
+          this.isUpdated = true;
+          this.isMissionUpdated.emit(this.isUpdated);
         },
-        error => console.log(error));
+        error => {
+          console.log(error);
+          this.isNotUpdated = true;
+  });
   }
 }

@@ -1,11 +1,14 @@
-
 <section class="hero is-dark is-fullheight-with-navbar">
   <div class="hero-body">
     <div class="container">
       <div class="column is-4 is-offset-4">
-       <h3 class="title has-text-danger">
+        <h1 class="title has-text-danger">
           Account
-        </h3>
+        </h1>
+
+        <div class="buttons is-right">
+          <a class="button is-primary" (click)="goToKids()"><span class="icon"><fa-icon [icon]="faArrowLeft"></fa-icon></span><span>Return to Kids</span></a>
+        </div>
 
         <form [formGroup]="updateUserForm" (ngSubmit)=onSubmit()>
           <div class="field">
@@ -20,15 +23,17 @@
           <label class="label has-text-primary">Email</label>
           <div class="field has-addons">
             <div class="control has-icons-left">
-              <input *ngIf="!allowEdit" disabled type="email" formControlName="email" class="input form-control" value={{user.email}} name="email">
-              <input *ngIf="allowEdit" type="email" formControlName="email" class="input form-control" value={{user.email}} name="email"
+              <input *ngIf="!allowEdit" disabled type="email" formControlName="email" class="input form-control"
+                     value={{user.email}} name="email">
+              <input *ngIf="allowEdit" type="email" formControlName="email" class="input form-control"
+                     value={{user.email}} name="email"
                      [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
               <span class="icon is-left has-text-primary">
                 <fa-icon [icon]="faEnvelope"></fa-icon>
               </span>
             </div>
             <div class="control">
-              <button *ngIf="!allowEdit" (click)="switchEdit()"class="button is-primary">
+              <button *ngIf="!allowEdit" (click)="switchEdit()" class="button is-primary">
                  <span class="icon">
                 <fa-icon [icon]="faUserEdit"></fa-icon>
               </span>
@@ -44,7 +49,8 @@
           </div>
           <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
             <p *ngIf="f.email.errors.required" class="help is-danger has-text-weight-bold">Email is required</p>
-            <p *ngIf="f.email.errors.email" class="help is-danger has-text-weight-bold">Email must be a valid email address</p>
+            <p *ngIf="f.email.errors.email" class="help is-danger has-text-weight-bold">Email must be a valid email
+              address</p>
           </div>
 
           <p *ngIf="f.submitted && isNotUpdated" class="help is-danger has-text-weight-bold">

@@ -3,13 +3,25 @@ package com.agathevaisse.biscuits.domain.mission;
 import com.agathevaisse.biscuits.domain.kid.Kid;
 import java.util.Objects;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class Mission {
 
     private Long id;
+
+    @NotBlank
+    @Size(min = 3, max = 50)
     private String action;
     private String imageURL;
     private boolean isDone;
+
+    @NotBlank
+    @Min(1)
     private int biscuitsToEarn;
+    
+    @NotBlank
     private Kid kid;
 
     public Mission() {
@@ -17,7 +29,7 @@ public class Mission {
 
     public Mission(String action, int biscuitsToEarn, Kid kid) {
         this.action = action;
-        this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg";
+        this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-mission.jpg";
         this.isDone = false;
         this.biscuitsToEarn = biscuitsToEarn;
         this.kid = kid;
@@ -44,7 +56,7 @@ public class Mission {
     }
 
     public void setImageURL() {
-        this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-mission-stamp.jpg";
+        this.imageURL = "src/main/biscuits-ui/src/assets/images/secret-mission.jpg";
     }
 
     public boolean isDone() {

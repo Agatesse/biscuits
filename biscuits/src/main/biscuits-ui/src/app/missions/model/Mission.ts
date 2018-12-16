@@ -1,19 +1,23 @@
+import { Kid } from "src/app/kids/model/Kid";
+
 export class Mission {
-  private _id: number;
+/*   private _id: number;
   private _action: string;
   private _imageURL: string;
   private _isDone: boolean;
   private _biscuitsToEarn: number;
+  private _kid: Kid; */
 
-  constructor(id: number, action: string, imageURL: string, isDone: boolean, biscuitsToEarn: number) {
-    this._id = id;
-    this._action = action;
-    this._imageURL = imageURL;
-    this._isDone = isDone;
-    this._biscuitsToEarn = biscuitsToEarn;
-  }
+  id: number;
+  action: string;
+  imageURL: string;
+  isDone: boolean;
+  biscuitsToEarn: number;
+  kid: Kid;
 
-  get id(): number {
+  constructor() { }
+
+/*   get id(): number {
     return this._id;
   }
 
@@ -52,4 +56,12 @@ export class Mission {
   set biscuitsToEarn(value: number) {
     this._biscuitsToEarn = value;
   }
+
+  get kid(): Kid {
+    return this._kid;
+  }
+
+  set kid(value: Kid) {
+    this._kid = value;
+  } */
 }

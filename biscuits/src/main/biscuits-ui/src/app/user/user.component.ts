@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import {faUserEdit, faCheck, faEnvelope, faUserSecret} from '@fortawesome/free-solid-svg-icons';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {faCheck, faEnvelope, faUserEdit, faUserSecret, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 import {UserService} from './service/user.service';
 import {User} from './model/User';
 import {TokenStorageService} from '../authentication/services/token-storage.service';
 
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
-export class AccountComponent implements OnInit {
+export class UserComponent implements OnInit {
   faUserEdit = faUserEdit;
   faUserSecret = faUserSecret;
   faCheck = faCheck;
   faEnvelope = faEnvelope;
+  faArrowLeft = faArrowLeft;
   user: User;
   updateUserForm: FormGroup;
   private allowEdit: boolean = false;
@@ -22,34 +24,40 @@ export class AccountComponent implements OnInit {
   private isUpdated: boolean = false;
   private isNotUpdated: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private tokenStorageService: TokenStorageService) {
-    this.user = new User(null, null, null, null, null);
+  constructor(private router: Router, private formBuilder: FormBuilder, private userService: UserService, private tokenStorageService: TokenStorageService) {
+    this.user = new User();
   }
 
   ngOnInit() {
-    let username: string = this.tokenStorageService.getUsername();
+    const username: string = this.tokenStorageService.getUsername();
     this.findUserByUsername(username);
     this.updateUserForm = this.formBuilder.group({
-      email: ['', [Validators.required,Validators.email]]
-    })
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
- findUserByUsername(username: string) {
+  findUserByUsername(username: string) {
     this.userService.findUserByUsername(username).subscribe(
-    data => {
-      this.user = data;
-    },
-    error => {
-      console.log(error);
-    }
-  );
-};
+      data => {
+        this.user = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
   switchEdit() {
     this.allowEdit = !this.allowEdit;
   }
 
-  get f() { return this.updateUserForm.controls; }
+  goToKids() {
+    this.router.navigate(['/kids']);
+  }
+
+  get f() {
+    return this.updateUserForm.controls;
+  }
 
   onSubmit() {
     this.submitted = true;
