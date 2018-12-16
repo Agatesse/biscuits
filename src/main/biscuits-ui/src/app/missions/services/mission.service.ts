@@ -11,7 +11,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MissionService {
-  private _missionUrl = 'http://localhost:8080/api/missions';
+  private _missionUrl = '/api/missions';
   private _getMissionsUrl: string = this._missionUrl + '/findmissionsbykid/';
   private _createMissionUrl: string = this._missionUrl + '/create';
   private _updateMissionUrl: string = this._missionUrl + '/update/';

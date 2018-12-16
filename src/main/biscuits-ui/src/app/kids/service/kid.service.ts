@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class KidService {
-  private _kidUrl = 'http://localhost:8080/api/kids';
+  private _kidUrl = '/api/kids';
   private _createKidUrl: string = this._kidUrl + '/create';
   private _getKidsUrl: string = this._kidUrl + '/findkidsbyuser/';
   private _getKid: string = this._kidUrl + '/findkidsbynickname/';

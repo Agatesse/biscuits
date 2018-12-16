@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class UserService {
 
-  private _accountUrl = 'http://localhost:8080/api/account/';
+  private _accountUrl = '/api/account/';
   private _byIdUrl = this._accountUrl + 'findbyid/';
   private _updateUrl = this._accountUrl + 'update/';
 
