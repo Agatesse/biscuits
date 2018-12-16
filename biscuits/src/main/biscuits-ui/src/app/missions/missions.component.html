@@ -8,11 +8,11 @@
       </div>
 
       <div class="buttons is-right">
-        <a class="button is-primary" (click)="goToKids()">Return to Kids</a>
+        <a class="button is-primary" (click)="goToKids()"><span class="icon"><fa-icon [icon]="faArrowLeft"></fa-icon></span><span>Return to Kids</span></a>
       </div>
 
-      <div class="row columns is-multiline">
-        <div class="column is-one-third is-two-thirds-mobile">
+      <div class="row columns is-multiline is-four-fifths-mobile is-two-third-tablet">
+        <div class="column is-one-third-desktop">
           <div class="card">
             <header class="card-header">
               <p class="card-header-title has-text-danger">
@@ -70,15 +70,15 @@
         </div>
       </div>
 
-      <div class="row columns is-multiline">
-        <div class="column is-one-third is-two-thirds-mobile" *ngFor="let mission of missions">
+      <div class="row columns is-four-fifths-mobile is-two-third-tablet">
+        <div class="column is-one-third-desktop" *ngFor="let mission of missions">
           <app-mission-details [mission]="mission"
                                (isMissionUpdated)="reloadMissionsAfterUpdate($event)"></app-mission-details>
         </div>
       </div>
       <div class="buttons is-right">
-        <a class="button is-primary">Go to top</a>
-      </div>
+          <a class="button is-primary" (click)="goToTop()"><span class="icon"><fa-icon [icon]="faArrowUp"></fa-icon></span><span>Go to top</span></a>
+          </div>
     </div>
   </div>
 </section>

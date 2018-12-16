@@ -3,18 +3,24 @@
       <div class="media">
         <div class="media-left">
           <figure class="image is-48x48">
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+            <img src="../../../assets/images/secret-mission-stamp.jpg" alt="Placeholder image">
           </figure>
         </div>
         <div class="media-content">
           <p class="title is-4 has-text-dark">{{mission.action}}</p>
           <p class="subtitle is-6 has-text-dark"><span>{{mission.biscuitsToEarn}}</span><span class="icon"><fa-icon [icon]="faCookieBite"></fa-icon></span> </p>
+          <div *ngIf="!mission.done">NOT DONE {{mission.done}}</div>
+          <div *ngIf="mission.done">DONE {{mission.done}}</div>
+        </div>
+        <div class="media-right">
+            <button class="button is-primary" (click)="toggleEdit()"><span class="icon"><fa-icon [icon]="faEdit"></fa-icon></span></button>
         </div>
       </div>
       <footer class="card-footer">
-        <a class="card-footer-item"><span class="icon" (click)="toggleEdit()"><fa-icon [icon]="faEdit"></fa-icon></span><span></span></a>
-        <a class="card-footer-item has-text-primary"><span class="icon" (click)="cancelCompleteMission(mission)"><fa-icon [icon]="faCheck"></fa-icon></span></a>
-        <a class="card-footer-item has-text-danger"><span class="icon" (click)="completeMission(mission)"><fa-icon [icon]="faTimes"></fa-icon></span></a>
+        <a *ngIf="!mission.done" class="card-footer-item has-text-danger"><span class="icon"><fa-icon [icon]="faTimes"></fa-icon></span><span>Not done</span></a>
+        <a *ngIf="mission.done" (click)="cancelCompleteMission(mission)" class="card-footer-item has-text-dark"><span class="icon"><fa-icon [icon]="faTimes"></fa-icon></span><span>Not done</span></a>
+        <a *ngIf="mission.done" class="card-footer-item has-text-primary"><span class="icon"><fa-icon [icon]="faCheck"></fa-icon></span><span>Done</span></a>
+        <a *ngIf="!mission.done" (click)="completeMission(mission)" class="card-footer-item has-text-dark"><span class="icon"><fa-icon [icon]="faCheck"></fa-icon></span><span>Done</span></a>
       </footer>
     </div>
   </div>

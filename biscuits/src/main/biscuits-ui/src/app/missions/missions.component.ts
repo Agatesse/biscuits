@@ -2,7 +2,7 @@ import { Component, OnInit, AfterContentInit, OnChanges } from '@angular/core';
 import {Observable} from 'rxjs';
 import {Mission} from './model/Mission';
 import {MissionService} from './services/mission.service';
-import {faCookieBite, faEdit, faPlus, faThumbsDown, faThumbsUp, faExclamationCircle, faCheck} from '@fortawesome/free-solid-svg-icons';
+import {faCookieBite, faEdit, faPlus, faThumbsDown, faThumbsUp, faExclamationCircle, faCheck, faArrowLeft, faArrowUp} from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import {Kid} from '../kids/model/Kid';
 import {KidService} from '../kids/service/kid.service';
@@ -14,13 +14,15 @@ import {TokenStorageService} from '../authentication/services/token-storage.serv
   templateUrl: './missions.component.html',
   styleUrls: ['./missions.component.css']
 })
-export class MissionsComponent implements OnInit, OnChanges, AfterContentInit {
+export class MissionsComponent implements OnInit {
   faPlus = faPlus;
   faCookieBite = faCookieBite;
   faEdit = faEdit;
   faThumbsUp = faThumbsUp;
   faThumbsDown = faThumbsDown;
   faCheck = faCheck;
+  faArrowUp = faArrowUp;
+  faArrowLeft = faArrowLeft;
   faExclamationCircle = faExclamationCircle;
   private missions: Mission[];
   mission: Mission;
@@ -41,21 +43,11 @@ export class MissionsComponent implements OnInit, OnChanges, AfterContentInit {
       });
     }
 
-    ngAfterContentInit() {
-      console.log('after content init');
-      console.log(this.selectedKid);
-    }
-    ngOnChanges() {
-      console.log('changes');
-      console.log(this.selectedKid);
-    }
-    
     getSelectedKid() {
       this.kidService.updateSelectedKid.subscribe(
         kidData => {
           this.selectedKid = kidData;
           this.getMissions();
-          
         },
         error => {
           console.log(error);
@@ -64,9 +56,8 @@ export class MissionsComponent implements OnInit, OnChanges, AfterContentInit {
       
       getMissions() {
         this.missionService.getMissions(this.selectedKid.id).subscribe((data: Mission[]) => {
-          console.log(data);
           this.missions = data;
-          console.log( this.missions);
+          this.missions.sort((a, b) => a.action < b.action ? -1 : 1);
         },
         error => {
           console.log(error);

@@ -151,6 +151,9 @@ public class MissionRepositoryImpl implements MissionRepository {
     public boolean completeMission(Long id) {
         try {
             Mission mission = findMissionById(id);
+            if (mission.isDone()) {
+                return false;
+            }
             mission.setDone(true);
             jdbcTemplate.update(UPDATE_ISDONE_BY_PATCH_SQL, mission.isDone(),mission.getId());
             addBiscuits(mission.getBiscuitsToEarn(), mission.getKid().getId());
@@ -165,6 +168,9 @@ public class MissionRepositoryImpl implements MissionRepository {
     public boolean cancelCompleteMission(Long id) {
         try {
             Mission mission = findMissionById(id);
+            if (!mission.isDone()) {
+                return false;
+            }
             mission.setDone(false);
             jdbcTemplate.update(UPDATE_ISDONE_BY_PATCH_SQL, mission.isDone(),mission.getId());
             removeBiscuits(mission.getKid().getId(), mission.getBiscuitsToEarn());

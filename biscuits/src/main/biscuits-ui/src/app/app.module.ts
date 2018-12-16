@@ -45,6 +45,7 @@ import {AuthService} from './authentication/services/auth.service';
 import {HeaderService} from './header/service/header.service';
 import {KidService} from './kids/service/kid.service';
 import {MissionService} from './missions/services/mission.service';
+import { AuthGuard } from './authentication/services/auth-guards.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -84,7 +85,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   TokenStorageService,
   AuthService,
   KidService,
-  MissionService
+  MissionService,
+  AuthGuard
   ],
   bootstrap: [AppComponent]
 })

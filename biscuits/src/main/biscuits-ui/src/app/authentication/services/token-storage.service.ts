@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from '../../user/model/User';
+import { getToken } from '@angular/router/src/utils/preactivation';
 
 const TOKEN_KEY = 'AuthToken';
 const USERNAME_KEY = 'AuthUsername';
@@ -61,5 +62,13 @@ export class TokenStorageService {
     }
 
     return this.roles;
+  }
+
+  public isAuthenticated() {
+    if (this.getToken() == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

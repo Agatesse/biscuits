@@ -7,7 +7,7 @@
         </h1>
 
         <div class="buttons is-right">
-          <a class="button is-primary" (click)="goToKids()">Return to Kids</a>
+          <a class="button is-primary" (click)="goToKids()"><span class="icon"><fa-icon [icon]="faArrowLeft"></fa-icon></span><span>Return to Kids</span></a>
         </div>
 
         <form [formGroup]="updateUserForm" (ngSubmit)=onSubmit()>

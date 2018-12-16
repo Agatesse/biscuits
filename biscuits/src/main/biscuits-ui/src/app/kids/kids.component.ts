@@ -1,5 +1,5 @@
 import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import {faCheck, faArrowRight, faCookieBite, faArrowUp, faPlus, faThumbsDown, faThumbsUp, faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faArrowRight, faCookieBite, faArrowUp, faPlus, faThumbsDown, faThumbsUp, faUserSecret, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import {KidService} from './service/kid.service';
 import {User} from '../user/model/User';
@@ -24,6 +24,7 @@ export class KidsComponent implements OnInit {
   faUserSecret = faUserSecret;
   faCheck = faCheck;
   faArrowRight = faArrowRight;
+  faArrowLeft = faArrowLeft;
   faArrowUp = faArrowUp;
   private kids: Kid[];
   kid: Kid;

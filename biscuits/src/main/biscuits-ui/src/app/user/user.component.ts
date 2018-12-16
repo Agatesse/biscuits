@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {faCheck, faEnvelope, faUserEdit, faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faEnvelope, faUserEdit, faUserSecret, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {UserService} from './service/user.service';
@@ -16,6 +16,7 @@ export class UserComponent implements OnInit {
   faUserSecret = faUserSecret;
   faCheck = faCheck;
   faEnvelope = faEnvelope;
+  faArrowLeft = faArrowLeft;
   user: User;
   updateUserForm: FormGroup;
   private allowEdit: boolean = false;

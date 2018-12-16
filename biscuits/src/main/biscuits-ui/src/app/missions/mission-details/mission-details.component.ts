@@ -90,8 +90,7 @@ export class MissionDetailsComponent implements OnInit {
       .subscribe(
         () => {
           this.isUpdated = true;
-          this.isMissionUpdated.emit( this.isUpdated);
-          console.log(this.mission.isDone);
+          this.isMissionUpdated.emit(this.isUpdated);
         },
         error => {
           console.log(error);
@@ -100,13 +99,11 @@ export class MissionDetailsComponent implements OnInit {
   }
 
   cancelCompleteMission(mission: Mission) {
-    console.log(mission);
     this.missionService.cancelCompleteMission(mission.id)
       .subscribe(
         () => {
           this.isUpdated = true;
-          this.isMissionUpdated.emit( this.isUpdated);
-          console.log(this.mission.isDone);
+          this.isMissionUpdated.emit(this.isUpdated);
         },
         error => {
           console.log(error);

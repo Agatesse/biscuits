@@ -47,6 +47,8 @@ export class MissionService {
   }
 
   cancelCompleteMission(missionId: number) {
+    console.log("e suis le service");
+    console.log(missionId);
     const cancelCompleteMission = this._cancelCompleteMissionUrl + missionId;
     return this.http.patch(cancelCompleteMission, missionId, httpOptions);
   }
