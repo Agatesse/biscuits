@@ -12,12 +12,12 @@ import {Router} from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
-  private signUpForm: FormGroup;
-  private submitted: boolean = false;
-  private signUpInfo: SignUpInfo;
-  private isSignedUp: boolean = false;
-  private isSignUpFailed: boolean = false;
-  private errorMessage: string = '';
+  signUpForm: FormGroup;
+  submitted: boolean = false;
+  signUpInfo: SignUpInfo;
+  isSignedUp: boolean = false;
+  isSignUpFailed: boolean = false;
+  errorMessage: string = '';
   faUserSecret = faUserSecret;
   faCheck = faCheck;
   faEnvelope = faEnvelope;
@@ -80,11 +80,11 @@ export class SignUpComponent implements OnInit {
   }
 
   cancelSignUp() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/app/home');
   }
 
   goToSignIn() {
-    this.router.navigateByUrl('/sign-in');
+    this.router.navigateByUrl('/app/sign-in');
   }
 
 }

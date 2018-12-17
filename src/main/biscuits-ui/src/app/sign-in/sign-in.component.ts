@@ -14,13 +14,13 @@ import {HeaderService} from '../header/service/header.service';
 })
 export class SignInComponent implements OnInit {
 
-  private signInForm: FormGroup;
-  private submitted: boolean = false;
-  private isSignedIn: boolean = false;
-  private isSignInFailed: boolean = false;
-  private errorMessage: string = '';
-  private roles: string[] = [];
-  private signInInfo: SignInInfo;
+  signInForm: FormGroup;
+  submitted: boolean = false;
+  isSignedIn: boolean = false;
+  isSignedInFailed: boolean = false;
+  errorMessage: string = '';
+  roles: string[] = [];
+  signInInfo: SignInInfo;
   faUserSecret = faUserSecret;
   faUnlock = faUnlock;
   faCheck = faCheck;
@@ -59,7 +59,7 @@ export class SignInComponent implements OnInit {
         this.tokenStorage.saveUsername(data.username);
         this.tokenStorage.saveAuthorities(data.authorities);
         this.tokenStorage.saveUser(data.id);
-        this.isSignInFailed = false;
+        this.isSignedInFailed = false;
         this.isSignedIn = true;
         this.roles = this.tokenStorage.getAuthorities();
         this.headerService.toggleNavBar(this.isSignedIn);
@@ -68,22 +68,24 @@ export class SignInComponent implements OnInit {
       error => {
         console.log(error);
         this.errorMessage = error.error.message;
-        this.isSignInFailed = true;
+        this.isSignedInFailed = true;
       }
     );
   }
 
   cancelSignIn() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/app/home']);
   }
 
   goToKids() {
-    this.router.navigate(['/kids']);
+    this.router.navigate(['/app/kids']);
   }
 
   goToSignUp() {
-    this.router.navigate(['/sign-up']);
+    this.router.navigate(['/app/sign-up']);
   }
+
+
 }
 
 

@@ -11,7 +11,7 @@ export class Mission {
   id: number;
   action: string;
   imageURL: string;
-  isDone: boolean;
+  done: boolean;
   biscuitsToEarn: number;
   kid: Kid;
 

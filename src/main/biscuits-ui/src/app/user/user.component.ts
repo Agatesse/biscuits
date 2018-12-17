@@ -19,10 +19,10 @@ export class UserComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   user: User;
   updateUserForm: FormGroup;
-  private allowEdit: boolean = false;
-  private submitted: boolean = false;
-  private isUpdated: boolean = false;
-  private isNotUpdated: boolean = false;
+  allowEdit: boolean = false;
+  submitted: boolean = false;
+  isUpdated: boolean = false;
+  isNotUpdated: boolean = false;
 
   constructor(private router: Router, private formBuilder: FormBuilder, private userService: UserService, private tokenStorageService: TokenStorageService) {
     this.user = new User();
@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
   }
 
   goToKids() {
-    this.router.navigate(['/kids']);
+    this.router.navigate(['/app/kids']);
   }
 
   get f() {

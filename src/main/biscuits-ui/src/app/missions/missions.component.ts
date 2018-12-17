@@ -24,12 +24,12 @@ export class MissionsComponent implements OnInit {
   faArrowUp = faArrowUp;
   faArrowLeft = faArrowLeft;
   faExclamationCircle = faExclamationCircle;
-  private missions: Mission[];
+  missions: Mission[];
   mission: Mission;
   createMissionForm: FormGroup;
-  private submitted = false;
-  private isCreated = false;
-  private isNotCreated = false;
+  submitted = false;
+  isCreated = false;
+  isNotCreated = false;
   selectedKid: Kid;
   
   constructor(private missionService: MissionService, private formBuilder: FormBuilder,
@@ -69,7 +69,7 @@ export class MissionsComponent implements OnInit {
       }
 
       goToKids() {
-        this.router.navigate(['/kids']);
+        this.router.navigate(['/app/kids']);
       }
 
       goToTop() {

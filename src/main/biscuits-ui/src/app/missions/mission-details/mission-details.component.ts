@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
-import {faCookieBite, faEdit, faThumbsDown, faThumbsUp, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faCookieBite, faExclamationCircle, faEdit, faThumbsDown, faThumbsUp, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Mission} from '../model/Mission';
 import {MissionService} from '../services/mission.service';
 import {MissionsComponent} from '../missions.component';
@@ -18,6 +18,7 @@ export class MissionDetailsComponent implements OnInit {
   @Input() mission: Mission;
   @Output() isMissionUpdated = new EventEmitter<boolean>();
 
+  faExclamationCircle = faExclamationCircle;
   faCookieBite = faCookieBite;
   faThumbsUp = faThumbsUp;
   faThumbsDown = faThumbsDown;
@@ -25,10 +26,10 @@ export class MissionDetailsComponent implements OnInit {
   faEdit = faEdit;
   faTimes = faTimes;
   updateMissionForm: FormGroup;
-  private submitted = false;
-  private isUpdated = false;
-  private isNotUpdated = false;
-  private isEditToggled = false;
+  submitted = false;
+  isUpdated = false;
+  isNotUpdated = false;
+  isEditToggled = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router,
      private missionService: MissionService, private missionsComponent: MissionsComponent) {

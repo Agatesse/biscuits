@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
     this.authority = null;
     this.roles = [];
     this.headerService.toggleNavBar(false);
-    this.router.navigate(['/sign-in']).then(() => {this.router.navigate(['/home'])});
+    this.router.navigate(['/app/sign-in']).then(() => {this.router.navigate(['/app/home'])});
     console.log(this.isSignedIn);
   }
 }

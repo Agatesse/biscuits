@@ -26,12 +26,12 @@ export class KidsComponent implements OnInit {
   faArrowRight = faArrowRight;
   faArrowLeft = faArrowLeft;
   faArrowUp = faArrowUp;
-  private kids: Kid[];
+  kids: Kid[];
   kid: Kid;
   createKidForm: FormGroup;
-  private submitted = false;
-  private isCreated = false;
-  private isNotCreated = false;
+  submitted = false;
+  isCreated = false;
+  isNotCreated = false;
   selectedKid: Kid;
 
   constructor(private kidService: KidService, private formBuilder: FormBuilder, private router: Router, private userService: UserService,
@@ -94,7 +94,7 @@ export class KidsComponent implements OnInit {
   goToMissions(kid: Kid) {
     this.selectedKid = kid;
     this.kidService.toggleIsSelected(this.selectedKid);
-    this.router.navigate(['missions']);
+    this.router.navigate(['/app/missions']);
   }
 
   goToTop() {

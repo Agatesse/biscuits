@@ -24,10 +24,10 @@ export class KidDetailsComponent implements OnInit {
   faEdit = faEdit;
   faArrowRight = faArrowRight;
   updateKidForm: FormGroup;
-  private submitted = false;
-  private isUpdated = false;
-  private isNotUpdated = false;
-  private isEditToggled = false;
+  submitted = false;
+  isUpdated = false;
+  isNotUpdated = false;
+  isEditToggled = false;
 
   constructor(private formBuilder: FormBuilder, private kidService: KidService, private kidsComponent: KidsComponent) {
   }
